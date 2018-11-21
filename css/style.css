@@ -63,6 +63,22 @@ ul {
 .u-margin-top-big { margin-top: 8rem !important; }
 .u-margin-top-huge { margin-top: 10rem !important; }
 
+.logo {
+    font-family: Arial, Helvetica, sans-serif;
+    /* border: 1px solid black; */
+    color: #e8491d;
+    padding: 0 5px 0 5px;
+    height: 50px;
+    cursor: pointer;}
+    .logo .special-coloring {
+        color: #fafad2;
+        font-style: italic;
+        font-family: monospace;
+        font-weight: 1000;}
+    .logo-footer-version {
+        transform: scale(2);
+    }
+
 .heading-secondary {
     font-size: 2.7rem;
     text-transform: uppercase;
@@ -133,7 +149,6 @@ ul {
     transform: scaleY(1);
     width: 100%;}
 
-
 /*------------------------------------------*/
 
 header {
@@ -146,18 +161,6 @@ header {
         display: flex;
         justify-content: space-around;
         /* flex-direction: column; */}
-    .div-ireporter {
-        font-family: Arial, Helvetica, sans-serif;
-        /* border: 2px solid black; */
-        color: #e8491d;
-        padding: 0 5px 0 5px;
-        height: 50px;
-        cursor: pointer;}
-    .div-ireporter .special-coloring {
-        color: #fafad2;
-        font-style: italic;
-        font-family: monospace;
-        font-weight: 1000;}
     nav {
         padding: 2px;
         margin-bottom: 10px;}
@@ -268,12 +271,68 @@ header {
         animation-fill-mode: backwards}
 
 
-.mini-main-section{
+#newsletter {
+    padding: 15px;
     color: #fafad2;
-    background: #35424a;
-    border-bottom: 2px solid #e8491d;}
-    .mini-main-section .row {
-        height: 6rem;}
+    background: #35424a;}
+    #newsletter .container {
+        border: none;
+        height: 6rem;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding-top: .5rem;}
+    #newsletter .container h1 { 
+        /* border: 1px solid white; */}
+    #newsletter .container form { 
+        display: flex;
+        justify-content: flex-end;
+        min-width: 50%;
+        padding-left: 0;
+        position: relative;}
+        .input-class {
+            display: inline-block;
+            font-size: 15px;
+            font-family: inherit;
+            border-radius: 2px;
+            background-color: rgba(255, 255, 255, 1);
+            border: none;
+            border-bottom: 3px solid transparent;
+            width: 60%;
+            padding: 4px;
+            height: 38px;
+            transition: all .5s;}
+        .input-class:focus {
+            outline: none;
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #55c57a;}
+        .input-class:focus:invalid {
+            border-bottom: 3px solid #e8491d;}
+        #newsletter .container form label {
+            display: inline-block;
+            position: absolute;
+            top: -2rem; /*Displays the label above the input box*/
+            /* top: 3rem; *//*Displays the label below the input box */ 
+            left: 7.5rem;
+            transition: all .5s;}
+        .input-class:placeholder-shown + .label-class { /*These operations ':placeholder-shown' and '+' does not work when you use tag selectors instead of class names.*/
+            opacity: 0;
+            visibility: hidden;
+            /* transform: translateY(-4rem); */ /* With the labe below the input box, this will move upwards */
+            transform: translateY(4rem); /*With the label above the input box, this will move it downwards*/
+        }
+        .btn {
+            display: inline-block;
+            height: 38px;
+            background: rgb(232, 73, 29);
+            border: 0;
+            padding-left: 20px;
+            padding-right: 20px;
+            color: #ffffff;
+            border-radius: 2px;}
+
+
+
 
 
 .section-about {
@@ -420,10 +479,54 @@ header {
         box-shadow: 0 1.5rem 4rem rgb(250, 250, 210, .4);
         /* box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .4); */}
 
-
+/*There is no story yet. So this 'section' is used to patch the clippy part of section-incidence, befor the section footer*/
 .section-stories {
     display: block;}
     .section-stories .row {
         height: 28.5vh;
         margin-top: -5rem;
         background-color: #6c7a89;}
+
+.footer {
+    /* background-color: #24252a; */
+    background-color: #013243;
+    padding: 6rem 0;
+    font-size: 1rem;
+    color: #eeeeee;}
+    .footer-logo-box {
+        text-align: center;
+        margin-bottom: 5rem;}
+    .flex-box-footer {
+        display: flex;
+        justify-content: space-around;}
+    .footer-navigation{
+        border-top: 1px solid #6c7a89;
+        padding-top: 1rem;
+        display: inline-block;}
+    .footer-ul {
+        /* border: 1px solid white; */
+        display: flex;}
+    .footer-ul-li {
+       /*Nothing here for now*/ }
+    .footer-ul-li:not(:last-child) {
+        margin-right: 1.5rem;}
+    .footer-link:link, 
+    .footer-link:visited {
+        color: #eeeeee;
+        background-color: transparent;
+        text-decoration: none;
+        text-transform: uppercase;
+        display: inline-block;
+        transition: all .2s;}
+    .footer-link:hover {
+        color: orangered;
+        box-shadow: 0 1rem 2rem rgba(0, 0, 0, .4);
+        transform: scale(1.05);}
+    .footer-copyright {
+        border-top: 1px solid #6c7a89;
+        padding-top: 1rem;
+    }
+
+
+
+
