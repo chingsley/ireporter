@@ -269,11 +269,11 @@ header {
         animation-fill-mode: backwards}
 
 
-#newsletter {
+.section-newsletter {
     padding: 2rem 0 0 0;
     color: #fafad2;
     background: #35424a;}
-    #newsletter .container {
+    .section-newsletter .container {
         margin-top: 1rem;
         width: 80%;
         margin: 0 auto;
@@ -282,9 +282,9 @@ header {
         justify-content: space-between;
         /* align-items: center; */ /* Will center the items vertically betwween the top and the bottom*/
         padding: 0 2rem;}
-    #newsletter .container h1 { 
+    .section-newsletter .container h1 { 
         /* border: 1px solid white; */}
-    #newsletter .container form { 
+    .section-newsletter .container form { 
         display: flex;
         justify-content: flex-end;
         width: 45%;
@@ -313,7 +313,7 @@ header {
             border-bottom: 3px solid #55c57a;}
         .input-class:focus:invalid {
             border-bottom: 3px solid #e8491d;}
-        #newsletter .container form label {
+        .section-newsletter .container form label {
             display: block;
             padding: 10px 0 0 0;
             transition: all .5s;}
@@ -324,6 +324,8 @@ header {
             /*transform: translateY(4rem); */ /*With the label above the input box, this will move it downwards*/}
         .btn {
             height: 38px;
+            text-transform: uppercase;
+            font-weight: 700;
             background: rgb(232, 73, 29);
             border: 0;
             padding-left: 20px;
@@ -445,11 +447,7 @@ header {
         top: 0rem;
         right: 0rem;
         transform: translate(-2%, 131%);
-        width: 100%;
-        /* top: 8rem;
-        right: 0rem;
-        width: 75%; */
-    }
+        width: 100%;}
     .card-heading-span {
         padding: .5rem .5rem;
         -webkit-box-decoration-break: clone;
@@ -526,9 +524,96 @@ header {
         transform: scale(1.05);}
     .footer-copyright {
         border-top: 1px solid #6c7a89;
-        padding-top: 1rem;
-    }
+        padding-top: 1rem;}
 
 
-
-
+/******************** SIGN-UP PAGE **************/
+.section-register {
+     background-image: linear-gradient(
+    to right bottom, 
+    rgba(53, 66, 74, 0.8), 
+    rgba(20, 23, 26, 0.8)), 
+    url(../img/nat-4.jpg);
+    background-size: cover;
+    padding-top: 55px;}
+    .register .row {
+        margin: 5px;
+        padding: 5px;}
+    .registration-div-2{
+        display: flex;
+        justify-content: center;}
+    .form{
+        box-shadow: 0 1.5rem 4rem rgb(250, 250, 210, .4);
+        margin: 0 auto;
+        margin-top: 2rem;
+        margin-bottom: 8rem;
+        background-image: linear-gradient(
+        to right bottom, 
+        rgba(53, 66, 74, 0.3), 
+        rgba(53, 66, 74, 0.3));
+        border: 3px solid rgb(53, 66, 74);
+        border-radius: 10px;
+        opacity: 0.5;
+        width: 60%;}
+    .form-group {
+        width: 70%;
+        margin: 0 auto;
+        padding: 2px;}
+    .form-group:not(:last-child) {
+        margin-bottom: 1rem;}
+    #form-group-last-child {
+        /* margin-bottom: 0px; */}
+    .form-group-title{
+        text-align: center;
+        /* border: 1px solid white; */
+        margin-top: 40px;}
+    .form-input {
+        font-size: 1rem;
+        font-family: inherit;
+        text-transform: uppercase;
+        color: black;
+        font-weight: 700;
+        padding: .5rem 1rem;
+        border-radius: 2px;
+        background-color: rgba(255, 255, 255, .5);
+        border-bottom: 3px solid transparent;
+        width: 100%;
+        display: block;
+        transition: all .5s;}
+    .form-input:focus {
+        outline: none;
+         box-shadow: 0 1.5rem 4rem rgb(250, 250, 210, .4) !important;
+        border-bottom: 3px solid lightgreen;}
+    .form-input:focus:invalid {
+        border-bottom: 3px solid #e8491d;}
+    .form-input::-webkit-input-placeholder {
+        /* color: #6c7a89; */
+        color: white;
+        text-transform: uppercase;
+        font-weight: 700;}
+    .form-label {
+        text-transform: uppercase;
+        color: white;
+        font-size: 1rem;
+        font-weight: 700;
+        margin-left:1.3rem;
+        margin-top: .5rem;
+        display: block;
+        transition: all .5s;}
+    .form-input:placeholder-shown + .form-label {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-2.5rem);}
+    .form-div-btn {
+        text-align: center;
+        width: 70%;
+        margin: 0 auto;
+        padding: 2px;
+        margin-bottom: 20px; }
+    #btn-register {
+        height: 3rem;
+        font-size: 1.5rem;
+        padding: 10px;
+        width: 50%;}
+/*************************************************/
+  
