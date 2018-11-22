@@ -62,7 +62,7 @@ ul {
 .u-margin-top-medium {margin-top: 4rem !important}
 .u-margin-top-big { margin-top: 8rem !important; }
 .u-margin-top-huge { margin-top: 10rem !important; }
-
+.active-link { color: #e8491d !important; }
 .logo {
     font-family: Arial, Helvetica, sans-serif;
     /* border: 1px solid black; */
@@ -144,8 +144,7 @@ ul {
     transition: transform .2s,
                 width .4s cubic-bezier(1,0,0,1) .2s,
                 background-color .6s;}
-.link-container:hover::before,
-.current::before {
+.link-container:hover::before {
     transform: scaleY(1);
     width: 100%;}
 
@@ -164,7 +163,7 @@ header {
     nav {
         padding: 2px;
         margin-bottom: 10px;}
-        .nav-ul::after {
+        .nav-ul::after { /*used to restore ul height after floating it to the right*/
             content: "";
             display: table;
             clear: both;}
@@ -193,7 +192,7 @@ header {
             position: relative;
             background-color: #35424a;
             border: 1px solid transparent;}
-            .a-li-outer::before,
+            .animated-link::before,
             .a-li-inner::before {
                 content: "";
                 position: absolute;
@@ -208,9 +207,8 @@ header {
                 transition: transform .2s,
                             width .4s cubic-bezier(1,0,0,1) .2s,
                             background-color .6s;}
-            .a-li-outer:hover::before, 
-            .a-li-inner:hover::before,
-            .current::before {
+            .animated-link:hover::before, 
+            .a-li-inner:hover::before {
                 transform: scaleY(1);
                 width: 100%;}
             .li-outer:active::before,
@@ -272,33 +270,40 @@ header {
 
 
 #newsletter {
-    padding: 15px;
+    padding: 2rem 0 0 0;
     color: #fafad2;
     background: #35424a;}
     #newsletter .container {
-        border: none;
-        height: 6rem;
+        margin-top: 1rem;
+        width: 80%;
+        margin: 0 auto;
+        height: 5rem;
         display: flex;
-        justify-content: space-around;
-        align-items: center;
-        padding-top: .5rem;}
+        justify-content: space-between;
+        /* align-items: center; */ /* Will center the items vertically betwween the top and the bottom*/
+        padding: 0 2rem;}
     #newsletter .container h1 { 
         /* border: 1px solid white; */}
     #newsletter .container form { 
         display: flex;
         justify-content: flex-end;
-        min-width: 50%;
-        padding-left: 0;
-        position: relative;}
+        width: 45%;
+        padding-left: 0;}
+        .input-and-label {
+            width: 100%;
+            display: flex;
+            flex-direction: column;}
         .input-class {
-            display: inline-block;
+            /* align-self: flex-end; */
+            border: 1px solid white;
+            display: block;
             font-size: 15px;
             font-family: inherit;
             border-radius: 2px;
             background-color: rgba(255, 255, 255, 1);
             border: none;
             border-bottom: 3px solid transparent;
-            width: 60%;
+            width: 100%;
             padding: 4px;
             height: 38px;
             transition: all .5s;}
@@ -309,20 +314,15 @@ header {
         .input-class:focus:invalid {
             border-bottom: 3px solid #e8491d;}
         #newsletter .container form label {
-            display: inline-block;
-            position: absolute;
-            top: -2rem; /*Displays the label above the input box*/
-            /* top: 3rem; *//*Displays the label below the input box */ 
-            left: 7.5rem;
+            display: block;
+            padding: 10px 0 0 0;
             transition: all .5s;}
         .input-class:placeholder-shown + .label-class { /*These operations ':placeholder-shown' and '+' does not work when you use tag selectors instead of class names.*/
             opacity: 0;
             visibility: hidden;
-            /* transform: translateY(-4rem); */ /* With the labe below the input box, this will move upwards */
-            transform: translateY(4rem); /*With the label above the input box, this will move it downwards*/
-        }
+            transform: translateY(-4rem);  /* With the labe below the input box, this will move upwards */
+            /*transform: translateY(4rem); */ /*With the label above the input box, this will move it downwards*/}
         .btn {
-            display: inline-block;
             height: 38px;
             background: rgb(232, 73, 29);
             border: 0;
@@ -339,7 +339,8 @@ header {
     /* border: 1px solid black; */
     /* background-color: #f7f7f7; */
     /* background-color: eeeeee; */
-    background-color: #6c7a89;
+    /*background-color: #6c7a89; */
+    background-image: linear-gradient(to right bottom, #6c7a89, black);
     padding: 3px;
     padding-bottom: 15rem;
     display: block;}
@@ -376,7 +377,8 @@ header {
                 .img-in-gallery-3:hover {
                     outline: 1rem solid #35424a;
                     transform: scale(1) translateY(-.5rem);
-                    box-shadow: 0 2.5rem 4rem rgba(0, 0, 0, .5);
+                    /* box-shadow: 0 2.5rem 4rem rgba(0, 0, 0, .5); */
+                    box-shadow: 0 2.5rem 4rem rgba(250, 250, 218, .5);
                     z-index: 20;}
                 .img-gallery:hover .img-in-gallery:not(:hover) {
                         transform: scale(.95);}
