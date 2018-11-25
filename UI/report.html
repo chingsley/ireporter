@@ -17,13 +17,13 @@
         <div class="row">
             <div id="header-flex-box">
                 <div class="logo" id="div-site-name-id">
-                    <h1><span class="special-coloring">i</span>Repa</h1>
+                    <h1><a href="index.html"><span class="special-coloring">i</span><span class="repa">Repa</span></a></h1>
                 </div>
                 <nav class="navigation">
                     <ul class="nav-ul">
-                        <li class="li-outer animated-link active-link"><a href="index.html" class="links">Home</a></li>
-                        <li class="li-outer animated-link"><a href="#" class="links">Login</a></li>
-                        <li class="li-outer animated-link"><a href="#" class="links">Report a case</a></li>
+                        <!-- <li class="li-outer animated-link"><a href="index.html" class="links">Home</a></li> -->
+                        <li class="li-outer animated-link"><a href="index.html" class="links">sign out</a></li>
+                        <li class="li-outer animated-link active-link"><a href="report.html" class="links">Report a case</a></li>
                         <li class="li-outer animated-link"><a href="#" class="links">User profile</a></li>
                     </ul>
                 </nav>
@@ -31,58 +31,65 @@
         </div>
     </header>
 
-    <section id="newsletter">
-        <div class="container" id="newsletter-container">
-            <h1 id="h1-id">Subscribe To Our Newsletter</h1>
-            <form action="#" id="form-id">
-                <div class="input-and-label">
-                    <input type="email" class="input-class" id="email" placeholder="Enter Email..." required>
-                    <label for="email" class="label-class">Enter Email...</label>
-                </div>
-                <button type="submit" id="btn__submit" class="btn">Subscribe</button>
-            </form>
-        </div>
-    </section>
+<section class="section-newsletter" id="section-newsletter-register-page">
+    <div class="container" id="newsletter-container">
+        <h1 id="h1-id">Subscribe To Our Newsletter</h1>
+        <form action="#" id="form-id">
+            <div class="input-and-label">
+                <input type="email" class="input-class" id="email" placeholder="Enter Email..." required>
+                <label for="email" class="label-class">Enter Email...</label>
+            </div>
+            <button type="submit" id="btn__submit" class="btn">Subscribe</button>
+        </form>
+    </div>
+</section>
 
     <section class="register">
         <div class="row">
-            <div class="book">
-                <div class="book-form">
-                    <form action="#" class="form">
-                        <div class="u-margin-bottom-medium">
-                            <h2 class="heading-secondary" id="form-register-title">
-                                Register now
-                            </h2>
+            <div class="div-over-form-report">
+                <form action="#" class="form">
+                    <div class="form-group form-group-title u-margin-bottom-medium">
+                        <h2 class="heading-secondary-dark" id="form-register-title">
+                            make a report
+                        </h2>
+                    </div>
+                    <div class="form-group" id="radio-container">
+                        <div class="form-radio-group-title">Select a type of report</div>
+                        <div class="form-radio-group">
+                            <input type="radio" class="form-radio-input" id="small" name="type" value="red-flag">
+                            <label for="small" class="form-radio-label">
+                                <span class="form-radio-button"></span>
+                                red-flag
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-input" id="firstname" placeholder="First name" required>
-                            <label for="firstname" class="form-label">First name</label>
+                        <div class="form-radio-group">
+                            <input type="radio" class="form-radio-input" id="large" name="type" value="intervention">
+                            <label for="large" class="form-radio-label">
+                                <span class="form-radio-button"></span>
+                                intervention
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <input type="text" class="form-input" id="lastname" placeholder="Last name" required>
-                            <label for="lastname" class="form-label">Last name</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-input" id="othernames" placeholder="Other names" required>
-                            <label for="othernames" class="form-label">Other names</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-input" id="email" placeholder="Email address" required>
-                            <label for="email" class="form-label">Email address</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-input" id="phonenumber" placeholder="Phone number" required>
-                            <label for="phonenumber" class="form-label">Phone number</label>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-input" id="username" placeholder="Username" required>
-                            <label for="username" class="form-label">Username</label>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn">Submit</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" id="lastname" placeholder="Location [string: Lat Long cordinates" required>
+                        <label for="lastname" class="form-label">Location</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" id="othernames" placeholder="Upload images">
+                        <label for="othernames" class="form-label">Upload images</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-input" id="username" placeholder="Upload videos" required>
+                        <label for="username" class="form-label">Upload vides</label>
+                    </div>
+                    <div class="form-group" id="form-group-last-child">
+                        <input type="email" class="form-input" id="email" placeholder="comment..." required>
+                        <label for="email" class="form-label">comment...</label>
+                    </div>
+                    <div class="form-div-btn">
+                        <button class="btn" id="btn-register">submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </section>
