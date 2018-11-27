@@ -1,0 +1,40 @@
+{
+  "redflags": [
+    {
+      "id": 1,
+      "createdOn": "2018-11-24T21:16:34.042Z",
+      "createdBy": "chinonso.kc@gmail.com",
+      "type": "red-flag",
+      "location": "ebeanunwa",
+      "status": "draft",
+      "comment": "stop corruption today and save lives."
+    },
+    {
+      "id": 1,
+      "createdOn": "2018-11-24T21:19:38.610Z",
+      "createdBy": "chino*nso.kc@gmail.com",
+      "type": "red-flag",
+      "location": "ebeanunwa",
+      "status": "draft",
+      "comment": "stop corruption today and save lives."
+    },
+    {
+      "id": 1,
+      "createdOn": "2018-11-24T21:23:03.855Z",
+      "createdBy": "eneja.kc@gmail.com",
+      "type": "red-flag",
+      "location": "ebeanunwa",
+      "status": "draft",
+      "comment": "stop corruption today and save lives."
+    },
+    {
+      "id": 1,
+      "createdOn": "2018-11-26T15:33:33.656Z",
+      "createdBy": "eneja.kc@gmail.com",
+      "type": "red-flag",
+      "location": "ebeanunwa",
+      "status": "draft",
+      "comment": "stop corruption today and save lives."
+    }
+  ]
+}
