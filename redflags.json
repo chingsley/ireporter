@@ -125,6 +125,24 @@
       "location": "9.388939, 0.848494",
       "status": "draft",
       "comment": "I am reporting corruption"
+    },
+    {
+      "id": 15,
+      "createdOn": "2018-11-27T17:59:54.807Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
+    },
+    {
+      "id": 16,
+      "createdOn": "2018-11-27T18:00:05.893Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
     }
   ]
 }
