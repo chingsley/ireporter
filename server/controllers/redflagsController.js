@@ -19,7 +19,7 @@ class RedflagsController {
           });
         }
       });
-      return res.status(200).json({
+      return res.status(201).json({
         status: 201,
         data: redflags,
       });

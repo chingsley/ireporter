@@ -1,13 +1,14 @@
 import { Router } from 'express';
-import Validate from '../middleware/validator';
+import Validator from '../middleware/validator';
 import RedflagsController from '../controllers/redflagsController';
 
 const router = new Router();
 
-router.post('/', Validate.newRedflag, RedflagsController.newRedflag);
+router.post('/', Validator.newRedflag, RedflagsController.newRedflag);
 
 /**
- * add more routes
+ * add more routes...
+ * get, patch, delete, ...
  */
 
 export default router;

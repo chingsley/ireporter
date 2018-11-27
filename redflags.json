@@ -2,39 +2,39 @@
   "redflags": [
     {
       "id": 1,
-      "createdOn": "2018-11-24T21:16:34.042Z",
-      "createdBy": "chinonso.kc@gmail.com",
+      "createdOn": "2018-11-27T09:31:41.995Z",
+      "createdBy": 1,
       "type": "red-flag",
       "location": "ebeanunwa",
       "status": "draft",
       "comment": "stop corruption today and save lives."
     },
     {
-      "id": 1,
-      "createdOn": "2018-11-24T21:19:38.610Z",
-      "createdBy": "chino*nso.kc@gmail.com",
+      "id": 2,
+      "createdOn": "2018-11-27T09:32:35.155Z",
+      "createdBy": 2,
       "type": "red-flag",
       "location": "ebeanunwa",
       "status": "draft",
-      "comment": "stop corruption today and save lives."
+      "comment": "Some serious corruption going on here"
     },
     {
-      "id": 1,
-      "createdOn": "2018-11-24T21:23:03.855Z",
-      "createdBy": "eneja.kc@gmail.com",
+      "id": 3,
+      "createdOn": "2018-11-27T09:34:03.959Z",
+      "createdBy": 3,
       "type": "red-flag",
       "location": "ebeanunwa",
       "status": "draft",
-      "comment": "stop corruption today and save lives."
+      "comment": "This is James reporting corruption"
     },
     {
-      "id": 1,
-      "createdOn": "2018-11-26T15:33:33.656Z",
-      "createdBy": "eneja.kc@gmail.com",
+      "id": 4,
+      "createdOn": "2018-11-27T09:36:45.845Z",
+      "createdBy": 4,
       "type": "red-flag",
-      "location": "ebeanunwa",
+      "location": "some university in the East",
       "status": "draft",
-      "comment": "stop corruption today and save lives."
+      "comment": "Corruption in school reported"
     }
   ]
 }

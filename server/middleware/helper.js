@@ -14,10 +14,20 @@ class Helper {
     return Array.isArray(value);
   }
 
-  static generateId() {
+  static generateUserId() {
     const { users } = JSON.parse(fs.readFileSync('users.json'));
     const ids = users.map(user => user.id);
     if (users.length < 1) return 1;
+    const idSorted = ids.sort((a, b) => a - b);
+    const indexOfLastItem = idSorted.length - 1;
+    const newId = 1 + idSorted[indexOfLastItem];
+    return newId;
+  }
+
+  static generateRedflagId() {
+    const { redflags } = JSON.parse(fs.readFileSync('redflags.json'));
+    const ids = redflags.map(redflag => redflag.id);
+    if (redflags.length < 1) return 1;
     const idSorted = ids.sort((a, b) => a - b);
     const indexOfLastItem = idSorted.length - 1;
     const newId = 1 + idSorted[indexOfLastItem];
