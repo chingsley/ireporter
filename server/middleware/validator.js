@@ -37,15 +37,7 @@ class Validate {
     // filter() returns an array, so matchingUser is an array of one user,
     // therefore matchingUser[0].id is how you access the id of that one user
     // console.log(matchingUser);
-
     if (matchingUser.length < 1) return res.status(401).json({ status: 401, error: `the email provided does not match any user in the system`});
-
-   
-    // return res.send({
-    //       user: matchingUser,
-    //       id: matchingUser[0].id
-    // });
-    
 
     // create a newRedflag object, attach it to the req object and set the values
     req.newRedflag = {};

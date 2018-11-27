@@ -35,6 +35,96 @@
       "location": "some university in the East",
       "status": "draft",
       "comment": "Corruption in school reported"
+    },
+    {
+      "id": 5,
+      "createdOn": "2018-11-27T15:13:28.930Z",
+      "createdBy": 2,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
+    },
+    {
+      "id": 6,
+      "createdOn": "2018-11-27T16:06:09.724Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
+    },
+    {
+      "id": 7,
+      "createdOn": "2018-11-27T16:12:23.339Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
+    },
+    {
+      "id": 8,
+      "createdOn": "2018-11-27T16:13:16.388Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
+    },
+    {
+      "id": 9,
+      "createdOn": "2018-11-27T16:16:52.951Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
+    },
+    {
+      "id": 10,
+      "createdOn": "2018-11-27T16:17:02.391Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
+    },
+    {
+      "id": 11,
+      "createdOn": "2018-11-27T16:52:38.256Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
+    },
+    {
+      "id": 12,
+      "createdOn": "2018-11-27T16:53:37.336Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
+    },
+    {
+      "id": 13,
+      "createdOn": "2018-11-27T16:54:46.196Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
+    },
+    {
+      "id": 14,
+      "createdOn": "2018-11-27T16:56:05.696Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption"
     }
   ]
 }

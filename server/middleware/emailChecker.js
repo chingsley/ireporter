@@ -74,7 +74,7 @@ const emailTest = {
       msg = `email is missing the '@' character`;
       return { error: true, message: msg };
     }
-    console.log(str);
+    // console.log('from emailChecker.js ', str);
     let quoted = false;
     const i = str.lastIndexOf('@');
     const dom = str.slice(i + 1);
