@@ -38,7 +38,10 @@ class Validate {
     // therefore matchingUser[0].id is how you access the id of that one user
     // console.log(matchingUser);
     if (matchingUser.length < 1) return res.status(401).json({ status: 401, error: `the email provided does not match any user in the system`});
-
+    
+    let images = [];
+    if(req.file) images.push(req.file.path);
+    
     // create a newRedflag object, attach it to the req object and set the values
     req.newRedflag = {};
     req.newRedflag.id = Helper.generateRedflagId();
@@ -48,6 +51,8 @@ class Validate {
     req.newRedflag.location = location.trim();
     req.newRedflag.status = 'draft';
     req.newRedflag.comment = comment.trim();
+    req.newRedflag.Image = req.file ?  req.file.path : null;
+    req.newRedflag.Image = images;
     return next();
   }// end static async newRedflag
 

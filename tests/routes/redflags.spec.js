@@ -16,6 +16,7 @@ describe('POST /redflags', () => {
         type: 'red-flag',
         location: '9.388939, 0.848494',
         comment: 'I am reporting corruption',
+        image: null
       })
       .end((err, res) => {
         if (err) {

@@ -16,6 +16,11 @@ class RedflagsController {
           });
         }
       });
+      // req.newRedflag.Image = `http://localhost:${process.env.PORT}/${req.newRedflag.Image}`;
+      // return res.status(201).json({
+      //   status: 201,
+      //   data: req.newRedflag
+      // });
       return res.status(201).json({
         status: 201,
         data: [{
