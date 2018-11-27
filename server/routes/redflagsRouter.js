@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import Validator from '../middleware/validator';
 import RedflagsController from '../controllers/redflagsController';
+import multer from 'multer'
 
 const router = new Router();
 
