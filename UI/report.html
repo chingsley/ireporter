@@ -76,17 +76,22 @@
                         <input type="text" class="form-input" id="lastname" placeholder="Location [string: Lat Long cordinates" required>
                         <label for="lastname" class="form-label">Location</label>
                     </div>
-                    <div class="form-group">
-                        <input type="text" class="form-input" id="othernames" placeholder="Upload images">
-                        <label for="othernames" class="form-label">Upload images</label>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-input" id="username" placeholder="Upload videos" required>
-                        <label for="username" class="form-label">Upload vides</label>
-                    </div>
                     <div class="form-group" id="form-group-last-child">
-                        <input type="email" class="form-input" id="email" placeholder="comment..." required>
-                        <label for="email" class="form-label">comment...</label>
+                        <textarea name="comment" id="comment" cols="30" rows="10">comment...</textarea>
+                        <!-- <input type="email" class="form-input" id="email" placeholder="comment..." required> -->
+                        <!-- <label for="email" class="form-label">comment...</label> -->
+                    </div>
+                    <div class="form-group">
+                        <input type="file" class="form-inputfile" id="pic" name="pic" accept="image/*;capture=camera">
+                        <label for="pic" class="form-inputfile-label">upload image...</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" class="form-inputfile" id="video" name="video" accept="video/*;capture=camcoder">
+                        <label for="video" class="form-inputfile-label">upload video...</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" class="form-inputfile" id="audio" name="audio" accept="audio/*;capture=microphone">
+                        <label for="audio" class="form-inputfile-label">upload audio...</label>
                     </div>
                     <div class="form-div-btn">
                         <button class="btn" id="btn-register">submit</button>

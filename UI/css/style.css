@@ -264,8 +264,7 @@ header {
         position: absolute;
         top: 45%;
         left: 50%;
-        transform: translate(-50%, -50%);
-    }
+        transform: translate(-50%, -50%);}
     .mission-statement-big {
         font-size: 55px;
         margin-bottom: 15px;
@@ -775,6 +774,32 @@ header {
         cursor: pointer;
         position: relative;
         padding-left: 3.5rem;}
+    textarea {
+        width: 100%;
+        border-radius: 3px;
+        padding: 1rem;}
+    .form-inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;}
+    .form-inputfile-label {
+        font-size: 12pt;
+        font-weight: 300;
+        padding: 5px;
+        color: #35424a;
+        background-color: #eeeeee;;
+        border: 1px solid grey;
+        border-radius: 3px;
+        display: inline-block;
+        transition: all .5s;}
+    .form-inputfile:focus + label,
+    .form-inputfile + .form-inputfile-label:hover {
+        color:#e8491d;}
+    .form-inputfile + label {
+        cursor: pointer;}
     .form-radio-button {
         height: 1.8rem;
         width: 1.8rem;
