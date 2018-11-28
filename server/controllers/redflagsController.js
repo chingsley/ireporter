@@ -1,8 +1,5 @@
 import fs from 'fs';
-import {
-  usersDotJason,
-  redflagsDotJason,
-} from '../storage/config';
+import { usersDotJason, redflagsDotJason, } from '../storage/config';
 // import moment from 'moment';
 
 class RedflagsController {
@@ -38,7 +35,20 @@ class RedflagsController {
         error: 'internal server error'
       });
     }
-  }
-}// end class RedflagsController
+  } // END newRedflag
+
+
+  static async editRedflagLocation(req, res) {
+    res.send({
+      status: 200,
+      data: [{
+        id: 1,
+        redflagToEdit: req.redflagToEdit
+      }]
+    })
+  } // END editRedflagLocation
+}// END class RedflagsController
+
+
 
 export default RedflagsController;

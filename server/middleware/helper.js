@@ -37,6 +37,12 @@ class Helper {
     return newId;
   }
 
+  // static async isRegisteredUser(email) {
+  //   const { users } = JSON.parse(fs.readFileSync(usersDotJason));
+  //   const user = users.filter(user => user.email.trim() === email.trim());
+  //   return (user.length > 1) ? true : false;
+  // }
+
 }// END HelperValidator
 
 export default Helper;

@@ -32,6 +32,7 @@ const upload = multer({
 const fileUpload = upload.fields([{name: 'images', maxCount: 8}, {name: 'videos', maxCount: 8}]);
 // router.post('/', upload.single('Image'), Validator.newRedflag, RedflagsController.newRedflag);
 router.post('/', fileUpload, Validator.newRedflag, RedflagsController.newRedflag);
+router.patch('/:id/location', upload.none(), Validator.editRedflagLocation, RedflagsController.editRedflagLocation);
 
 
 

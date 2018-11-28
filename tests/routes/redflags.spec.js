@@ -158,4 +158,172 @@ describe('POST /redflags', () => {
         done();
       });
   });
-});
+}); // END POST/redflags
+
+
+/**------- PATCH /redflags/:id/location   ---- */
+describe('PATCH /redflags/:id/location', () => {
+  it('should return a 400 error if an invalid id is provided', (done) => {
+    chai.request(app)
+      .patch('/api/v1/redflags/a/location') // 'a' is not a valid redflag id
+      .send({
+        email: 'eneja.kcgmail.com',
+        location: '9.388939, 0.848494',
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(400);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it('should return a 400 error if email is not provided', (done) => {
+    chai.request(app)
+      .patch('/api/v1/redflags/1/location')
+      .send({
+        email: '',
+        location: '9.388939, 0.848494',
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(400);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it('should return a 400 eror is the provided email wrongly formatted', (done) => {
+    chai.request(app)
+      .patch('/api/v1/redflags/1/location')
+      .send({
+        email: 'eneja*(*( kc@-gm ail.com',
+        location: '9.388939, 0.848494',
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(400);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it('should return a 400 error if location is not provided', (done) => {
+    chai.request(app)
+      .patch('/api/v1/redflags/1/location')
+      .send({
+        email: 'eneja.kc@gmail.com',
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(400);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it('should return a 400 error for invalid coordinate locations', (done) => {
+    chai.request(app)
+      .patch('/api/v1/redflags/1/location')
+      .send({
+        email: 'eneja.kc@gmail.com',
+        location: ".224q1, -2.4451"   // you shouldn't have a letter in a coord. The lat here includes 'q'
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(400);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it('should return a 401 error if an unregisterd user attempts to edit the location of a redflag', (done) => {
+    chai.request(app)
+      .patch('/api/v1/redflags/1/location')
+      .send({
+        email: 'unregisteredUser@gmail.com',
+        location: ".22411, -2.4451"
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(401);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it(`should return a 401 error if a user tries to edit a redflag that does not match their id`, (done) => {
+    chai.request(app)
+      .patch('/api/v1/redflags/1/location')
+      // The red flag with id = 1 belongs to eneja.kc@gmail.com, therefore, cannot be edited by user with email john@gmail.com
+      .send({
+        email: 'john@gmail.com', 
+        location: ".22411, -2.4451"
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(401);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it(`should return a 401 error if a user tries to edit a redflag that does not match their id`, (done) => {
+    chai.request(app)
+      .patch('/api/v1/redflags/1/location')
+      // The red flag with id = 1 belongs to eneja.kc@gmail.com, therefore, cannot be edited by user with email john@gmail.com
+      .send({
+        email: 'john@gmail.com', 
+        location: ".22411, -2.4451"
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(401);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it(`should return a 404 error if no redflag in the system has the specifed id`, (done) => {
+    chai.request(app)
+      .patch('/api/v1/redflags/-1/location')
+      // The red flag with id = 1 belongs to eneja.kc@gmail.com, therefore, cannot be edited by user with email john@gmail.com
+      .send({
+        email: 'john@gmail.com', 
+        location: ".22411, -2.4451"
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(404);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+}); // END PATCH/redflags/:id/location
