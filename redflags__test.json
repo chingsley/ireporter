@@ -79,6 +79,17 @@
       "comment": "I am reporting corruption",
       "Image": [],
       "Video": []
+    },
+    {
+      "id": 9,
+      "createdOn": "2018-11-28T12:05:50.137Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
     }
   ]
 }
