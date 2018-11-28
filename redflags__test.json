@@ -1,40 +1,84 @@
 {
-    "redflags": [
-        {
-            "id": 1,
-            "createdOn": "2018-11-27T09:31:41.995Z",
-            "createdBy": 1,
-            "type": "red-flag",
-            "location": "ebeanunwa",
-            "status": "draft",
-            "comment": "stop corruption today and save lives."
-        },
-        {
-            "id": 2,
-            "createdOn": "2018-11-27T09:32:35.155Z",
-            "createdBy": 2,
-            "type": "red-flag",
-            "location": "ebeanunwa",
-            "status": "draft",
-            "comment": "Some serious corruption going on here"
-        },
-        {
-            "id": 3,
-            "createdOn": "2018-11-27T09:34:03.959Z",
-            "createdBy": 3,
-            "type": "red-flag",
-            "location": "ebeanunwa",
-            "status": "draft",
-            "comment": "This is James reporting corruption"
-        },
-        {
-            "id": 4,
-            "createdOn": "2018-11-27T09:36:45.845Z",
-            "createdBy": 4,
-            "type": "red-flag",
-            "location": "some university in the East",
-            "status": "draft",
-            "comment": "Corruption in school reported"
-        }
-    ]
+  "redflags": [
+    {
+      "id": 1,
+      "createdOn": "2018-11-27T09:31:41.995Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "ebeanunwa",
+      "status": "draft",
+      "comment": "stop corruption today and save lives."
+    },
+    {
+      "id": 2,
+      "createdOn": "2018-11-27T09:32:35.155Z",
+      "createdBy": 2,
+      "type": "red-flag",
+      "location": "ebeanunwa",
+      "status": "draft",
+      "comment": "Some serious corruption going on here"
+    },
+    {
+      "id": 3,
+      "createdOn": "2018-11-27T09:34:03.959Z",
+      "createdBy": 3,
+      "type": "red-flag",
+      "location": "ebeanunwa",
+      "status": "draft",
+      "comment": "This is James reporting corruption"
+    },
+    {
+      "id": 4,
+      "createdOn": "2018-11-27T09:36:45.845Z",
+      "createdBy": 4,
+      "type": "red-flag",
+      "location": "some university in the East",
+      "status": "draft",
+      "comment": "Corruption in school reported"
+    },
+    {
+      "id": 5,
+      "createdOn": "2018-11-28T11:56:30.025Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 6,
+      "createdOn": "2018-11-28T11:56:40.133Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 7,
+      "createdOn": "2018-11-28T11:56:47.788Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 8,
+      "createdOn": "2018-11-28T11:56:57.791Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    }
+  ]
 }

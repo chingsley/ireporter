@@ -1,13 +1,17 @@
 import fs from 'fs';
+import {
+  usersDotJason,
+  redflagsDotJason,
+} from '../storage/config';
 
 class AuthController {
   static async signup(req, res) {
     try {
-      const users = await (JSON.parse(fs.readFileSync('users.json'))).users;
+      const { users } = await JSON.parse(fs.readFileSync(usersDotJason));
       users.push(req.newUser);
       const obj = {};
       obj.users = users;
-      fs.writeFileSync('users.json', JSON.stringify(obj, null, 2), (err) => {
+      fs.writeFileSync(usersDotJason, JSON.stringify(obj, null, 2), (err) => {
         if (err) {
           return res.status(500).json({
             status: 500,

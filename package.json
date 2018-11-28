@@ -7,7 +7,7 @@
     "dev-start": "babel-watch ./server/index.js",
     "start": "npm run build && node ./dist/index.js",
     "build": "babel ./server -d dist",
-    "test": "nyc --reporter=lcov mocha --recursive ./tests/* --require babel-register --exit",
+    "test": "export NODE_ENV=test && nyc --reporter=lcov mocha --recursive ./tests/* --require babel-register --exit",
     "cover": "nyc report --reporter=text-lcov | coveralls",
     "coverage": "nyc mocha --recursive ./tests/* --require babel-register --exit",
     "dev": "nodemon --exec babel-node ./server/index.js",

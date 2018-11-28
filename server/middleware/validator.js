@@ -3,8 +3,12 @@ import moment from 'moment';
 import bcrypt from 'bcrypt';
 import EmailChecker from './emailChecker';
 import Helper from './helper';
+import {
+  usersDotJason,
+  redflagsDotJason,
+} from '../storage/config';
 
-// const users = (JSON.parse(fs.readFileSync('users.json'))).users;
+// const users = (JSON.parse(fs.readFileSync(usersDotJason))).users;
 
 class Validate {
   static async newRedflag(req, res, next) {
@@ -35,7 +39,7 @@ class Validate {
 
 
     // check if there is a user in the system with the specified email
-    const { users } = await JSON.parse(fs.readFileSync('users.json'))
+    const { users } = await JSON.parse(fs.readFileSync(usersDotJason))
     const matchingUser = users.filter(user => user.email === email);
     // filter() returns an array, so matchingUser is an array of one user,
     // therefore matchingUser[0].id is how you access the id of that one user
@@ -97,7 +101,7 @@ class Validate {
       return response(EmailChecker.verifyEmail(email).message);
     }
 
-    const users = await (JSON.parse(fs.readFileSync('users.json'))).users;
+    const { users } = await JSON.parse(fs.readFileSync(usersDotJason));
     for(let i = 0; i < users.length; i += 1) {
       if (users[i].email.trim() === email.trim()) {
         return res.status(403).json({ status: 403, error: `${email}, has been used by another user. Choose a different email`});
@@ -108,7 +112,7 @@ class Validate {
 
     // attach payload to the req object
     req.newUser = {};
-    req.newUser.id = Helper.generateUserId('users.json');
+    req.newUser.id = Helper.generateUserId(usersDotJason);
     req.newUser.firstname = firstname.trim();
     req.newUser.lastname = lastname || null;
     req.newUser.othernames = othernames || null;
