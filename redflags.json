@@ -31,6 +31,50 @@
       "status": "draft",
       "comment": "I am reporting corruption",
       "Image": []
+    },
+    {
+      "id": 4,
+      "createdOn": "2018-11-28T09:08:26.837Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "2.44432, 2.44422",
+      "status": "draft",
+      "comment": "fighting corruption",
+      "Image": [
+        "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
+      ]
+    },
+    {
+      "id": 5,
+      "createdOn": "2018-11-28T10:06:07.530Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "2.44432, 2.44422",
+      "status": "draft",
+      "comment": "fighting corruption",
+      "Image": [
+        "uploads/food3.jpg",
+        "uploads/food2.jpg",
+        "uploads/food1.jpg"
+      ]
+    },
+    {
+      "id": 6,
+      "createdOn": "2018-11-28T10:11:42.908Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "2.44432, 2.44422",
+      "status": "draft",
+      "comment": "fighting corruption",
+      "Image": [
+        "uploads/food3.jpg",
+        "uploads/food2.jpg",
+        "uploads/food1.jpg"
+      ],
+      "Video": [
+        "uploads/ESLint Setup with VSCode_HD.mp4",
+        "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
+      ]
     }
   ]
 }
