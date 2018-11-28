@@ -28,6 +28,9 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/v1/redflags', redflagsRouter);
 app.use('/api/v1/auth', authRouter);
 
+// route to get uploaded images
+app.use('/uploads', express.static('uploads'));
+
 // Handle all unknown routes
 app.all('*', (req, res) => {
   res.status(404).json({

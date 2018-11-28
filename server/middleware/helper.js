@@ -1,5 +1,8 @@
 import fs from 'fs';
-
+import {
+  usersDotJason,
+  redflagsDotJason,
+} from '../storage/config';
 
 class Helper {
   static isValidPassword(password) {
@@ -15,7 +18,7 @@ class Helper {
   }
 
   static generateUserId() {
-    const { users } = JSON.parse(fs.readFileSync('users.json'));
+    const { users } = JSON.parse(fs.readFileSync(usersDotJason));
     const ids = users.map(user => user.id);
     if (users.length < 1) return 1;
     const idSorted = ids.sort((a, b) => a - b);
@@ -25,7 +28,7 @@ class Helper {
   }
 
   static generateRedflagId() {
-    const { redflags } = JSON.parse(fs.readFileSync('redflags.json'));
+    const { redflags } = JSON.parse(fs.readFileSync(redflagsDotJason));
     const ids = redflags.map(redflag => redflag.id);
     if (redflags.length < 1) return 1;
     const idSorted = ids.sort((a, b) => a - b);

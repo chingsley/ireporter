@@ -1,14 +1,18 @@
 import fs from 'fs';
+import {
+  usersDotJason,
+  redflagsDotJason,
+} from '../storage/config';
 // import moment from 'moment';
 
 class RedflagsController {
   static async newRedflag(req, res) {
     try {
-      const { redflags } = await JSON.parse(fs.readFileSync('redflags.json'));
+      const { redflags } = await JSON.parse(fs.readFileSync(redflagsDotJason));
       redflags.push(req.newRedflag);
       const obj = {};
       obj.redflags = redflags;
-      fs.writeFileSync('redflags.json', JSON.stringify(obj, null, 2), (err) => {
+      fs.writeFileSync(redflagsDotJason, JSON.stringify(obj, null, 2), (err) => {
         if (err) {
           return res.status(500).json({
             status: 500,
@@ -16,6 +20,11 @@ class RedflagsController {
           });
         }
       });
+      // req.newRedflag.Image = `http://localhost:${process.env.PORT}/${req.newRedflag.Image}`;
+      // return res.status(201).json({
+      //   status: 201,
+      //   data: req.newRedflag
+      // });
       return res.status(201).json({
         status: 201,
         data: [{

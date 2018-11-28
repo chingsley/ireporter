@@ -59,6 +59,30 @@
       "username": null,
       "registered": "2018-11-27T09:48:22.224Z",
       "isAdmin": true
+    },
+    {
+      "id": 6,
+      "firstname": "mua",
+      "lastname": null,
+      "othernames": null,
+      "email": "mua@gmail.com",
+      "password": "$2b$10$6RaEmWktH5U4BPzFl/JiSesw85AwH4O3fwVc78ACn/PBRKDojGxFy",
+      "phoneNumber": "28028820202",
+      "username": null,
+      "registered": "2018-11-28T11:53:19.322Z",
+      "isAdmin": false
+    },
+    {
+      "id": 7,
+      "firstname": "ichie",
+      "lastname": "chiejina",
+      "othernames": null,
+      "email": "ichie@gmail.com",
+      "password": "$2b$10$gdDZnCVy45w22.zH8LmrUO3l./Wdb9SNY9IcZ4EGYBhZCI0T8WXwq",
+      "phoneNumber": "09099098909",
+      "username": null,
+      "registered": "2018-11-28T14:12:09.974Z",
+      "isAdmin": false
     }
   ]
 }
