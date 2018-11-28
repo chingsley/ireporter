@@ -90,6 +90,61 @@
       "comment": "I am reporting corruption",
       "Image": [],
       "Video": []
+    },
+    {
+      "id": 10,
+      "createdOn": "2018-11-28T13:35:45.328Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 11,
+      "createdOn": "2018-11-28T13:35:55.350Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 12,
+      "createdOn": "2018-11-28T17:07:25.576Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 13,
+      "createdOn": "2018-11-28T17:07:28.240Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 14,
+      "createdOn": "2018-11-28T17:13:20.784Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
     }
   ]
 }

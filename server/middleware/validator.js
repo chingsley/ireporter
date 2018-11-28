@@ -1,6 +1,7 @@
 import fs from 'fs';
 import moment from 'moment';
 import bcrypt from 'bcrypt';
+import isValidCoordinates from 'is-valid-coordinates';
 import EmailChecker from './emailChecker';
 import Helper from './helper';
 import {
@@ -29,6 +30,7 @@ class Validate {
       return (field === undefined || field === '')? keys[index] : null;
     }).filter(field => field !== null).join(', ');
 
+
     const response = message => res.status(400).json({ status: 400, error: message });
 
     if (!email || !type || !location || !comment) return response(`values are required for the following fields: ${missingFields}`);
@@ -36,7 +38,6 @@ class Validate {
     if (type.toLowerCase() !== 'red-flag' && type !== 'intervention') return response(`'type' must be \'red-flag\' or \'intervention\'`);
 
     if (EmailChecker.verifyEmail(email).error) return response(`${EmailChecker.verifyEmail(email).message}`);
-
 
     // check if there is a user in the system with the specified email
     const { users } = await JSON.parse(fs.readFileSync(usersDotJason))
@@ -46,6 +47,14 @@ class Validate {
     // console.log(matchingUser);
     if (matchingUser.length < 1) return res.status(401).json({ status: 401, error: `the email provided does not match any user in the system`});
     
+    // validate the location field
+    const coords = location.split(',');
+    if (coords.length !== 2) return response(`Invalid format for location coordinates. Valid format is: Latitude, Longitude; [E.g -8.945406, 38.575078 ]`);
+    const lat = Number(coords[0]);
+    const long = Number(coords[1]);
+    if (!isValidCoordinates(lat, long)) return response(`Invalid location coordinates. Example of a valid coordinate is: -8.945406, 38.575078 (representing Latitude and Longitude respectively)`);
+    // console.log('lat: ', lat, ' isNaN ?: ', Number.isNaN(Number(lat)));
+
     let imageArr = [];
     let videoArr = [];
     if(req.files) {

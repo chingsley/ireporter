@@ -122,6 +122,61 @@
       "Video": [
         "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
       ]
+    },
+    {
+      "id": 10,
+      "createdOn": "2018-11-28T16:48:47.427Z",
+      "createdBy": 6,
+      "type": "red-flag",
+      "location": "-4.244432, 2.44422",
+      "status": "draft",
+      "comment": "comment",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 11,
+      "createdOn": "2018-11-28T16:49:51.161Z",
+      "createdBy": 6,
+      "type": "red-flag",
+      "location": "-4.244432,2.44422",
+      "status": "draft",
+      "comment": "comment",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 12,
+      "createdOn": "2018-11-28T16:50:00.418Z",
+      "createdBy": 6,
+      "type": "red-flag",
+      "location": "-4.244432,      2.44422",
+      "status": "draft",
+      "comment": "comment",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 13,
+      "createdOn": "2018-11-28T16:57:21.155Z",
+      "createdBy": 6,
+      "type": "red-flag",
+      "location": "-4.244432,      2.44",
+      "status": "draft",
+      "comment": "comment",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 14,
+      "createdOn": "2018-11-28T16:57:29.830Z",
+      "createdBy": 6,
+      "type": "red-flag",
+      "location": "-4.244432,      2.449909909099090",
+      "status": "draft",
+      "comment": "comment",
+      "Image": [],
+      "Video": []
     }
   ]
 }
