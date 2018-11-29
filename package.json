@@ -13,7 +13,7 @@
     "dev": "nodemon --exec babel-node ./server/index.js",
     "lint test": "eslint tests --fix",
     "lint-server": "eslint server",
-    "lint-redflagsController--fix": "eslint server/controllers/redflagsController.js --fix",
+    "lint-server--fix": "eslint server --fix",
     "lint-test": "eslint tests --fix"
   },
   "author": "Eneja Kingsley C",
