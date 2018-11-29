@@ -136,8 +136,10 @@ class Validate {
       error: `you have no authorization to edit that redfag`
     });
     
+    req.allRedflags = redflags;
     req.redflagToEdit = redflagToEdit[0];
     req.location = location;
+    req.redflagOwner = user[0];
     return next();
   
   }// END editRedflagLocation

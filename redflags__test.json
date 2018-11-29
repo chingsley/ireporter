@@ -5,7 +5,7 @@
       "createdOn": "2018-11-27T09:31:41.995Z",
       "createdBy": 1,
       "type": "red-flag",
-      "location": "ebeanunwa",
+      "location": "-8.88888, 0.88888",
       "status": "draft",
       "comment": "stop corruption today and save lives."
     },
@@ -347,6 +347,72 @@
     {
       "id": 33,
       "createdOn": "2018-11-28T22:06:38.941Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 34,
+      "createdOn": "2018-11-29T10:06:11.111Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 35,
+      "createdOn": "2018-11-29T10:06:54.887Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 36,
+      "createdOn": "2018-11-29T10:07:58.735Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 37,
+      "createdOn": "2018-11-29T10:08:52.598Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 38,
+      "createdOn": "2018-11-29T10:11:06.612Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "9.388939, 0.848494",
+      "status": "draft",
+      "comment": "I am reporting corruption",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 39,
+      "createdOn": "2018-11-29T10:14:25.033Z",
       "createdBy": 1,
       "type": "red-flag",
       "location": "9.388939, 0.848494",
