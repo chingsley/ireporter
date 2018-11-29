@@ -382,6 +382,28 @@ describe('PATCH /redflags/:id/location', () => {
 /**-------------- PATCH /redflags/:id/comment -------------------*/
 describe('PATCH /redflags/:id/comment', () => {
 
+  it('should successfully update the comment of a redflag record', (done) => {
+    chai.request(app)
+      .patch('/api/v1/redflags/1/comment') // 'a' is not a valid redflag id
+      .send({
+        email: 'eneja.kc@gmail.com',
+        comment: 'This is eneja.kc fighting corruption',
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(200);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'data']);
+        res.body.status.should.eql(200);
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.be.an('object').which.has.all.keys(['id', 'message']);
+        res.body.data[0].id.should.eql(1);
+        done();
+      });
+  });
+
   it('should return a 400 error if an invalid id is provided', (done) => {
     chai.request(app)
       .patch('/api/v1/redflags/a/comment') // 'a' is not a valid redflag id
