@@ -17,6 +17,11 @@ class Helper {
     return Array.isArray(value);
   }
 
+  static isValidComment(comment) {
+    // example of a valid comment: "I was cheated" : 3 words
+    return (comment.split(' ').length > 2)
+  }
+
   static generateUserId() {
     const { users } = JSON.parse(fs.readFileSync(usersDotJason));
     const ids = users.map(user => user.id);
@@ -36,6 +41,12 @@ class Helper {
     const newId = 1 + idSorted[indexOfLastItem];
     return newId;
   }
+
+  // static async isRegisteredUser(email) {
+  //   const { users } = JSON.parse(fs.readFileSync(usersDotJason));
+  //   const user = users.filter(user => user.email.trim() === email.trim());
+  //   return (user.length > 1) ? true : false;
+  // }
 
 }// END HelperValidator
 
