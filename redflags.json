@@ -7,7 +7,7 @@
       "type": "red-flag",
       "location": "2.22222, 9.999999",
       "status": "draft",
-      "comment": "fighting corruption",
+      "comment": "eneja.kc spearheading the fight against corruption",
       "Image": [
         "uploads/Screenshot from 2018-11-16 21-36-42.png"
       ]
@@ -19,7 +19,7 @@
       "type": "red-flag",
       "location": "ebeanunwa",
       "status": "draft",
-      "comment": "This is John reporting corruption"
+      "comment": "This is a new comment provided by John"
     },
     {
       "id": 3,
@@ -28,7 +28,7 @@
       "type": "red-flag",
       "location": "ebeanunwa",
       "status": "draft",
-      "comment": "This is James reporting corruption"
+      "comment": "Thi is James again, reporting corruption"
     }
   ]
 }

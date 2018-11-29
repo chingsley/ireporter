@@ -7,14 +7,14 @@
       "type": "red-flag",
       "location": "-8.88888, 0.88888",
       "status": "draft",
-      "comment": "This is eneja.kc (Admin) reporting corruption"
+      "comment": "This is eneja.kc fighting corruption"
     },
     {
       "id": 2,
       "createdOn": "2018-11-27T09:32:35.155Z",
       "createdBy": 2,
       "type": "red-flag",
-      "location": "ebeanunwa",
+      "location": "2.83928, -0.28928",
       "status": "draft",
       "comment": "This is John reporting corruption"
     },
@@ -23,13 +23,13 @@
       "createdOn": "2018-11-27T09:34:03.959Z",
       "createdBy": 3,
       "type": "red-flag",
-      "location": "ebeanunwa",
+      "location": "29.28292, 28.28292",
       "status": "draft",
       "comment": "This is James reporting corruption"
     },
     {
       "id": 4,
-      "createdOn": "2018-11-29T17:38:09.315Z",
+      "createdOn": "2018-11-29T19:04:16.361Z",
       "createdBy": 1,
       "type": "red-flag",
       "location": "9.388939, 0.848494",

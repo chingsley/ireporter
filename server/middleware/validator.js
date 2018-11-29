@@ -140,7 +140,7 @@ class Validate {
     
     req.allRedflags = redflags;
     req.redflagToEdit = redflagToEdit[0];
-    req.location = location;
+    req.newLocation = location;
     req.redflagOwner = user[0];
 
     return next();
@@ -197,6 +197,11 @@ class Validate {
     // validate the comment
     if (!Helper.isValidComment(comment.trim())) return response(`comment must be a minimum  of 3 words`);
 
+    // attach important payloads to the req object before moving on to the next handler
+    req.allRedflags = redflags;
+    req.redflagToEdit = redflagToEdit[0];
+    req.newComment = comment.trim();
+    req.redflagOwner = user[0];
     
 
     return next();
