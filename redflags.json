@@ -14,169 +14,21 @@
     },
     {
       "id": 2,
-      "createdOn": "2018-11-27T19:42:56.834Z",
-      "createdBy": 1,
+      "createdOn": "2018-11-27T09:32:35.155Z",
+      "createdBy": 2,
       "type": "red-flag",
-      "location": "9.388939, 0.848494",
+      "location": "ebeanunwa",
       "status": "draft",
-      "comment": "I am reporting corruption",
-      "Image": []
+      "comment": "This is John reporting corruption"
     },
     {
       "id": 3,
-      "createdOn": "2018-11-27T19:43:04.882Z",
-      "createdBy": 1,
+      "createdOn": "2018-11-27T09:34:03.959Z",
+      "createdBy": 3,
       "type": "red-flag",
-      "location": "9.388939, 0.848494",
+      "location": "ebeanunwa",
       "status": "draft",
-      "comment": "I am reporting corruption",
-      "Image": []
-    },
-    {
-      "id": 4,
-      "createdOn": "2018-11-28T09:08:26.837Z",
-      "createdBy": 1,
-      "type": "red-flag",
-      "location": "2.44432, 2.44422",
-      "status": "draft",
-      "comment": "fighting corruption",
-      "Image": [
-        "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
-      ]
-    },
-    {
-      "id": 5,
-      "createdOn": "2018-11-28T10:06:07.530Z",
-      "createdBy": 1,
-      "type": "red-flag",
-      "location": "2.44432, 2.44422",
-      "status": "draft",
-      "comment": "fighting corruption",
-      "Image": [
-        "uploads/food3.jpg",
-        "uploads/food2.jpg",
-        "uploads/food1.jpg"
-      ]
-    },
-    {
-      "id": 6,
-      "createdOn": "2018-11-28T10:11:42.908Z",
-      "createdBy": 1,
-      "type": "red-flag",
-      "location": "2.44432, 2.44422",
-      "status": "draft",
-      "comment": "fighting corruption",
-      "Image": [
-        "uploads/food3.jpg",
-        "uploads/food2.jpg",
-        "uploads/food1.jpg"
-      ],
-      "Video": [
-        "uploads/ESLint Setup with VSCode_HD.mp4",
-        "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
-      ]
-    },
-    {
-      "id": 7,
-      "createdOn": "2018-11-28T10:16:13.110Z",
-      "createdBy": 1,
-      "type": "red-flag",
-      "location": "9.388939, 0.848494",
-      "status": "draft",
-      "comment": "I am reporting corruption",
-      "Image": [],
-      "Video": []
-    },
-    {
-      "id": 8,
-      "createdOn": "2018-11-28T11:47:16.390Z",
-      "createdBy": 1,
-      "type": "red-flag",
-      "location": "2.44432, 2.44422",
-      "status": "draft",
-      "comment": "fighting corruption",
-      "Image": [
-        "uploads/food5.jpg",
-        "uploads/food4.jpg",
-        "uploads/food3.jpg",
-        "uploads/food2.jpg",
-        "uploads/food1.jpg"
-      ],
-      "Video": [
-        "uploads/ESLint Setup with VSCode_HD.mp4",
-        "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
-      ]
-    },
-    {
-      "id": 9,
-      "createdOn": "2018-11-28T11:54:35.904Z",
-      "createdBy": 6,
-      "type": "red-flag",
-      "location": "2.22222, 2.222222",
-      "status": "draft",
-      "comment": "fighting corruption",
-      "Image": [
-        "uploads/food3.jpg",
-        "uploads/food2.jpg"
-      ],
-      "Video": [
-        "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
-      ]
-    },
-    {
-      "id": 10,
-      "createdOn": "2018-11-28T16:48:47.427Z",
-      "createdBy": 6,
-      "type": "red-flag",
-      "location": "-4.244432, 2.44422",
-      "status": "draft",
-      "comment": "comment",
-      "Image": [],
-      "Video": []
-    },
-    {
-      "id": 11,
-      "createdOn": "2018-11-28T16:49:51.161Z",
-      "createdBy": 6,
-      "type": "red-flag",
-      "location": "-4.244432,2.44422",
-      "status": "draft",
-      "comment": "comment",
-      "Image": [],
-      "Video": []
-    },
-    {
-      "id": 12,
-      "createdOn": "2018-11-28T16:50:00.418Z",
-      "createdBy": 6,
-      "type": "red-flag",
-      "location": "-4.244432,      2.44422",
-      "status": "draft",
-      "comment": "comment",
-      "Image": [],
-      "Video": []
-    },
-    {
-      "id": 13,
-      "createdOn": "2018-11-28T16:57:21.155Z",
-      "createdBy": 6,
-      "type": "red-flag",
-      "location": "-4.244432,      2.44",
-      "status": "draft",
-      "comment": "comment",
-      "Image": [],
-      "Video": []
-    },
-    {
-      "id": 14,
-      "createdOn": "2018-11-28T16:57:29.830Z",
-      "createdBy": 6,
-      "type": "red-flag",
-      "location": "-4.244432,      2.449909909099090",
-      "status": "draft",
-      "comment": "comment",
-      "Image": [],
-      "Video": []
+      "comment": "This is James reporting corruption"
     }
   ]
 }

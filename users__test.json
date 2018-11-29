@@ -35,30 +35,6 @@
             "username": "chingsley",
             "registered": "2018-11-27T03:23:25.905Z",
             "isAdmin": false
-        },
-        {
-            "id": 4,
-            "firstname": "john",
-            "lastname": "Eneja",
-            "othernames": "chinonso",
-            "email": "johnsnow@gmail.com",
-            "password": "$2b$10$g1.6vcUI/iuHbLbiyUWjJOWrsy8GVH7FZccJRO9Yr20A8cvlby6OC",
-            "phoneNumber": "08063550695",
-            "username": "chingsley",
-            "registered": "2018-11-27T09:04:36.947Z",
-            "isAdmin": false
-        },
-        {
-            "id": 5,
-            "firstname": "chinonso",
-            "lastname": null,
-            "othernames": null,
-            "email": "chinonso@gmail.com",
-            "password": "$2b$10$CFfRLKPZw.veVqb4kwGBz.Xwuqbl7fNVOEVaAAaEUu8l685Cg05X6",
-            "phoneNumber": "0909900989",
-            "username": null,
-            "registered": "2018-11-27T09:48:22.224Z",
-            "isAdmin": true
         }
     ]
 }

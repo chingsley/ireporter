@@ -78,6 +78,15 @@ class RedflagsController {
       }],
     });
   } // END editRedflagLocation
+
+
+  static async editRedflagComment(req, res) {
+    res.send({
+      message: 'we are in testing mode'
+    });
+  }
+
+
 }// END class RedflagsController
 
 
