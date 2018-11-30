@@ -207,6 +207,15 @@ class Validate {
   } // END editRedflagComment
 
 
+  static async getAllRedflags(req, res, next) {
+
+    const { redflags } = await JSON.parse(fs.readFileSync(redflagsDotJason));
+    req.redflags = redflags;
+    
+    return next();
+  }// END getAllRedflags
+
+
   static async getOneRedflag(req, res, next) {
 
     const response = message => res.status(400).json({ status: 400, error: message });

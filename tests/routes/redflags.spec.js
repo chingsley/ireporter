@@ -750,3 +750,27 @@ describe('DELETE /redflags/:id', () => {
 
 });
 /**---------------------(END) DELETE /redflags/:id -------------- */
+
+
+
+
+/**--------------------- GET /redflag -------------- */
+describe('GET /redflags', () => {
+  it('should let a user successfuly get all red-flag records', (done) => {
+    chai.request(app)
+      .get('/api/v1/redflags')
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(200);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'data']);
+        res.body.data.should.be.an('array');
+        // res.body.data[0].should.be.an('object').which.has.all.keys(['id', 'location', 'createdBy', 'createdOn', 'Comment', 'type', 'Image', 'Video', 'status']);
+        done();
+      });
+  });
+});
+
+/**--------------------- (END) GET /redflag -------------- */
