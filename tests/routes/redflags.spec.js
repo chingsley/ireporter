@@ -697,7 +697,56 @@ describe('DELETE /redflags/:id', () => {
       });
   });
 
+  it('should let a registered user create an order to be deleted by the next test', (done) => {
+    chai.request(app)
+      .post('/api/v1/redflags')
+      .send({
+        email: 'eneja.kc@gmail.com',
+        type: 'red-flag',
+        location: '9.388939, 0.848494',
+        comment: 'This order is created to be used to test the successful deletion of a route by the next test',
+        "Image": [
+          "uploads/food4.jpg",
+          "uploads/food3.jpg",
+          "uploads/food2.jpg",
+          "uploads/food1.jpg"
+        ],
+        "Video": [
+          "uploads/ESLint Setup with VSCode_HD.mp4",
+          "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
+        ]
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(201);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'data']);
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.be.an('object').which.has.all.keys(['id', 'message']);
+        done();
+      });
+  });
+
+  it('should let a registered user create an order to be deleted by the next test', (done) => {
+    chai.request(app)
+      .delete('/api/v1/redflags/5') // the last redflag after the recent post test above will have an id of 5
+      .send({
+        email: 'eneja.kc@gmail.com', // the user who created the red-flag record
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(200);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'data']);
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.be.an('object').which.has.all.keys(['id', 'message']);
+        done();
+      });
+  });
 
 });
-
 /**---------------------(END) DELETE /redflags/:id -------------- */

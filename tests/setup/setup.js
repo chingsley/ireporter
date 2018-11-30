@@ -14,7 +14,7 @@ const clearRecords = async () => {
             });
         }
     });
-    console.log(redflags);
+    // console.log(redflags);
 }
  
 
