@@ -530,3 +530,74 @@ describe('PATCH /redflags/:id/comment', () => {
       });
   });
 });
+/**-------------------- END PATCH /redflags/:id/comment -------------------------- */
+
+
+
+
+
+/**--------------------- GET /redflags/:id -------------- */
+describe('GET /redflags/:id', () => {
+
+    it(`should return a 400 error if an invalid red-flag id is provided as parameter`, (done) => {
+      chai.request(app)
+      .get('/api/v1/redflags/a') // 'a' is an invalid red-flag id
+      .end((err, res) => {
+        if(err) {
+          done(err);
+        }
+        res.status.should.eql(400);
+        res.body.status.should.eql(400);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+    });
+
+    it(`should return a 400 error if negative id is provided`, (done) => {
+      chai.request(app)
+      .get('/api/v1/redflags/-1')
+      .end((err, res) => {
+        if(err) {
+          done(err);
+        }
+        res.status.should.eql(400);
+        res.body.status.should.eql(400);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+    });
+
+    it(`should return an empty object if the requested red-flag does not exist`, (done) => {
+      chai.request(app)
+      .get('/api/v1/redflags/10000') // no red-flag with id 10000
+      .end((err, res) => {
+        if(err) {
+          done(err);
+        }
+        res.status.should.eql(200);
+        res.body.status.should.eql(200);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'data']);
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.be.an('object'); // how can I test for an empty obj in mocha ?
+        done();
+      });
+    });
+
+    it(`should successfully return the requested red-flag`, (done) => {
+      chai.request(app)
+      .get('/api/v1/redflags/1') // no red-flag with id 10000
+      .end((err, res) => {
+        if(err) {
+          done(err);
+        }
+        res.status.should.eql(200);
+        res.body.status.should.eql(200);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'data']);
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.be.an('object');
+        done();
+      });
+    });
+
+});
+/**----------------------- END GET/redflags/:id -----------*/

@@ -24,7 +24,6 @@ class RedflagsController {
       });
     }
 
-
     // req.newRedflag.Image = `http://localhost:${process.env.PORT}/${req.newRedflag.Image}`;
     // return res.status(201).json({
     //   status: 201,
@@ -122,6 +121,13 @@ class RedflagsController {
     });
   }// END editRedflagComment
 
+  static async getOneRedflag(req, res) {
+    const { requestedRedflag } = req;
+    res.status(200).json({
+      status: 200,
+      data: [ requestedRedflag ]
+    });
+  }// END getOneRedflag
 
 }// END class RedflagsController
 

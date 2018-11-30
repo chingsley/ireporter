@@ -203,9 +203,26 @@ class Validate {
     req.newComment = comment.trim();
     req.redflagOwner = user[0];
     
-
     return next();
   } // END editRedflagComment
+
+
+  static async getOneRedflag(req, res, next) {
+
+    const response = message => res.status(400).json({ status: 400, error: message });
+    
+    if (!Number.isInteger(Number(req.params.id))) return response(`'${req.params.id}' is not a valid redflag id. Red-flags have only positive integer id's`);
+    if(Number(req.params.id) < 0) return response(`Red-flags have only positive integer id's`);
+
+    const { redflags } = await JSON.parse(fs.readFileSync(redflagsDotJason));
+    const requestedRedflag = redflags.filter(redflag => Number(redflag.id) === Number(req.params.id));
+    // recall: filter returns an array. thererfore, the required redflag = requestedRedflag[0], which is null if the array is empty
+
+    const emptyObj = {};
+    req.requestedRedflag = requestedRedflag[0] ? requestedRedflag[0] : emptyObj;
+    
+    return next();
+  }// END getOneRedflag
   
 
 
