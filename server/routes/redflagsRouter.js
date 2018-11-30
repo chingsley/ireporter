@@ -30,17 +30,13 @@ const upload = multer({
 });
 
 const fileUpload = upload.fields([{name: 'images', maxCount: 8}, {name: 'videos', maxCount: 8}]);
+
 // router.post('/', upload.single('Image'), Validator.newRedflag, RedflagsController.newRedflag);
 router.post('/', fileUpload, Validator.newRedflag, RedflagsController.newRedflag);
 router.patch('/:id/location', upload.none(), Validator.editRedflagLocation, RedflagsController.editRedflagLocation);
 router.patch('/:id/comment', upload.none(), Validator.editRedflagComment, RedflagsController.editRedflagComment);
-router.get('/:id', upload.none(), Validator.getOneRedflag, RedflagsController.getOneRedflag);
+router.get('/:id', Validator.getOneRedflag, RedflagsController.getOneRedflag);
+router.delete('/:id', upload.none(), Validator.deleteRedflag, RedflagsController.deleteRedflag);
 
-
-
-/**
- * add more routes...
- * get, patch, delete, ...
- */
 
 export default router;

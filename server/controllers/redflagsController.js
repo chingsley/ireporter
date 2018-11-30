@@ -129,6 +129,45 @@ class RedflagsController {
     });
   }// END getOneRedflag
 
+  static async deleteRedflag(req, res) {
+    const { allRedflags, redflagToDelete, redflagOwner } = req;
+
+    const ownerEmail = redflagOwner.email; //for sending email notification to owner
+    const ownerPhoneNumber = redflagOwner.phoneNumber; // for sending sms notification to owner
+
+    const indexOfRedflagToDelete = allRedflags.indexOf(redflagToDelete);
+    allRedflags.splice(indexOfRedflagToDelete, 1);
+
+    try {
+      const obj = {};
+      obj.redflags = allRedflags;
+      fs.writeFileSync(redflagsDotJason, JSON.stringify(obj, null, 2), (err) => {
+        if (err) {
+          return res.status(500).json({
+            status: 500,
+            error: 'there was an error while trying to save the redflag',
+          });
+        }
+      });
+    } catch (error) {
+      // console.log('error from redflagsController.js, examine the code in static async editRedflagLocation(req, res)\n', error);
+      return res.status(500).json({
+        status: 500,
+        error: 'internal server error',
+      });
+    }
+    return res.status(200).json({
+      status: 200,
+      data: [{
+        id: redflagToDelete.id,
+        message: 'red-flag record has been deleted',
+      }],
+    });
+
+
+
+  }// END deleteRedflag
+
 }// END class RedflagsController
 
 
