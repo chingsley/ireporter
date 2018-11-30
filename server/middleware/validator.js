@@ -167,7 +167,7 @@ class Validate {
     if (!email || !comment) return response(`values are required for the following feild(s): ${missingFields}`);
 
     // ensure that email is the right format
-    if (EmailChecker.verifyEmail(email).error) return response(`${EmailChecker.verifyEmail(email).message}`);
+    if (EmailChecker.verifyEmail(email.trim()).error) return response(`${EmailChecker.verifyEmail(email.trim()).message}`);
 
     // ensure the user is registered
     const { users } = await JSON.parse(fs.readFileSync(usersDotJason));
@@ -223,6 +223,49 @@ class Validate {
     
     return next();
   }// END getOneRedflag
+  
+
+
+
+  static async deleteRedflag(req, res, next) {
+    const { email } = req.body;
+    const response = message => res.status(400).json({ status: 400, error: message });
+    
+    if(!email || email.trim() === '') return response('you need to provide an email to access this route');
+    if (EmailChecker.verifyEmail(email.trim()).error) return response(`${EmailChecker.verifyEmail(email.trim()).message}`);
+    if (!Number.isInteger(Number(req.params.id))) return response(`'${req.params.id}' is not a valid redflag id. Red-flags have only positive integer id's`);
+    if(Number(req.params.id) < 0) return response(`Red-flags have only positive integer id's`);
+    
+    const { users } = await JSON.parse(fs.readFileSync(usersDotJason));
+    const user = users.filter(user => user.email.trim() === email.trim());
+    if (user.length < 1) return res.status(401).json({
+      status: 401,
+      error: (`${email} is not registered. You need to signup to access this route`)
+    });
+
+    const userId = user[0].id;
+
+    const { redflags } = await JSON.parse(fs.readFileSync(redflagsDotJason));
+    const redflagToDelete = redflags.filter(redflag => Number(redflag.id) === Number(req.params.id));
+
+    if (redflagToDelete.length < 1) return res.status(404).json({
+      status: 404,
+      error: `no redflag matches the specified id`
+    });
+
+    if (redflagToDelete[0].createdBy !== userId) return res.status(401).json({
+      status: 401,
+      error: `you have no authorization to edit that redfag`
+    });
+
+    
+    // attach important payloads to the req object before moving on to the next handler
+    req.allRedflags = redflags;
+    req.redflagToDelete = redflagToDelete[0];
+    req.redflagOwner = user[0];
+    
+    return next();
+  }// END deleteRedflag
   
 
 

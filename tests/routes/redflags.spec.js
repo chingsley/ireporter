@@ -600,4 +600,153 @@ describe('GET /redflags/:id', () => {
     });
 
 });
-/**----------------------- END GET/redflags/:id -----------*/
+/**----------------------- (END) GET/redflags/:id -----------*/
+
+
+
+/**--------------------- DELETE /redflags/:id -------------- */
+describe('DELETE /redflags/:id', () => {
+
+  it(`should return a 400 error if email is not provided`, (done) => {
+    chai.request(app)
+      .delete('/api/v1/redflags/1') 
+      .send({}) // email not provided
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+        res.status.should.eql(400);
+        res.body.status.should.eql(400);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it(`should return a 400 error if provided email is wrongley formatted`, (done) => {
+    chai.request(app)
+      .delete('/api/v1/redflags/1') 
+      .send({email: "wrong-email-format-at-yohoo-***dotcom"})
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+        res.status.should.eql(400);
+        res.body.status.should.eql(400);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it(`should return a 401 error if the provided email is not registered`, (done) => {
+    chai.request(app)
+      .delete('/api/v1/redflags/1') 
+      .send({ email: "unregisteredMail@gmail.com" })
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+        res.status.should.eql(401);
+        res.body.status.should.eql(401);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it(`should return a 401 error if the redflag exists, but does not belong to the user trying to delete it`, (done) => {
+    chai.request(app)
+      .delete('/api/v1/redflags/1') 
+      .send({ email: "john@gmail.com" }) // john trying to delete a red-flag belonging to eneja.kc
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+        res.status.should.eql(401);
+        res.body.status.should.eql(401);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it(`should return a 400 error if an invalid red-flag id is provided as parameter`, (done) => {
+    chai.request(app)
+      .delete('/api/v1/redflags/a') // 'a' is an invalid red-flag id
+      .send({ email: "eneja.kc@gmail.com" })
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+        res.status.should.eql(400);
+        res.body.status.should.eql(400);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it(`should return 404 if there's no redflag in the system with the specified id`, (done) => {
+    chai.request(app)
+      .delete('/api/v1/redflags/1000') 
+      .send({ email: "eneja.kc@gmail.com" })
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        }
+        res.status.should.eql(404);
+        res.body.status.should.eql(404);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
+        done();
+      });
+  });
+
+  it('should let a registered user create an order to be deleted by the next test', (done) => {
+    chai.request(app)
+      .post('/api/v1/redflags')
+      .send({
+        email: 'eneja.kc@gmail.com',
+        type: 'red-flag',
+        location: '9.388939, 0.848494',
+        comment: 'This order is created to be used to test the successful deletion of a route by the next test',
+        "Image": [
+          "uploads/food4.jpg",
+          "uploads/food3.jpg",
+          "uploads/food2.jpg",
+          "uploads/food1.jpg"
+        ],
+        "Video": [
+          "uploads/ESLint Setup with VSCode_HD.mp4",
+          "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
+        ]
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(201);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'data']);
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.be.an('object').which.has.all.keys(['id', 'message']);
+        done();
+      });
+  });
+
+  it('should let a registered user create an order to be deleted by the next test', (done) => {
+    chai.request(app)
+      .delete('/api/v1/redflags/5') // the last redflag after the recent post test above will have an id of 5
+      .send({
+        email: 'eneja.kc@gmail.com', // the user who created the red-flag record
+      })
+      .end((err, res) => {
+        if (err) {
+          //   console.log(err);
+          done(err);
+        }
+        res.status.should.eql(200);
+        res.body.should.be.an('object').which.has.all.keys(['status', 'data']);
+        res.body.data.should.be.an('array');
+        res.body.data[0].should.be.an('object').which.has.all.keys(['id', 'message']);
+        done();
+      });
+  });
+
+});
+/**---------------------(END) DELETE /redflags/:id -------------- */
