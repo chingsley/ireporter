@@ -121,6 +121,16 @@ class RedflagsController {
     });
   }// END editRedflagComment
 
+  static async getAllRedflags(req, res) {
+
+    const { redflags } = req;
+
+    return res.status(200).json({
+      status: 200,
+      data: redflags
+    });
+  }// END getAllRedflags
+
   static async getOneRedflag(req, res) {
     const { requestedRedflag } = req;
     res.status(200).json({
@@ -128,6 +138,8 @@ class RedflagsController {
       data: [ requestedRedflag ]
     });
   }// END getOneRedflag
+
+
 
   static async deleteRedflag(req, res) {
     const { allRedflags, redflagToDelete, redflagOwner } = req;
