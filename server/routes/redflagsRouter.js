@@ -34,6 +34,7 @@ const fileUpload = upload.fields([{name: 'images', maxCount: 8}, {name: 'videos'
 router.post('/', fileUpload, Validator.newRedflag, RedflagsController.newRedflag);
 router.patch('/:id/location', upload.none(), Validator.editRedflagLocation, RedflagsController.editRedflagLocation);
 router.patch('/:id/comment', upload.none(), Validator.editRedflagComment, RedflagsController.editRedflagComment);
+router.get('/:id', upload.none(), Validator.getOneRedflag, RedflagsController.getOneRedflag);
 
 
 
