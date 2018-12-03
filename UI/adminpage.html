@@ -22,9 +22,9 @@
                 <nav class="navigation">
                     <ul class="nav-ul">
                         <!-- <li class="li-outer animated-link"><a href="index.html" class="links">Home</a></li> -->
-                        <li class="li-outer animated-link active-link"><a href="login.html" class="links">Login</a></li>
-                        <li class="li-outer animated-link"><a href="signup.html" class="links">Register</a></li>
-                        <li class="li-outer animated-link"><a href="#" class="links">My profile</a></li>
+                        <!-- <li class="li-outer animated-link"><a href="login.html" class="links">Login</a></li> -->
+                        <li class="li-outer animated-link"><a href="index.html" class="links">sign out</a></li>
+                        <li class="li-outer animated-link active-link"><a href="#" class="links">Admin</a></li>
                     </ul>
                 </nav>
             </div>
@@ -49,9 +49,13 @@
     <section class="section-admin">
         <div class="section-admin-wrapper-div">
             <div class="flex-box-main">
-                <div class="row-1-of-3">row-1-of-3</div>
-                <div class="row-1-of-3">row-1-of-3</div>
-                <div class="row-1-of-3">
+                <!-- <div class="row-1-of-3">row-1-of-3</div> -->
+                <div class="row-1-of-3" id="div-table-title">
+                    <h2 class="heading-secondary-dark" id="table-title">
+                        Manage Records
+                    </h2>
+                </div>
+                <div class="row-1-of-3" id="table-wrapper">
                     <table class="table-admin" id="table-admin">
                         <tr class="row">
                             <td class="cell">ID</td>
@@ -65,40 +69,97 @@
                         </tr>
                         <tr class="row">
                             <td class="cell id">01</td>
-                            <td class="cell createdon">row-2 cell-1</td>
-                            <td class="cell createdby">row-2 cell-1</td>
-                            <td class="cell type">row-2 cell-1</td>
-                            <td class="cell location">row-2 cell-1</td>
+                            <td class="cell createdon">02 - 11 - 2018</td>
+                            <td class="cell createdby">eneja.kc@gmail.com</td>
+                            <td class="cell type">red-flag</td>
+                            <td class="cell location">3.2342, 17.8392</td>
                             <td class="cell comment-and-media"> <a href="#popup" class="comment-and-media-link">...</a> </td>
                             <td class="cell status">
                                 <select name="status" id="status">
                                     <option value="draft">draft</option>
-                                    <option value="under investigation">under investigation</option>
+                                    <option value="under investigation">U.I</option>
                                     <option value="resolved">resolved</option>
                                     <option value="rejected">rejected</option>
                                 </select>
                             </td>
                             <td class="cell delete">
-                                <input type="button" value="&times;" onclick="deleteTableRow()">
+                                <input class="btn-delete-record" type="button" value="&times;" onclick="deleteTableRow()">
                             </td>
                         </tr>
                         <tr class="row">
                             <td class="cell id">02</td>
-                            <td class="cell createdon">row-2 cell-1</td>
-                            <td class="cell createdby">row-2 cell-1</td>
-                            <td class="cell type">row-2 cell-1</td>
-                            <td class="cell location">row-2 cell-1</td>
-                            <td class="cell comment-and-media"> <a href="#popup" class="comment-and-media-link">...</a> </td>
+                            <td class="cell createdon">22 - 09 - 2018</td>
+                            <td class="cell createdby">john@yahoo.com</td>
+                            <td class="cell type">intervention</td>
+                            <td class="cell location">-2.0224, 45.9820</td>
+                            <td class="cell comment-and-media"> <a href="#popup-2" class="comment-and-media-link">...</a> </td>
                             <td class="cell status">
                                 <select name="status" id="status">
                                     <option value="draft">draft</option>
-                                    <option value="under investigation">under investigation</option>
+                                    <option value="under investigation">U.I</option>
                                     <option value="resolved">resolved</option>
                                     <option value="rejected">rejected</option>
                                 </select>
                             </td>
                             <td class="cell delete">
-                                <input type="button" value="&times;" onclick="deleteTableRow()">
+                                <input class="btn-delete-record" type="button" value="&times;" onclick="deleteTableRow()">
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <td class="cell id">03</td>
+                            <td class="cell createdon">22 - 09 - 2018</td>
+                            <td class="cell createdby">james@gmail.com</td>
+                            <td class="cell type">intervention</td>
+                            <td class="cell location">-2.0224, 45.9820</td>
+                            <td class="cell comment-and-media"> <a href="#popup" class="comment-and-media-link">...</a> </td>
+                            <td class="cell status">
+                                <select name="status" id="status">
+                                    <option value="draft">draft</option>
+                                    <option value="under investigation">U.I</option>
+                                    <option value="resolved">resolved</option>
+                                    <option value="rejected">rejected</option>
+                                </select>
+                            </td>
+                            <td class="cell delete">
+                                <input class="btn-delete-record" type="button" value="&times;" onclick="deleteTableRow()">
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <td class="cell id">04</td>
+                            <td class="cell createdon">22 - 09 - 2018</td>
+                            <td class="cell createdby">greyjoy@yahoo.com</td>
+                            <td class="cell type">intervention</td>
+                            <td class="cell location">-2.0224, 45.9820</td>
+                            <td class="cell comment-and-media"> <a href="#popup" class="comment-and-media-link">...</a> </td>
+                            <td class="cell status">
+                                <select name="status" id="status">
+                                    <option value="draft">draft</option>
+                                    <option value="under investigation">U.I</option>
+                                    <option value="resolved">resolved</option>
+                                    <option value="rejected">rejected</option>
+                                </select>
+                            </td>
+                            <td class="cell delete">
+                                <input class="btn-delete-record" type="button" value="&times;" onclick="deleteTableRow()">
+                            </td>
+                        </tr>
+                        <tr class="row">
+                            <td class="cell id">05</td>
+                            <td class="cell createdon">22 - 09 - 2018</td>
+                            <td class="cell createdby">ironborne@yahoo.com</td>
+                            <td class="cell type">intervention</td>
+                            <td class="cell location">-2.0224, 45.9820</td>
+                            <td class="cell comment-and-media"> <a href="#popup" class="comment-and-media-link">...</a> </td>
+                            <td class="cell status">
+                                <select name="status" id="status">
+                                    <option value="draft">draft</option>
+                                    <option value="under investigation">U.I</option>
+                                    <option value="resolved">resolved</option>
+                                    <option value="rejected">rejected</option>
+                                </select>
+                            </td>
+                            <td class="cell delete">
+                                <input class="btn-delete-record" type="button" value="&times;" onclick="deleteTableRow()">
                             </td>
                         </tr>
                     </table>
@@ -134,15 +195,8 @@
                 </p>
             </div>
         </div>
-        <a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px"
-            href="https://unsplash.com/@mpumelelomacu?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge"
-            target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Mpumelelo Macu"><span
-                style="display:inline-block;padding:2px 3px"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-1px;fill:white"
-                    viewBox="0 0 32 32">
-                    <title>unsplash-logo</title>
-                    <path d="M20.8 18.1c0 2.7-2.2 4.8-4.8 4.8s-4.8-2.1-4.8-4.8c0-2.7 2.2-4.8 4.8-4.8 2.7.1 4.8 2.2 4.8 4.8zm11.2-7.4v14.9c0 2.3-1.9 4.3-4.3 4.3h-23.4c-2.4 0-4.3-1.9-4.3-4.3v-15c0-2.3 1.9-4.3 4.3-4.3h3.7l.8-2.3c.4-1.1 1.7-2 2.9-2h8.6c1.2 0 2.5.9 2.9 2l.8 2.4h3.7c2.4 0 4.3 1.9 4.3 4.3zm-8.6 7.5c0-4.1-3.3-7.5-7.5-7.5-4.1 0-7.5 3.4-7.5 7.5s3.3 7.5 7.5 7.5c4.2-.1 7.5-3.4 7.5-7.5z"></path>
-                </svg></span><span style="display:inline-block;padding:2px 3px">Mpumelelo Macu</span></a>
-    </footer>
+           </footer>
+
     <div class="popup" id="popup">
         <div class="popup-content">
             <div class="popup-left">
@@ -150,13 +204,33 @@
                 <img src="img/download (2).jpeg" alt="Tour photo" class="popup-img">
             </div>
             <div class="popup-right">
-                <a href="#table-admin" class="popup-close">&times;</a>
+                <a href="#div-table-title" class="popup-close">&times;</a>
                 <!-- <h2 class="heading-secondary">Reporter's Comments & Media</h2> -->
                 <h3 class="heading-tertiary-dark u-margin-bottom-small">Reporter's comment &ndash;</h3>
                 <p class="popup-text">
                     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia quis molestias corporis ipsum praesentium minus dolore quidem ipsam officiis laboriosam ullam, incidunt odit, doloremque ipsa esse voluptas repellendus, vitae corrupti.
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ratione eligendi dolor architecto corrupti doloribus molestias voluptatibus, tempore quo, magnam inventore explicabo! Soluta, odit amet nulla ipsum error vero repellat.
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium laudantium mollitia quasi blanditiis, porro facilis fugit, reprehenderit excepturi esse nulla officiis tenetur dignissimos inventore voluptatem! Quibusdam ipsam asperiores excepturi tempora.
+                    <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium laudantium mollitia quasi blanditiis, porro facilis fugit, reprehenderit excepturi esse nulla officiis tenetur dignissimos inventore voluptatem! Quibusdam ipsam asperiores excepturi tempora. -->
+                </p>
+                <!-- <a href="#table-admin" class="btn">OK</a> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="popup" id="popup-2">
+        <div class="popup-content">
+            <div class="popup-left">
+                <img src="img/1543731908425.jpg" alt="Tour photo" class="popup-img">
+                <img src="img/1543732393583.jpg" alt="Tour photo" class="popup-img">
+            </div>
+            <div class="popup-right">
+                <a href="#div-table-title" class="popup-close">&times;</a>
+                <!-- <h2 class="heading-secondary">Reporter's Comments & Media</h2> -->
+                <h3 class="heading-tertiary-dark u-margin-bottom-small">Reporter's comment &ndash;</h3>
+                <p class="popup-text">
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Officia quis molestias corporis ipsum praesentium minus dolore quidem ipsam officiis laboriosam ullam, incidunt odit, doloremque ipsa esse voluptas repellendus, vitae corrupti.
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Excepturi ratione eligendi dolor architecto corrupti doloribus molestias voluptatibus, tempore quo, magnam inventore explicabo! Soluta, odit amet nulla ipsum error vero repellat.
+                    <!-- Lorem ipsum dolor sit amet, consectetur adipisicing elit. Praesentium laudantium mollitia quasi blanditiis, porro facilis fugit, reprehenderit excepturi esse nulla officiis tenetur dignissimos inventore voluptatem! Quibusdam ipsam asperiores excepturi tempora. -->
                 </p>
                 <!-- <a href="#table-admin" class="btn">OK</a> -->
             </div>
