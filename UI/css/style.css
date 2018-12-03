@@ -86,7 +86,7 @@ ul {
     .logo a {
         text-decoration: none;}
     .logo-footer-version {
-        transform: scale(2);}
+        transform: scale(1.2);}
 
 .heading-secondary {
     font-size: 2.7rem;
@@ -123,6 +123,24 @@ ul {
         transform: scale(1.1);
         text-shadow: .5rem 1rem 2rem rgba(53, 66, 74, 1);} */
 
+
+.heading-tertiary-dark {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: inline-block;
+   background-image: linear-gradient(to right, #35424a, rgb(1, 50, 67));
+   transform: scale(1.1);
+    text-shadow: .5rem 1rem 2rem rgba(53, 66, 74, 1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 2px;
+    transition: all .2s;}
+    /* .heading-secondary-dark:hover {
+        transform: scale(1.1);
+        text-shadow: .5rem 1rem 2rem rgba(53, 66, 74, 1);} */
+
 .heading-tertiary {
     background-image: linear-gradient(to right, #eeeeee, gold);
     -webkit-background-clip: text;
@@ -143,7 +161,8 @@ ul {
 .link {
     padding: 10px 2px 10px 2px;
     font-family: "Lucida Grande" !important;
-    font-size: 1.5rem;
+    font-size: 1rem;
+    text-transform: uppercase;
     text-decoration: none;
     display: block;
     color: lightgoldenrodyellow;
@@ -179,6 +198,87 @@ ul {
     transition: all 1s;}
 #link-on-white-bg:hover {
     color: #ffffff;}
+
+
+/**   POPUP DISPLAY */
+.popup {
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, .8);
+    z-index: 9999;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: all .4s;}
+.popup-content {
+    width: 75%;
+    /* height: 20rem; */ /* You don't want height, so that this div will have an auto height, that scales according to content */
+    background-color: rgba(255, 255, 255, .75);
+    box-shadow: 0 2rem 4rem rgba(0, 0, 0, .2);
+    border-radius: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: table; /* so that its children (popup-left and popup-right), when their display property is set to 'table-cell',  will be displayed side by side like the cells of a table. It works like display: flex; */
+    overflow: hidden; /*prevents its contents (like the img) from overflowing the border*/
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.25);
+    transition: all .4s .2s; /* transition-duration: 0.4s; transition-delay: 0.2s;*/}
+.popup-left {
+    width: 33.333333%;
+    display: table-cell;}
+.popup-right {
+    width: 66.6666667%;
+    display: table-cell;
+    vertical-align: middle; /*other values are: top, bottom. You can check them out with the dev tool*/
+    padding: 2rem 4rem;}
+.popup-img {
+    display: block;
+    width: 100%;}
+.popup-text {
+    font-size: 1rem;
+    margin-bottom: 3rem;
+
+    column-count: 2; /* divides the text into 2 columns. You can try other values like 3, 4, etc*/
+    column-gap: 3rem;
+    column-rule: 1px solid grey;
+    
+    /* to work in mozilla*/
+    --moz-column-count: 2; /* divides the text into 2 columns. You can try other values like 3, 4, etc*/
+    -moz-column-gap: 3rem;
+    -moz-column-rule: 1px solid #eee;
+
+    -webkit-hyphens: auto;
+    -moz-hyphens: auto;
+    -ms-hyphens: auto;
+    hyphens: auto; /* adds hyphens automatically. For this to work, your html tag must be defined with the lang property, like <html lang="en"> */}
+.popup:target {
+    opacity: 1;
+    visibility: visible;}
+.popup:target .popup-content { /* When the popup becomes targeted, scale the popup-content to 100% ie scale(1)*/
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);}
+.popup-close:link, .popup-close:visited {
+    position: absolute;
+    top: 2.5rem;
+    right: 2.5rem;
+    font-size: 3rem;
+    color: #e8491d;
+    text-decoration: none;
+    display: inline-block !important;
+    text-align: center;
+    line-height: 1;
+    transition: all .5s;}
+.popup-close:hover {
+    color: red;}
+
+
 
 /*------------------------------------------*/
 
@@ -259,6 +359,7 @@ header {
         url(../img/nat-7.jpg);
     min-height: 400px;  
     background-size: cover;  
+    /* background-position: center; */
     text-align: center;}
     .mission-statement {
         padding: 24px 0 24px 0;
@@ -475,10 +576,10 @@ header {
             background-image: linear-gradient(to right bottom,
                                 rgba(258, 66, 74, 0.8),
                                 rgba(-40, 23, 60, 0.58)),
-                                url(../img/nat-5.jpg);}
+                                url(../img/bribery.jpeg);}
     .card-picture--2 {
         background-image: linear-gradient(to right bottom, #ffb900, #ff7730),
-                            url(../img/nat-6.jpg);}
+                            url(../img/1543732393583.jpg);}
     .card-heading {
         font-size: 2.8rem;
         font-weight: 300;
@@ -540,12 +641,12 @@ header {
 .footer {
     /* background-color: #24252a; */
     background-color: #013243;
-    padding: 6rem 0;
+    padding: 3rem 0;
     font-size: 1rem;
-    color: #eeeeee;}
+    color: darkgray;}
     .footer-logo-box {
         text-align: center;
-        margin-bottom: 5rem;}
+        margin-bottom: 3rem;}
     .flex-box-footer {
         display: flex;
         justify-content: space-around;}
@@ -562,7 +663,7 @@ header {
         margin-right: 1.5rem;}
     .footer-link:link, 
     .footer-link:visited {
-        color: #eeeeee;
+        color: darkgray;
         background-color: transparent;
         text-decoration: none;
         text-transform: uppercase;
@@ -684,13 +785,8 @@ header {
     padding: 0 0;
      background-image: linear-gradient(to right bottom, #6c7a89, black);}
 .div-over-form {
-    background-image: linear-gradient(
-                        105deg,
-                    rgba(255, 255, 50, 0.9) 0%,
-                    rgba(255, 255, 255, 0.9), 50%, 
-                    transparent 50%
-                    ), 
-                    url(../img/nat-10.jpg);
+    /* background-image: linear-gradient(105deg,rgba(255, 255, 50, 0.9) 0%,rgba(255, 255, 255, 0.9), 50%, transparent 50%), url(../img/nat-10.jpg); */
+    background-image: linear-gradient(105deg,rgba(242, 242, 242, 1) 0%,rgba(255, 255, 255, 0.9), 50%, transparent 50%), url(../img/nat-10.jpg);
     background-size: cover;
     /*background-size: 100%; */ /* same as [ background-size: cover ] */
     border-radius: 3px;
@@ -832,6 +928,94 @@ header {
     
 /********************** (END REPORT PAGE) *************/
 
+
+/*********************** ADMIN PAGE *******************/
+.section-admin {
+    padding: 5px;
+    /* border: 1px solid silver; */
+}
+.section-admin-wrapper-div {
+    padding: 5px;
+    /* border: 1px solid silver; */
+}
+.section-admin .flex-box-main {
+    overflow-x: auto;
+    padding: 5px;
+    /* border: 1px solid silver; */
+    display: grid;
+    grid-row-gap: 4rem;
+    margin-top: 2rem;
+    grid-template-rows: 50px auto;}
+.section-admin .flex-box-main .row-1-of-3 {
+    padding: 5px;
+    /* border: 1px solid silver; */
+    width: 100%;
+    margin: 0 auto;
+    /* overflow-x: auto; */
+}
+#table-wrapper {
+    border: none;
+}
+.table-admin {
+    width: 90%;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+.table-admin .row {
+    height: 30px;
+    /* background-color: silver; */
+}
+.table-admin .row:first-child {
+    background-color: #35424a;
+    color: white;
+    /* text-transform: uppercase; */
+    font-weight: 700;
+}
+
+tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.table-admin .row .cell {
+    padding: 0 0.5rem 0 .5rem;
+    border: 1px solid silver;
+}
+
+.comment-and-media-link {
+    text-decoration: none;
+    /* font-size: 1rem; */
+    display: block;
+    /* border: 1px solid black; */
+    /* padding: 2px 15px; */
+    margin: 0 auto;
+    text-align: center;
+    font-weight: bold;
+}
+select {
+    padding: 2px;
+    margin: 5px 0 5px 0;
+    width: 100%;
+}
+.btn-delete-record {
+    font-size: 2rem;
+    color: #e8491d;
+    text-decoration: none;
+    display: block !important;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+#div-table-title {
+    text-align: center;
+    /* padding-bottom: 4rem; */
+}
+/* .table-admin .createdBy {
+    width: 50%;
+} */
+/******************** (END ADMIN PAGE) *******************/
 
 
 /************************ MEDIA QUERY ******************/
