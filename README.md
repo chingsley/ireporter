@@ -45,7 +45,8 @@ npm start
 
 ### Required Payload
 
-#### `POST /auth/signup`
+#### `POST /api/v1/auth/signup`
+### `[heroku link] https://desolate-beyond-57360.herokuapp.com/api/v1/auth/signup`
 
 ```json
 {
@@ -59,8 +60,8 @@ npm start
 }
 ```
 
-#### `POST /redflags`
-
+#### `POST /api/v1/redflags`
+### `[heroku link] https://desolate-beyond-57360.herokuapp.com/api/v1/redflags`
 ```json
 {
   "email": "user email", [REQUIRED]
@@ -73,6 +74,7 @@ npm start
 ```
 
 #### `PATCH /redflags/:id/location`
+### `[heroku link] https://desolate-beyond-57360.herokuapp.com/api/v1/redflags/:id/location`
 
 ```json
 {
@@ -81,7 +83,8 @@ npm start
 }
 ```
 
-#### `PATCH /redflags/:id/location`
+#### `PATCH /redflags/:id/comment`
+### `[heroku link] https://desolate-beyond-57360.herokuapp.com/api/v1/redflags/:id/comment`
 
 ```json
 {
@@ -91,6 +94,7 @@ npm start
 ```
 
 #### `DELETE /redflags/:id`
+### `[heroku link] https://desolate-beyond-57360.herokuapp.com/api/v1/redflags/:id`
 
 ```json
 {
@@ -109,6 +113,8 @@ npm test
 ## Deployment
 
 * UI Templates => [GitHub Pages](https://chingsley.github.io/gh-pages/login.html) 
+
+* Heroku => [heroku link](https://desolate-beyond-57360.herokuapp.com/api/v1/redflags) 
 
 
 ## Tecnologies Used
