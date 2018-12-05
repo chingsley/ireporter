@@ -107,13 +107,13 @@ ul {
         text-shadow: .5rem 1rem 2rem rgba(250, 250, 210, 1);}
 
 .heading-secondary-dark {
-    font-size: 2.7rem;
+    font-size: 2rem;
     text-transform: uppercase;
     font-weight: 700;
     display: inline-block;
    background-image: linear-gradient(to right, #35424a, rgb(1, 50, 67));
    transform: scale(1.1);
-    text-shadow: .5rem 1rem 2rem rgba(53, 66, 74, 1);
+    /* text-shadow: .5rem 1rem 2rem rgba(53, 66, 74, 1); */
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -479,13 +479,14 @@ header {
 .section-about {
     /* background-image: linear-gradient(to right bottom, #6c7a89, black); */
     color: rgb(250, 250, 210);
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
                         90deg,
                     rgba(250, 250, 50, 1) 0%,
                     rgba(255, 255, 255, 0.9), 100%, 
                     transparent 50%
                     ), 
-                    url(../img/nat-6.jpg);
+                    url(../img/nat-6.jpg); */
+    background-image: radial-gradient(white, #eeeeee);
     padding: 3px;
     padding-bottom: 15rem;
     display: block;}
@@ -651,7 +652,7 @@ header {
         display: flex;
         justify-content: space-around;}
     .footer-navigation{
-        border-top: 1px solid #6c7a89;
+        border-top: 1px solid #e8491d;
         padding-top: 1rem;
         display: inline-block;}
     .footer-ul {
@@ -674,7 +675,7 @@ header {
         box-shadow: 0 1rem 2rem rgba(0, 0, 0, .4);
         transform: scale(1.05);}
     .footer-copyright {
-        border-top: 1px solid #6c7a89;
+        border-top: 1px solid #e8491d;
         padding-top: 1rem;}
    
 /******************* (END HOME PAGE) *************/
@@ -696,12 +697,12 @@ header {
         display: flex;
         justify-content: center;}
     .form {
-        box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 1);
+        /* box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 1); */
         margin: 0 auto;
         /* margin-top: 2rem; */
         margin-bottom: 8rem;
-        border: 3px solid rgb(53, 66, 74);
-        border-radius: 10px;
+        border: 1px solid rgb(53, 66, 74);
+        border-radius: 5px;
         opacity: .9;
         width: 60%;}
     .test-form{
@@ -735,19 +736,21 @@ header {
         background-clip: text;
         color: transparent;} 
     .form-input {
-        font-size: 1.2rem;
         font-family: inherit;
+        font-size: 1rem;
         color: black;
-        padding: .5rem 1rem;
+        padding: .8rem 1rem;
         border-radius: 2px;
+        border: 1px solid rgb(53, 66, 74);
         background-color: rgba(255, 255, 255, 1);
-        border-bottom: 1px solid #e8491d;
+        /* border-bottom: 1px solid #e8491d; */
         width: 100%;
         display: block;
-        transition: all .5s;}
+        transition: all .5s;
+    }
     .form-input:focus {
         outline: none;
-         box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .4) !important;
+         /* box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .4) !important; */
         border-bottom: 3px solid lightgreen;}
     .form-input:focus:invalid {
         border-bottom: 3px solid #e8491d;}
@@ -755,7 +758,7 @@ header {
         color: #6c7a89;}
     .form-label {
         /* color: #6c7a89; */
-        color: black;
+        color: lightslategrey;
         font-size: 1.2rem;
         margin-left:1.3rem;
         margin-top: .5rem;
@@ -847,10 +850,13 @@ header {
 /************************************************/
 
 /*********************** REPORT PAGE *****************/
+.register {
+    background-image: radial-gradient(white, #eeeeee);
+}
     .div-over-form-report {
         padding-top: 2rem;}
     #radio-container {
-        border: 2px solid #6c7a89;
+        border: 1px solid rgb(53, 66, 74);
         border-radius: 3px;
         background-color: rgba(211, 211, 211, .1);
         margin-bottom: 2rem;}
@@ -878,25 +884,16 @@ header {
         border-radius: 3px;
         padding: 1rem;}
     .form-inputfile {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;}
-    .form-inputfile-label {
-        font-size: 12pt;
-        font-weight: 300;
-        padding: 5px;
-        color: #35424a;
-        background-color: #eeeeee;;
-        border: 1px solid grey;
-        border-radius: 3px;
-        display: inline-block;
-        transition: all .5s;}
-    .form-inputfile:focus + label,
-    .form-inputfile + .form-inputfile-label:hover {
-        color:#e8491d;}
+        /* width: 0.1px; */
+        /* height: 0.1px; */
+        /* opacity: 0; */
+        /* overflow: hidden; */
+        /* position: absolute; */
+        /* z-index: -1; */
+    }
+    .file-form-group {
+      text-align: center;
+    }
     .form-inputfile + label {
         cursor: pointer;}
     .form-radio-button {
@@ -932,12 +929,10 @@ header {
 /*********************** ADMIN PAGE *******************/
 .section-admin {
     padding: 5px;
-    /* border: 1px solid silver; */
-}
+    /* border: 1px solid silver; */}
 .section-admin-wrapper-div {
     padding: 5px;
-    /* border: 1px solid silver; */
-}
+    /* border: 1px solid silver; */}
 .section-admin .flex-box-main {
     overflow-x: auto;
     padding: 5px;
@@ -951,36 +946,26 @@ header {
     /* border: 1px solid silver; */
     width: 100%;
     margin: 0 auto;
-    /* overflow-x: auto; */
-}
+    /* overflow-x: auto; */}
 #table-wrapper {
-    border: none;
-}
+    border: none;}
 .table-admin {
     width: 90%;
     margin: 0 auto;
-    border-collapse: collapse;
-}
+    border-collapse: collapse;}
 .table-admin .row {
     height: 30px;
-    /* background-color: silver; */
-}
+    /* background-color: silver; */}
 .table-admin .row:first-child {
     background-color: #35424a;
     color: white;
     /* text-transform: uppercase; */
-    font-weight: 700;
-}
-
-tr:nth-child(odd) {
-    background-color: #f2f2f2;
-}
-
+    font-weight: 700;}
+.table-admin tr:nth-child(odd) {
+    background-color: #f2f2f2;}
 .table-admin .row .cell {
     padding: 0 0.5rem 0 .5rem;
-    border: 1px solid silver;
-}
-
+    border: 1px solid silver;}
 .comment-and-media-link {
     text-decoration: none;
     /* font-size: 1rem; */
@@ -989,13 +974,11 @@ tr:nth-child(odd) {
     /* padding: 2px 15px; */
     margin: 0 auto;
     text-align: center;
-    font-weight: bold;
-}
+    font-weight: bold;}
 select {
     padding: 2px;
     margin: 5px 0 5px 0;
-    width: 100%;
-}
+    width: 100%;}
 .btn-delete-record {
     font-size: 2rem;
     color: #e8491d;
@@ -1006,16 +989,98 @@ select {
     line-height: 1;
     background-color: transparent;
     border: none;
-    cursor: pointer;
-}
+    cursor: pointer;}
 #div-table-title {
     text-align: center;
-    /* padding-bottom: 4rem; */
-}
-/* .table-admin .createdBy {
-    width: 50%;
-} */
+    /* padding-bottom: 4rem; */}
+
 /******************** (END ADMIN PAGE) *******************/
+
+
+/******************** REPORT HISTORY PAGE *******************/
+.section-reporthistory {
+    /* background-image: radial-gradient(
+    to right bottom, 
+    rgba(255, 255, 255, 1), 
+    rgba(192, 192, 192, 1)), 
+    url(../img/nat-4.jpg); */
+    background-image: radial-gradient(rgba(255, 255, 255, 1), #eeeeee);
+    background-size: cover;
+    padding-bottom: 4rem;
+}
+.section-reporthistory-wrapper {
+    width: 80%;
+    margin: 0 auto;
+}
+.flex-box-reporthistory {
+    /* border: 2px solid black; */
+    margin: 5px;
+    padding-top: 2rem;
+    display: grid;
+    grid-row-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(15.2rem, 1fr));
+    grid-row-gap: 3rem;
+    justify-items: center;
+}
+.report {
+    height: 19rem;
+    width: 15rem;
+    border: 1px solid silver;
+    border-radius:3px;
+    overflow: hidden;
+    box-shadow: 0 .5rem 2rem rgba(0, 0, 0, 1.15);
+    /* clip-path: polygon(0 0, 100% 0, 100% 115%, 0 100%); */
+    clip-path: polygon(0% 15%, 20% 0%, 100% 0, 100% 115%, 0 100%);
+    background-image: linear-gradient(to right, white, grey);
+}
+.div-report-img {
+    height: 10rem;
+}
+.report-img {
+    width: 100%;
+}
+.report-details-table {
+    /* border: 1px solid silver; */
+    margin: 0 auto;
+    text-transform: lowercase;
+    font-style: italic;
+    width: 90%;
+}
+.report-details-table td {
+     border: 1px solid silver;
+     padding: 2px 5px;
+}
+.td-status-draft {
+    background-color: lightgrey;
+}
+.td-status-resolved {
+    background-color: lightgreen;
+}
+.td-status-ui {
+    /*ui means under-investigation*/
+    background-color: yellow;
+}
+.td-status-rejected {
+    background-color: lightcoral;
+}
+.report-details-div-btn{
+    width: 100%;
+    /* border: 1px solid silver; */
+    text-align: center;
+    margin-top: 1rem;
+}
+#btn-edit-report {
+    height: 30px;
+    padding: 0px 1rem 0 1rem;
+    display: inline-block;
+    letter-spacing: 2px;
+    width: 81px;
+}
+
+.disabled-btn {
+    background-color: gray !important;
+}
+/******************** (END REPORT HISTORY PAGE) *******************/
 
 
 /************************ MEDIA QUERY ******************/
