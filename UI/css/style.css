@@ -65,7 +65,8 @@ ul {
 .u-margin-bottom-medium { margin-bottom: 4rem !important; }
 .u-margin-bottom-big { margin-bottom: 8rem !important; }
 
-.u-margin-top-medium {margin-top: 4rem !important}
+.u-margin-top-small {margin-top: 2rem !important;}
+.u-margin-top-medium {margin-top: 4rem !important;}
 .u-margin-top-big { margin-top: 8rem !important; }
 .u-margin-top-huge { margin-top: 10rem !important; }
 .active-link { color: #e8491d !important; }
@@ -357,6 +358,10 @@ header {
         rgba(0, 0, 0, 0.5),
         rgba(0, 0, 0, 0.8)),
         url(../img/nat-7.jpg);
+    /* background-image: linear-gradient(to right bottom,
+        rgba(6, 6, 29, .5),
+        rgba(6, 6, 29, .5)),
+        url(../img/nat-7.jpg); */
     min-height: 400px;  
     background-size: cover;  
     /* background-position: center; */
@@ -415,6 +420,7 @@ header {
     color: #fafad2;
     background: #35424a;}
     .section-newsletter .container {
+        opacity: 0; /* LFA: 'take out the newsletter section' */
         margin-top: 1rem;
         width: 80%;
         margin: 0 auto;
@@ -735,19 +741,6 @@ header {
          -webkit-background-clip: text;
         background-clip: text;
         color: transparent;} 
-    .form-input {
-        font-family: inherit;
-        font-size: 1rem;
-        color: black;
-        padding: .8rem 1rem;
-        border-radius: 2px;
-        border: 1px solid rgb(53, 66, 74);
-        background-color: rgba(255, 255, 255, 1);
-        /* border-bottom: 1px solid #e8491d; */
-        width: 100%;
-        display: block;
-        transition: all .5s;
-    }
     .form-input:focus {
         outline: none;
          /* box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, .4) !important; */
@@ -788,8 +781,8 @@ header {
     padding: 0 0;
      background-image: linear-gradient(to right bottom, #6c7a89, black);}
 .div-over-form {
-    /* background-image: linear-gradient(105deg,rgba(255, 255, 50, 0.9) 0%,rgba(255, 255, 255, 0.9), 50%, transparent 50%), url(../img/nat-10.jpg); */
-    background-image: linear-gradient(105deg,rgba(242, 242, 242, 1) 0%,rgba(255, 255, 255, 0.9), 50%, transparent 50%), url(../img/nat-10.jpg);
+    /* background-image: linear-gradient(105deg,rgba(242, 242, 242, 1) 0%,rgba(255, 255, 255, 0.9), 50%, transparent 50%), url(../img/nat-10.jpg); */
+    background-image: linear-gradient(105deg,rgba(6, 6, 29, .8) 0%,rgba(6, 6, 29, .8), 50%, transparent 50%), url(../img/nat-10.jpg);
     background-size: cover;
     /*background-size: 100%; */ /* same as [ background-size: cover ] */
     border-radius: 3px;
@@ -800,14 +793,19 @@ header {
         margin: 0 auto;}
     .login-form-group:not(:last-child) {
         margin-bottom: 2rem;}
-    .login-form-input {
-        font-size: 1.2rem;
+    .form-input {
         font-family: inherit;
-        color: inherit;
-        padding: 1rem 1rem;
-        border-radius: 2px;
-        background-color: rgba(255, 255, 255, .5);
-        border-bottom: 1px solid #e8491d;}
+        font-size: 1rem;
+        color: white;
+        padding: .8rem 1rem;
+        /* border-radius: 2px; */
+        /* border: 1px solid white; */
+        background-color: transparent;
+        /* border-bottom: 1px solid #e8491d; */
+        width: 100%;
+        display: block;
+        transition: all .5s;
+    }
     .login-form-input:focus {
         outline: none;
         box-shadow: 0 1rem 2rem rgba(0, 0, 0, .1);
@@ -849,78 +847,182 @@ header {
     margin-top: 40px;}
 /************************************************/
 
+
+
+
 /*********************** REPORT PAGE *****************/
-.register {
-    background-image: radial-gradient(white, #eeeeee);
+.section-report {
+    background-image: linear-gradient(
+    to bottom, 
+    rgba(0, 0, 0, 0.5), 
+    rgba(173, 216, 230, .5)), 
+    url(../img/nat-4.jpg);
+    background-position: center;
 }
-    .div-over-form-report {
-        padding-top: 2rem;}
-    #radio-container {
-        border: 1px solid rgb(53, 66, 74);
-        border-radius: 3px;
-        background-color: rgba(211, 211, 211, .1);
-        margin-bottom: 2rem;}
-    .form-radio-group-title {
-        /* border: 1px solid black; */
-        padding: 10px;
-        font-size: 1.2rem;
-        text-transform: uppercase;
-        margin-bottom: 10px;}
-    .form-radio-group {
-        width: 49%;
-        margin: 0 auto;
-        margin-bottom: 2rem;
-        /* display: inline-block; */
-        /* border: 1px solid black; */}
-    .form-radio-input {
-        display: none;}
-    .form-radio-label {
-        font-size: 1.2rem;
-        cursor: pointer;
-        position: relative;
-        padding-left: 3.5rem;}
-    textarea {
-        width: 100%;
-        border-radius: 3px;
-        padding: 1rem;}
-    .form-inputfile {
-        /* width: 0.1px; */
-        /* height: 0.1px; */
-        /* opacity: 0; */
-        /* overflow: hidden; */
-        /* position: absolute; */
-        /* z-index: -1; */
-    }
-    .file-form-group {
-      text-align: center;
-    }
-    .form-inputfile + label {
-        cursor: pointer;}
-    .form-radio-button {
-        height: 1.8rem;
-        width: 1.8rem;
-        border: 5px solid #e8491d;
-        border-radius: 50%;
-        display: inline-block;
-        position: absolute;
-        top: -.26rem;
-        left: 1.3rem;}
-    .form-radio-button::after { /* This is a pseudo-element, an element created with css instead of html. For the technique to work, such an element must have the 'content' and 'display' properties set as follows */
-        content: "";
-        display: block;
-        height: .8rem;
-        width: .8rem;
-        border-radius: 50%;
-        /* the next 4 lines will center the innner dot*/
-        position: absolute;
-        top: 52%;
-        left: 49%;
-        transform: translate(-50%, -50%);
-        background-color: #e8491d;
-        opacity: 0;
-        transition: opacity .5s;}
-    .form-radio-input:checked ~ .form-radio-label .form-radio-button::after {
-        opacity: 1;}
+.section-report-flex-box {
+    display: flex;
+    /* border: 1px solid green; */
+    padding: 2px;
+    width: 95%;
+    margin: 0 auto;
+    justify-content: space-between;
+    /* background-image: linear-gradient(180deg, rgba(6, 6, 29, .5) 50%,rgba(6, 6, 29, .5), 100%, transparent 0); */
+
+    /* margin-top: 4rem; */
+}
+.div-over-form-report {
+    /* border: 1px solid blue; */
+    width: 70%;
+}
+
+.report-form {
+    color: rgba(250, 250, 210, .5);
+    /* border: 1px solid red; */
+    margin: 2px;
+    padding: 2px;
+    /* background-color: rgba(238, 238, 238, .5); */
+    background-image: linear-gradient(180deg, rgba(6, 6, 29, .5) 50%,rgba(6, 6, 29, .5), 100%, transparent 0);
+}
+
+.report-input-flex {
+    /* border: 1px solid red; */
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+
+    /* background-color: #eeeeee; */
+} 
+#report-input-flex-for-btn {
+    background-color: transparent;
+    justify-content: center;
+}
+.rep-field {
+    /* border: 1px solid white; */
+    padding: 2px;
+    /* background-color: transparent;r */
+    width: 48%;
+}
+.rep-field-for-radio, .rep-field-for-upload {
+    background-image: linear-gradient(180deg, rgba(6, 6, 29, .5) 50%,rgba(6, 6, 29, .5), 100%, transparent 0);
+}
+
+#radio-container {
+    /* border: 1px solid rgb(53, 66, 74);
+    border-radius: 3px;
+    background-color: rgba(211, 211, 211, .1); */
+}
+.report-form-input {
+    /* border-radius: 2px; */
+    /* border: 1px solid silver; */
+    font-size: 1rem;
+   width: 100%;
+   padding: .5rem .5rem .5rem .5rem;
+   outline: none;
+   color: white;
+   background-color: transparent;
+   /* height: 100%; */
+}
+textarea {
+    width: 100%;
+    /* border-radius: 3px; */
+    background-color: transparent;
+    outline: none;
+    color: white;
+    padding: 1rem;
+}
+#rep-field-textarea {
+    width: 100%;
+}
+.prompt {
+    width: 100%;
+    text-align: center;
+    margin: 5px;
+    color: lightgoldenrodyellow;
+}
+#btn-get-current-location {
+    /* padding: 0 10px 0 10px; */
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 1rem;
+    color: #e8491d;
+    text-decoration: underline;
+    cursor: pointer;
+}
+.form-radio-group {
+    padding: .5rem .5rem .5rem .5rem;
+    /* border: 1px solid black; */
+}
+.form-radio-input {
+    display: none;}
+.form-radio-label {
+    font-size: 1.2rem;
+    cursor: pointer;
+    position: relative;
+    padding-left: 3.5rem;}
+
+.div-over-file-upload-group {
+    text-align: center;
+}
+.file-upload-group {
+   padding-top: 10px;
+   padding-bottom: 10px;
+    
+}
+.report-input-file-upload {
+    box-sizing: border-box;
+    padding-right: 0;
+    /* color: red; */
+    display: inline-block;
+    /* border: 1px solid black; */
+    padding: 0;
+    margin: 0;
+}
+.form-radio-button {
+    height: 1.8rem;
+    width: 1.8rem;
+    border: 5px solid #e8491d;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: -.26rem;
+    left: 1.3rem;}
+.form-radio-button::after { /* This is a pseudo-element, an element created with css instead of html. For the technique to work, such an element must have the 'content' and 'display' properties set as follows */
+    content: "";
+    display: block;
+    height: .8rem;
+    width: .8rem;
+    border-radius: 50%;
+    /* the next 4 lines will center the innner dot*/
+    position: absolute;
+    top: 52%;
+    left: 49%;
+    transform: translate(-50%, -50%);
+    background-color: #e8491d;
+    opacity: 0;
+    transition: opacity .5s;}
+.form-radio-input:checked ~ .form-radio-label .form-radio-button::after {
+    opacity: 1;}
+.div-report-form-btn {
+    /* border: 1px solid black; */
+    width: 48%;
+}
+#btn-send-report {
+    font-size: 1rem;
+    width: 100%;
+}
+.div-over-map {
+    width: auto;
+    /* border: 1px solid yellow; */
+    padding: 10px;
+}
+.map {
+    width: 20rem;
+    height: 30rem;
+    border: 2px solid #35424a;
+}
     
     
 /********************** (END REPORT PAGE) *************/
@@ -1004,9 +1106,12 @@ select {
     rgba(255, 255, 255, 1), 
     rgba(192, 192, 192, 1)), 
     url(../img/nat-4.jpg); */
-    background-image: radial-gradient(rgba(255, 255, 255, 1), #eeeeee);
+    /* background-image: radial-gradient(rgba(255, 255, 255, 1), #eeeeee); */
+    /* background-image: radial-gradient(rgba(255, 255, 255, 1), rgba(6, 6, 29, .5)); */
+    background-image: radial-gradient(rgba(255, 255, 255, 1), black);
     background-size: cover;
     padding-bottom: 4rem;
+    padding-top: 2rem;
 }
 .section-reporthistory-wrapper {
     width: 80%;
@@ -1025,7 +1130,7 @@ select {
 .report {
     height: 19rem;
     width: 15rem;
-    border: 1px solid silver;
+    /* border: 1px solid silver; */
     border-radius:3px;
     overflow: hidden;
     box-shadow: 0 .5rem 2rem rgba(0, 0, 0, 1.15);
@@ -1083,11 +1188,259 @@ select {
 /******************** (END REPORT HISTORY PAGE) *******************/
 
 
+
+/******************** PROFILE PAGE *******************/
+#date {
+    /* border: 1px solid black; */
+    text-align: center;
+    font-weight: 300;
+}
+.section-profile {
+    background-color: #eeeeee;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-image: radial-gradient(white, black);
+}
+.profile-div {
+    color: white;
+    width: 80%;
+    min-height: 20rem;
+    margin: 0 auto;
+    /* border: 1px solid black; */
+    padding-top: 10px;
+    padding-bottom: 20px;
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+    background-image: linear-gradient(
+    to bottom, 
+    rgba(0, 0, 0, 0.9), 
+    rgba(173, 216, 230, 1)), 
+    url(../img/nat-10.jpg);
+    /* background-position: center; */
+    background-size:cover;
+    border-radius: 3px;
+}
+
+.div-profile-content {
+    width: 95%;
+    margin: 0 auto;
+    /* border: 1px solid black; */
+}
+
+.div-profile-content-title {
+    text-align: center;
+    text-transform: uppercase;
+    padding: .5rem 0 .5rem 0;
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.piture-div-img {
+    /* border: 1px solid black; */
+    width: 12rem;
+    height: 12rem;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.piture-div-img > img {
+    width: 100%;
+    height: 100%;
+}
+.div-profile-content-userdetails {
+    text-align: center;
+}
+
+.div-profile-content-userdetails > p {
+    font-size: 2rem;
+    font-weight: lighter;
+}
+.div-profile-content-flexbox {
+    display: flex;
+    justify-content: space-between;
+}
+.flex-child {
+    /* border: 1px solid black; */
+    width: 50%;
+}
+.redflag, .incidence {
+    text-align: center;
+    width: 48%;
+    border-radius: 5px;
+    background-color: rgba(0, 0,0, .5);
+}
+.stats {
+    color: rgba(0, 0, 0, .8);
+    text-align: center;
+    /* border: 1px solid black; */
+}
+.redflag-stats {
+    /* border-right: 1px solid rgba(0, 0,0, .5); */
+}
+.incidence-stats {
+    border-left: 1px solid rgba(0, 0,0, .5);
+}
+#pic-for-username {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+#pic-for-username > img {
+    height: 100%;
+    width: 100%;
+}
+#profile-username {
+    width: 80%;
+    line-height: 80px; /* will center the text vertically */
+}
+#div-profile-content-flexbox-username-part {
+    /* border: 1px solid rgba(0, 0, 0, .5); */
+    border-radius: 5px;
+    background-color: rgba(0, 0, 0, .2);
+    box-shadow: 2px 2px 2px 2px black;
+    padding: 5px 0 5px 0;
+}
+
+/******************** (END PROFILE PAGE) *******************/
+
+/******************* REGISTER ******************/
+.section-reg {
+    /* padding: 5px; */
+}
+.section-reg-wrapper {
+    /* border: 1px solid black; */
+    padding: 5px;
+    background-image: linear-gradient(
+    to bottom, 
+    rgba(0, 0, 0, 0.5), 
+    rgba(173, 216, 230, .5)), 
+    url(../img/nat-4.jpg);
+    background-position: center;
+}
+.reg-form {
+    /* border: 1px solid black; */
+    background-image: linear-gradient(180deg, rgba(6, 6, 29, .5) 50%,rgba(6, 6, 29, .5), 100%, transparent 0);
+    padding: 2px;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 0r;
+    margin-bottom: 1rem;
+}
+.reg-form .div-flexbox {
+    display: flex;
+    /* border: 1px solid black; */
+    margin: 10px;
+    /* background: #eeeeee; */
+    justify-content: space-between;
+    padding: 5px;
+}
+.reg-form .div-flexbox .flex-child {
+ /* border: 1px solid black; */
+ width: 46%;
+}
+.reg-form .div-flexbox .flex-child input,
+.reg-form .div-flexbox .flex-child label {
+    color: white;
+    display: block;
+    width: 100%;
+    background-color: transparent;
+}
+.reg-form .div-flexbox .flex-child input {
+    padding: .4rem;
+    font-size: 1rem;
+    margin-top: 3px;
+    outline: none;
+}
+#form-register-title, #form-register-title > h2 {
+    color: #eeeeee;
+    padding-bottom: 0;
+    /* margin-bottom: 1rem; */
+    padding-top: 0;
+    margin-top: 1rem;
+}
+.form-group-title > h4 {
+    color: white;
+    font-weight: lighter;
+    letter-spacing: 1px;
+    margin-bottom: 1rem; 
+}
+.here {
+    color: #e8491d;
+    text-decoration: underline;
+    font-weight: bolder;
+}
+#div-flexbox-btn {
+    justify-content: center;
+}
+.btn-reg {
+    width: 100%;
+    height: 40px;
+    color: white;
+    background-color: #e8491d;
+    font-weight: bolder;
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+
+}
+.flex-child > input[type="file"] {
+    /* background-color: #eeeeee !important; */
+    border: 1px solid #eeeeee;
+}
+/******************* REGISTER ******************/
+
 /************************ MEDIA QUERY ******************/
+@media (max-width: 1063px) {
+      .section-report-flex-box {
+          border: 1px solid black;
+        /* display: flex; */
+        flex-direction: column;
+        width: 95%;
+        /* justify-content: space-between; */
+    }
+
+    .div-over-form-report {
+        /* border: 1px solid blue; */
+        width: 80%;
+        margin: auto;
+    }
+
+    .report-input-flex {
+        background-color: #eeeeee;
+    } 
+
+    .div-over-map {
+        width: 80%;
+        padding: 10px;
+        margin: 0 auto;
+    }
+    .map {
+        width: 30rem;
+        height: 30rem;
+        border: 2px solid #35424a;
+        margin: 0 auto;
+    }
+}    
+
 @media (max-width: 850px) {
     .form {
         width: 80%;
     }
+
+    .map {
+        width: 20rem;
+        height: 20rem;
+        border: 2px solid #35424a;
+        margin: 0 auto;
+    }
+    .report-input-flex {
+        background-color: #eeeeee;
+        margin-top: 2.4rem;
+    } 
 }     
 @media(max-width: 768px) {
     .flex-box-footer {
@@ -1168,11 +1521,77 @@ select {
     .form {
         width: 80%;
     }
+
+    .map {
+        width: 22rem;
+        height: 10rem;
+        
+    }
+    .div-report-form-btn {
+         width: 100%;
+    }
+
+    .reg-form {
+        width: 90%;
+    }
+
+        .div-over-form {
+        background-image: linear-gradient(105deg,rgba(6, 6, 29, .8) 0%,rgba(6, 6, 29, .8), 100%, transparent 0%), url(../img/nat-10.jpg);
+    }
+
+    .login-form-group {
+        width: 100%;
+        margin: 0 auto;
+        /* border: 1px solid white; */
+    }
+    .login-form {
+        width: 90%;
+        margin: 0 auto;
+    }
 }
 
 @media(max-width: 600px) {
     .form {
         width: 90%;
+    }
+
+     .report-input-flex {
+        flex-direction: column;
+        /* background-color: #eeeeee; */
+    } 
+
+    .rep-field {
+        width: 100%;
+    }
+
+    .div-report-form-btn {
+        width: 100%;
+    }
+
+    .reg-form .div-flexbox {
+        flex-direction: column;
+    }
+    .reg-form .div-flexbox .flex-child {
+         width: 100%;
+         margin: 0 auto;
+    }
+    .flex-child > input[type="file"] {
+        margin-top: .8rem;
+        /* background-color: #eeeeee !important; */
+    }
+
+    .div-over-form {
+        background-image: linear-gradient(105deg,rgba(6, 6, 29, .8) 0%,rgba(6, 6, 29, .8), 100%, transparent 0%), url(../img/nat-10.jpg);
+    }
+
+.login-form-group {
+        width: 100%;
+        margin: 0 auto;
+        /* border: 1px solid white; */
+    }
+    .login-form {
+        width: 90%;
+        margin: 0 auto;
     }
 }
         
