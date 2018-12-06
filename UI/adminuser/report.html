@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="a web app designed for reporting corruption and need for intervention">
+    <meta name="keywords" content="iReporter, report, redflag, intervention, incidence, corruption">
+    <meta name="author" content="Eneja Kingsley">
+    <title>iReporter | Welcome</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- <link rel="stylesheet" href="./css/testin.css"> -->
+</head>
+
+<body>
+    <header>
+        <div class="row">
+            <div id="header-flex-box">
+                <div class="logo" id="div-site-name-id">
+                    <h1><a href="index.html"><span class="special-coloring">i</span><span class="repa">Repa</span></a></h1>
+                </div>
+                <nav class="navigation">
+                    <ul class="nav-ul">
+                        <!-- <li class="li-outer animated-link"><a href="index.html" class="links">Home</a></li> -->
+                        <li class="li-outer animated-link"><a href="index.html" class="links">sign out</a></li>
+                        <li class="li-outer animated-link active-link"><a href="report.html" class="links">Report a case</a></li>
+                        <li class="li-outer animated-link"><a href="#" class="links">User profile</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- <section class="section-newsletter" id="section-newsletter-register-page">
+        <div class="container" id="newsletter-container">
+            <h1 id="h1-id">Subscribe To Our Newsletter</h1>
+            <form action="#" id="form-id">
+                <div class="input-and-label">
+                    <input type="email" class="input-class" id="email" placeholder="Enter Email..." required>
+                    <label for="email" class="label-class">Enter Email...</label>
+                </div>
+                <div class="btn-div">
+                    <button type="submit" id="btn__submit" class="btn">Subscribe</button>
+                </div>
+            </form>
+        </div>
+    </section> -->
+
+    <section class="section-report">
+        <div class="section-report-flex-box">
+            <div class="div-over-form-report">
+                <div class="form-group-title" id="report-title">
+                    <h2 class="heading-secondary-dark" id="form-register-title">
+                        make a report
+                    </h2>
+                </div>
+                <form action="#" class="report-form">
+                    <div id="radio-container" class= "report-input-flex">
+                        <!-- <div class="form-radio-group-title">Select a type of report</div> -->
+                        <div class="rep-field rep-field-for-radio">
+                            <div class="form-radio-group">
+                                <input type="radio" class="form-radio-input" id="small" name="type" value="red-flag">
+                                <label for="small" class="form-radio-label">
+                                    <span class="form-radio-button"></span>
+                                    red-flag
+                                </label>
+                            </div>
+                        </div>
+                        <div class="rep-field rep-field-for-radio">
+                            <div class="form-radio-group">
+                                <input type="radio" class="form-radio-input" id="large" name="type" value="intervention">
+                                <label for="large" class="form-radio-label">
+                                    <span class="form-radio-button"></span>
+                                    intervention
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div-address-and-coords report-input-flex"> 
+                        <div class="rep-field">
+                            <input type="text" class="report-form-input" id="address" placeholder="Enter your address">
+                        </div>
+                        <div class="rep-field">
+                            <input type="text" class="report-form-input" id="coords" required readonly>
+                        </div>
+                        <div class="prompt">Don't know your address? Click <button id="btn-get-current-location">here</button> to allow us get your current location.</div>
+                        <!-- <label for="lastname" class="form-label">Location</label> -->
+                    </div>
+                    <div class="div-over-file-upload-group report-input-flex">
+                        <div class="rep-field rep-field-for-upload">
+                            <div class="file-upload-group">
+                                <label for="pic" class="form-inputfile-label">Images</label>
+                                <input type="file" class="report-input-file-upload" id="pic" name="pic" accept="image/*;capture=camera" multiple>
+                            </div>
+                        </div>
+                        <div class="rep-field rep-field-for-upload">
+                            <div class="file-upload-group">
+                                <label for="video" class="form-inputfile-label">Videos</label>
+                                <input type="file" class="report-input-file-upload" id="video" name="video" accept="video/*;capture=camcoder" multiple>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="report-input-flex" id="form-group-last-child">
+                        <div class="rep-field" id="rep-field-textarea">
+                            <textarea name="comment" id="comment" rows="6">comment...</textarea>
+                        </div>
+                    </div>
+                    <!-- <div class="file-upload-group">
+                        <label for="audio" class="form-inputfile-label">Audio</label>
+                        <input type="file" class="form-inputfile" id="audio" name="audio" accept="audio/*;capture=microphone" multiple>
+                    </div> -->
+                    <div class="report-input-flex" id="report-input-flex-for-btn">
+                        <div class="div-report-form-btn">
+                            <button class="btn" id="btn-send-report">send</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="div-over-map">
+                <div class="map" id="map"> this is the map div</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-logo-box">
+            <div class="logo" id="div-site-name-id">
+                <h1 class="logo-footer-version"><span class="special-coloring">i</span>Repa</h1>
+            </div>
+        </div>
+
+        <div class="row flex-box-footer">
+            <div class="col-1-of-2">
+                <div class="footer-navigation">
+                    <ul class="footer-ul">
+                        <li class="footer-ul-li"><a href="#" class="footer-link">About us</a></li>
+                        <li class="footer-ul-li"><a href="#" class="footer-link">Contact us</a></li>
+                        <li class="footer-ul-li"><a href="#" class="footer-link">Privacy policy</a></li>
+                        <li class="footer-ul-li"><a href="#" class="footer-link">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-1-of-2">
+                <p class="footer-copyright">
+                    Built by <a href="#" class="footer-link">Eneja Kingsley</a>. Copyright &copy; by Eneja Kingsley.
+                    Lorem ipsum dolor,
+                    sit amet consectetur adipisicing elit. Voluptatibus magnam eveniet vero corporis, repellat modi
+                    ducimus deleniti
+                    voluptatum a hic qui excepturi veritatis totam iste quos ullam est sunt omnis.
+                </p>
+            </div>
+        </div>
+    </footer>
+        <script>
+           
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsPc92ZcMDHK2wx3zgcu8ysBQVCOfBCSE&callback=initMap">
+        </script>
+
+    <script src="./js/script.js"></script>
+</body>
+
+</html>

@@ -1410,7 +1410,7 @@ select {
     }
 
     .report-input-flex {
-        background-color: #eeeeee;
+        /* background-color: #eeeeee; */
     } 
 
     .div-over-map {
@@ -1438,7 +1438,7 @@ select {
         margin: 0 auto;
     }
     .report-input-flex {
-        background-color: #eeeeee;
+        /* background-color: #eeeeee; */
         margin-top: 2.4rem;
     } 
 }     

@@ -1,8 +1,6 @@
 import chai from 'chai';
 import 'chai/register-should';
 import chaiHttp from 'chai-http';
-// import dotenv from 'dotenv';
-// import fs from 'fs';
 import app from '../../server/index';
 import { clearRecords } from '../setup/setup';
 
@@ -23,7 +21,6 @@ describe('POST /redflags', () => {
       })
       .end((err, res) => {
         if (err) {
-        //   console.log(err);
           done(err);
         }
         res.status.should.eql(201);
@@ -45,7 +42,6 @@ describe('POST /redflags', () => {
       })
       .end((err, res) => {
         if (err) {
-        //   console.log(err);
           done(err);
         }
         res.body.should.be.an('object').which.has.all.keys(['status', 'error']);
