@@ -23,8 +23,8 @@
                     <ul class="nav-ul">
                         <!-- <li class="li-outer animated-link"><a href="index.html" class="links">Home</a></li> -->
                         <li class="li-outer animated-link active-link"><a href="login.html" class="links">Login</a></li>
-                        <li class="li-outer animated-link"><a href="signup.html" class="links">Register</a></li>
-                        <li class="li-outer animated-link"><a href="#" class="links">My profile</a></li>
+                        <li class="li-outer animated-link"><a href="register.html" class="links">Register</a></li>
+                        <li class="li-outer animated-link"><a href="report.html" class="links">report a case</a></li>
                     </ul>
                 </nav>
             </div>
@@ -34,7 +34,7 @@
     <section class="section-login">
         <div class="row">
             <div class="div-over-form">
-                <form action="index.html" class="login-form">
+                <form action="" method="POST" class="login-form">
                         <div class="login-form-group login-form-group-title u-margin-bottom-medium u-center-text">
                             <h2 class="heading-secondary-dark" id="form-register-title">
                                 sign in
@@ -86,7 +86,17 @@
         </div>
     </footer>
 
-
+    <script>
+        const btnSubmit = document.getElementById('login-btn-submit');
+        btnSubmit.addEventListener('click', (event) => {
+            event.preventDefault();
+            location.href = '/registereduser/index.html'
+            // window.location.assign("https://www.w3schools.com");
+        });
+        // function newDoc() {
+        //     window.location.assign("https://www.w3schools.com")
+        // }
+    </script>
     <script src="./js/script.js"></script>
 </body>
 
