@@ -13,7 +13,7 @@ describe('POST /redflags', () => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        email: 'eneja.kc@gmail.com',
+        id: "1",
         type: 'red-flag',
         location: '9.388939, 0.848494',
         comment: 'I am reporting corruption',
@@ -35,7 +35,7 @@ describe('POST /redflags', () => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        email: 'unregisteredUser@gmail.com',
+        id: '1000', // there is no user with id of 10000
         type: 'red-flag',
         location: '9.388939, 0.848494',
         comment: 'I am reporting corruption',
@@ -188,7 +188,7 @@ describe('PATCH /redflags/:id/location', () => {
     chai.request(app)
       .patch('/api/v1/redflags/1/location') // 'a' is not a valid redflag id
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: '1',
         location: '-8.88888, 0.88888',
       })
       .end((err, res) => {
@@ -210,7 +210,7 @@ describe('PATCH /redflags/:id/location', () => {
     chai.request(app)
       .patch('/api/v1/redflags/a/location') // 'a' is not a valid redflag id
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: '1',
         location: '9.388939, 0.848494',
       })
       .end((err, res) => {
@@ -228,7 +228,7 @@ describe('PATCH /redflags/:id/location', () => {
     chai.request(app)
       .patch('/api/v1/redflags/1/location') // 'a' is not a valid redflag id
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: '1',
         // no value for 'location'
       })
       .end((err, res) => {
@@ -244,11 +244,11 @@ describe('PATCH /redflags/:id/location', () => {
 
   
 
-  it('should return a 400 error if email is not provided', (done) => {
+  it('should return a 400 error if userId is not provided', (done) => {
     chai.request(app)
       .patch('/api/v1/redflags/1/location')
       .send({
-        email: '',
+        userId: '',
         location: '9.388939, 0.848494',
       })
       .end((err, res) => {
@@ -262,11 +262,11 @@ describe('PATCH /redflags/:id/location', () => {
       });
   });
 
-  it('should return a 400 error if the provided email wrongly formatted', (done) => {
+  it('should return a 400 error if the provided userId wrongly formatted', (done) => {
     chai.request(app)
       .patch('/api/v1/redflags/1/location')
       .send({
-        email: 'eneja*(*( kc@-gm ail.com',
+        userId: '2A',
         location: '9.388939, 0.848494',
       })
       .end((err, res) => {
@@ -284,11 +284,10 @@ describe('PATCH /redflags/:id/location', () => {
     chai.request(app)
       .patch('/api/v1/redflags/1/location')
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: '1',
       })
       .end((err, res) => {
         if (err) {
-          //   console.log(err);
           done(err);
         }
         res.status.should.eql(400);
@@ -301,12 +300,11 @@ describe('PATCH /redflags/:id/location', () => {
     chai.request(app)
       .patch('/api/v1/redflags/1/location')
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: '1',
         location: ".224q1, -2.4451"   // you shouldn't have a letter in a coord. The lat here includes 'q'
       })
       .end((err, res) => {
         if (err) {
-          //   console.log(err);
           done(err);
         }
         res.status.should.eql(400);
@@ -319,7 +317,7 @@ describe('PATCH /redflags/:id/location', () => {
     chai.request(app)
       .patch('/api/v1/redflags/1/location')
       .send({
-        email: 'unregisteredUser@gmail.com',
+        userId: '2000000',
         location: ".22411, -2.4451"
       })
       .end((err, res) => {
@@ -338,7 +336,7 @@ describe('PATCH /redflags/:id/location', () => {
       .patch('/api/v1/redflags/1/location')
       // The red flag with id = 1 belongs to eneja.kc@gmail.com, therefore, cannot be edited by user with email john@gmail.com
       .send({
-        email: 'john@gmail.com', 
+        userId: '2', // i.e. john@gmail.com whose user id is 2
         location: ".22411, -2.4451"
       })
       .end((err, res) => {
@@ -357,12 +355,11 @@ describe('PATCH /redflags/:id/location', () => {
       // no red-flag with id = -1
       .patch('/api/v1/redflags/-1/location')
       .send({
-        email: 'john@gmail.com', 
+        userId: '2', 
         location: ".22411, -2.4451"
       })
       .end((err, res) => {
         if (err) {
-          //   console.log(err);
           done(err);
         }
         res.status.should.eql(404);
@@ -382,7 +379,7 @@ describe('PATCH /redflags/:id/comment', () => {
     chai.request(app)
       .patch('/api/v1/redflags/1/comment') // 'a' is not a valid redflag id
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: 1,
         comment: 'This is eneja.kc fighting corruption',
       })
       .end((err, res) => {
@@ -404,7 +401,7 @@ describe('PATCH /redflags/:id/comment', () => {
     chai.request(app)
       .patch('/api/v1/redflags/a/comment') // 'a' is not a valid redflag id
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: 1,
         comment: 'This is eneja.kc reporting corruption',
       })
       .end((err, res) => {
@@ -422,7 +419,7 @@ describe('PATCH /redflags/:id/comment', () => {
     chai.request(app)
       .patch('/api/v1/redflags/1/comment') // 'a' is not a valid redflag id
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: 1,
         // no value for 'comment'
       })
       .end((err, res) => {
@@ -436,11 +433,11 @@ describe('PATCH /redflags/:id/comment', () => {
       });
   });
 
-  it('should return a 400 error if the provided email wrongly formatted', (done) => {
+  it('should return a 400 error if the provided userId wrongly formatted', (done) => {
     chai.request(app)
       .patch('/api/v1/redflags/1/comment')
       .send({
-        email: 'eneja*(*( kc@-gm ail.com',
+        userId: '1A',
         comment: 'This is eneja.kc reporting corrupiton',
       })
       .end((err, res) => {
@@ -458,7 +455,7 @@ describe('PATCH /redflags/:id/comment', () => {
     chai.request(app)
       .patch('/api/v1/redflags/1/comment')
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: 1,
         comment: 'reporting corruption', // comment less than 3 words
       })
       .end((err, res) => {
@@ -474,7 +471,7 @@ describe('PATCH /redflags/:id/comment', () => {
     chai.request(app)
       .patch('/api/v1/redflags/1/comment')
       .send({
-        email: 'unregisteredUser@gmail.com',
+        userId: 999, // there is no user with an id of 999
         comment: "urnregistered user is trying to report corruption"
       })
       .end((err, res) => {
@@ -493,12 +490,11 @@ describe('PATCH /redflags/:id/comment', () => {
       .patch('/api/v1/redflags/-1/comment')
       // The red-flag with id = -1 does not exist
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: 1,
         comment: "some valid comment"
       })
       .end((err, res) => {
         if (err) {
-          //   console.log(err);
           done(err);
         }
         res.status.should.eql(404);
@@ -512,7 +508,7 @@ describe('PATCH /redflags/:id/comment', () => {
       .patch('/api/v1/redflags/1/comment')
       // The red flag with id = 1 belongs to eneja.kc@gmail.com, therefore, cannot be edited by user with email john@gmail.com
       .send({
-        email: 'john@gmail.com',
+        userId: 2, // this user id refers to john@gmail.com
         comment: "some valid comment"
       })
       .end((err, res) => {
@@ -603,10 +599,10 @@ describe('GET /redflags/:id', () => {
 /**--------------------- DELETE /redflags/:id -------------- */
 describe('DELETE /redflags/:id', () => {
 
-  it(`should return a 400 error if email is not provided`, (done) => {
+  it(`should return a 400 error if userId is not provided`, (done) => {
     chai.request(app)
       .delete('/api/v1/redflags/1') 
-      .send({}) // email not provided
+      .send({}) // userId not provided
       .end((err, res) => {
         if (err) {
           done(err);
@@ -618,10 +614,10 @@ describe('DELETE /redflags/:id', () => {
       });
   });
 
-  it(`should return a 400 error if provided email is wrongley formatted`, (done) => {
+  it(`should return a 400 error if provided userId is not a valid integer`, (done) => {
     chai.request(app)
       .delete('/api/v1/redflags/1') 
-      .send({email: "wrong-email-format-at-yohoo-***dotcom"})
+      .send({userId: '2A'})
       .end((err, res) => {
         if (err) {
           done(err);
@@ -633,10 +629,10 @@ describe('DELETE /redflags/:id', () => {
       });
   });
 
-  it(`should return a 401 error if the provided email is not registered`, (done) => {
+  it(`should return a 401 error if the provided id does not match any user  in the system`, (done) => {
     chai.request(app)
       .delete('/api/v1/redflags/1') 
-      .send({ email: "unregisteredMail@gmail.com" })
+      .send({ userId: 383898928298 })
       .end((err, res) => {
         if (err) {
           done(err);
@@ -651,7 +647,7 @@ describe('DELETE /redflags/:id', () => {
   it(`should return a 401 error if the redflag exists, but does not belong to the user trying to delete it`, (done) => {
     chai.request(app)
       .delete('/api/v1/redflags/1') 
-      .send({ email: "john@gmail.com" }) // john trying to delete a red-flag belonging to eneja.kc
+      .send({ userId: 2 }) // john trying to delete a red-flag belonging to eneja.kc
       .end((err, res) => {
         if (err) {
           done(err);
@@ -666,7 +662,7 @@ describe('DELETE /redflags/:id', () => {
   it(`should return a 400 error if an invalid red-flag id is provided as parameter`, (done) => {
     chai.request(app)
       .delete('/api/v1/redflags/a') // 'a' is an invalid red-flag id
-      .send({ email: "eneja.kc@gmail.com" })
+      .send({ userId: 1 })
       .end((err, res) => {
         if (err) {
           done(err);
@@ -680,8 +676,8 @@ describe('DELETE /redflags/:id', () => {
 
   it(`should return 404 if there's no redflag in the system with the specified id`, (done) => {
     chai.request(app)
-      .delete('/api/v1/redflags/1000') 
-      .send({ email: "eneja.kc@gmail.com" })
+      .delete('/api/v1/redflags/10000') 
+      .send({ userId: 1 })
       .end((err, res) => {
         if (err) {
           done(err);
@@ -697,7 +693,7 @@ describe('DELETE /redflags/:id', () => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        email: 'eneja.kc@gmail.com',
+        id: '1', // this is the userId.
         type: 'red-flag',
         location: '9.388939, 0.848494',
         comment: 'This order is created to be used to test the successful deletion of a route by the next test',
@@ -725,11 +721,11 @@ describe('DELETE /redflags/:id', () => {
       });
   });
 
-  it('should let a registered user create an order to be deleted by the next test', (done) => {
+  it('should let a user delete a record he created', (done) => {
     chai.request(app)
       .delete('/api/v1/redflags/5') // the last redflag after the recent post test above will have an id of 5
       .send({
-        email: 'eneja.kc@gmail.com', // the user who created the red-flag record
+        userId: 1, // the user who created the red-flag record
       })
       .end((err, res) => {
         if (err) {

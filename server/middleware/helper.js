@@ -17,6 +17,10 @@ class Helper {
     return Array.isArray(value);
   }
 
+  static isValidId(id) {
+    return !(Number.isNaN(Number(id)));
+  }
+
   static isValidComment(comment) {
     // example of a valid comment: "I was cheated" : 3 words
     return (comment.split(' ').length > 2)
