@@ -68,6 +68,56 @@
         "uploads/ESLint Setup with VSCode_HD.mp4",
         "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
       ]
+    },
+    {
+      "id": 5,
+      "createdOn": "2018-12-06T20:21:18.959Z",
+      "createdBy": 2,
+      "type": "red-flag",
+      "location": "32.9065293, -6.45115020000003",
+      "status": "draft",
+      "comment": "john's lates reports corruption again",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 6,
+      "createdOn": "2018-12-07T01:27:55.095Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "32.9065293, -6.45115020000003",
+      "status": "draft",
+      "comment": "eneja.kc  lates reports corruption again",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 8,
+      "createdOn": "2018-12-07T01:45:28.052Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "              8.999999, 20.999999",
+      "status": "draft",
+      "comment": "This is a new comment",
+      "Image": [],
+      "Video": []
+    },
+    {
+      "id": 9,
+      "createdOn": "2018-12-07T07:02:59.859Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "8.999999, 20.999999",
+      "status": "draft",
+      "comment": "testing conversion of id to userId in post redflags",
+      "Image": [
+        "uploads/food3.jpg",
+        "uploads/food2.jpg"
+      ],
+      "Video": [
+        "uploads/ESLint Setup with VSCode_HD.mp4",
+        "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
+      ]
     }
   ]
 }
