@@ -13,7 +13,7 @@ describe('POST /redflags', () => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        id: "1",
+        userId: "1",
         type: 'red-flag',
         location: '9.388939, 0.848494',
         comment: 'I am reporting corruption',
@@ -35,7 +35,7 @@ describe('POST /redflags', () => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        id: '1000', // there is no user with id of 10000
+        userId: '1000', // there is no user with id of 10000
         type: 'red-flag',
         location: '9.388939, 0.848494',
         comment: 'I am reporting corruption',
@@ -54,7 +54,7 @@ describe('POST /redflags', () => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: '1',
         type: 'red-flag',
         location: '8.2282, 2.8928',
         comment: '',
@@ -73,7 +73,7 @@ describe('POST /redflags', () => {
       .post('/api/v1/redflags')
       .send({
         // missing the location field
-        email: 'eneja.kc@gmail.com',
+        userId: '1',
         type: 'red-flag',
         comment: 'reporting corruption',
       })
@@ -90,7 +90,7 @@ describe('POST /redflags', () => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: '1',
         type: 'red-flag',
         location: '2.3332, -3.32222',
         comment: 'reporting corruption', // comment less than 3 words
@@ -104,11 +104,11 @@ describe('POST /redflags', () => {
       });
   });
 
-  it('should return an error if a wrong email format is provided', (done) => {
+  it('should return an error if userId is not a valid integer', (done) => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        email: 'ene&^ja.kc@gmail.com',
+        userId: '2A',
         type: 'red-flag',
         comment: 'reporting corruption in my area',
         location: '.22532, 34.2224'
@@ -122,11 +122,11 @@ describe('POST /redflags', () => {
       });
   });
 
-  it('should return a error message if the type field is not red-flag or intervention', (done) => {
+  it('should return an error message if the type field is not red-flag or intervention', (done) => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: '1',
         location: '.2898282, 2.228982',
         type: 'neither red-flag nor intervention',
         comment: 'reporting corruption',
@@ -144,7 +144,7 @@ describe('POST /redflags', () => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: '1',
         location: '.2898282, 2.228982, 28.89282',
         type: 'neither red-flag nor intervention',
         comment: 'reporting corruption',
@@ -162,7 +162,7 @@ describe('POST /redflags', () => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        email: 'eneja.kc@gmail.com',
+        userId: '1',
         location: '.2898282, 2.228add982', // the longitude value is invalid (it contains letters)
         type: 'neither red-flag nor intervention',
         comment: 'reporting corruption',
@@ -233,7 +233,6 @@ describe('PATCH /redflags/:id/location', () => {
       })
       .end((err, res) => {
         if (err) {
-          //   console.log(err);
           done(err);
         }
         res.status.should.eql(400);
@@ -253,7 +252,6 @@ describe('PATCH /redflags/:id/location', () => {
       })
       .end((err, res) => {
         if (err) {
-          //   console.log(err);
           done(err);
         }
         res.status.should.eql(400);
@@ -271,7 +269,6 @@ describe('PATCH /redflags/:id/location', () => {
       })
       .end((err, res) => {
         if (err) {
-          //   console.log(err);
           done(err);
         }
         res.status.should.eql(400);
@@ -693,7 +690,7 @@ describe('DELETE /redflags/:id', () => {
     chai.request(app)
       .post('/api/v1/redflags')
       .send({
-        id: '1', // this is the userId.
+        userId: '1', // this is the userId.
         type: 'red-flag',
         location: '9.388939, 0.848494',
         comment: 'This order is created to be used to test the successful deletion of a route by the next test',
@@ -710,7 +707,6 @@ describe('DELETE /redflags/:id', () => {
       })
       .end((err, res) => {
         if (err) {
-          //   console.log(err);
           done(err);
         }
         res.status.should.eql(201);

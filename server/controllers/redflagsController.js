@@ -122,12 +122,11 @@ class RedflagsController {
   }// END editRedflagComment
 
   static async getAllRedflags(req, res) {
-
     const { redflags } = req;
 
     return res.status(200).json({
       status: 200,
-      data: redflags
+      data: redflags,
     });
   }// END getAllRedflags
 
@@ -135,16 +134,15 @@ class RedflagsController {
     const { requestedRedflag } = req;
     res.status(200).json({
       status: 200,
-      data: [ requestedRedflag ]
+      data: [requestedRedflag],
     });
   }// END getOneRedflag
-
 
 
   static async deleteRedflag(req, res) {
     const { allRedflags, redflagToDelete, redflagOwner } = req;
 
-    const ownerEmail = redflagOwner.email; //for sending email notification to owner
+    const ownerEmail = redflagOwner.email; // for sending email notification to owner
     const ownerPhoneNumber = redflagOwner.phoneNumber; // for sending sms notification to owner
 
     const indexOfRedflagToDelete = allRedflags.indexOf(redflagToDelete);
@@ -175,11 +173,7 @@ class RedflagsController {
         message: 'red-flag record has been deleted',
       }],
     });
-
-
-
   }// END deleteRedflag
-
 }// END class RedflagsController
 
 

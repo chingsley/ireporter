@@ -101,6 +101,23 @@
       "comment": "This is a new comment",
       "Image": [],
       "Video": []
+    },
+    {
+      "id": 9,
+      "createdOn": "2018-12-07T07:02:59.859Z",
+      "createdBy": 1,
+      "type": "red-flag",
+      "location": "8.999999, 20.999999",
+      "status": "draft",
+      "comment": "testing conversion of id to userId in post redflags",
+      "Image": [
+        "uploads/food3.jpg",
+        "uploads/food2.jpg"
+      ],
+      "Video": [
+        "uploads/ESLint Setup with VSCode_HD.mp4",
+        "uploads/How to Enable Hardware Virtualization on Pc or Laptop_HD.mp4"
+      ]
     }
   ]
 }

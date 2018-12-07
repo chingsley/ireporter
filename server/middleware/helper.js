@@ -23,7 +23,7 @@ class Helper {
 
   static isValidComment(comment) {
     // example of a valid comment: "I was cheated" : 3 words
-    return (comment.split(' ').length > 2)
+    return (comment.split(' ').length > 2);
   }
 
   static generateUserId() {
@@ -51,7 +51,6 @@ class Helper {
   //   const user = users.filter(user => user.email.trim() === email.trim());
   //   return (user.length > 1) ? true : false;
   // }
-
 }// END HelperValidator
 
 export default Helper;
