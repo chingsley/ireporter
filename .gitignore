@@ -1,6 +1,5 @@
 node_modules/
 .nyc_output/
 .coveralls.yml
-.env
 dist/
 coverage/
