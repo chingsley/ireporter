@@ -3,3 +3,9 @@ node_modules/
 .coveralls.yml
 dist/
 coverage/
+redflags_test.json
+redflags.json
+users_test.json
+users.json
+server/storage/
+server/index.js

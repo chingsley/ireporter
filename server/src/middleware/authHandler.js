@@ -4,6 +4,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 class AuthHandler {
+  /**
+   * 
+   * @param {object} req the request object
+   * @param {object} res the response object
+   */
   static async generateAuthToken(req, res) {
     const {
       userDetails, userId, userName, userEmail, userStatus,
@@ -34,8 +39,14 @@ class AuthHandler {
         },
       }],
     });
-  }// END generateAuthToken
+  }
 
+  /**
+   * 
+   * @param {object} req request object
+   * @param {object} res response object
+   * @param {funtion} next calls next handler
+   */
   static authorize(req, res, next) {
     const token = req.header('x-auth');
 
@@ -52,8 +63,14 @@ class AuthHandler {
         error: 'Authorization failed. You must be logged in to use this route',
       });
     }
-  }// END authorize
+  }
 
+  /**
+   * 
+   * @param {object} req request object
+   * @param {object} res response object
+   * @param {funcion} next to the next handler
+   */
   static authorizeAdmin(req, res, next) {
     if (req.userStatus !== 'admin') {
       return res.status(403).json({
@@ -62,7 +79,7 @@ class AuthHandler {
       });
     }
     return next();
-  }// END static authorizeAdmin
-}// END class AuthHandler
+  }
+}
 
 export default AuthHandler;
