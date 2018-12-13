@@ -18,9 +18,9 @@ class RedflagsController {
    * @returns {object} 
    */
   static async newRedflag(req, res) {
-    const recordType = ((req.baseUrl).split('/')[3]).slice(1, -1);
-    console.log(recordType);
-    console.log(recordType === 'red-flags')
+    // const recordType = ((req.baseUrl).split('/')[3]).slice(1, -1);
+    // console.log(recordType);
+    // console.log(recordType === 'red-flags')
     const {
       createdBy,
       location,
@@ -53,12 +53,22 @@ class RedflagsController {
         comment,
       ])).rows[0];
 
+      let formattedResult = {};
+      formattedResult.id = newRedflag.id;
+      formattedResult.createdOn = newRedflag.created_on;
+      formattedResult.createdBy = newRedflag.created_by;
+      formattedResult.type = newRedflag.type;
+      formattedResult.location = newRedflag.location;
+      formattedResult.status = newRedflag.status;
+      formattedResult.Images = newRedflag.images;
+      formattedResult.Videos = newRedflag.videos;
+      formattedResult.comment= newRedflag.comment
       res.status(201).json({
         status: 201,
         data: [{
           id: newRedflag.id,
           message: 'created red-flag record',
-          'red-flag': newRedflag,
+          'red-flag': formattedResult,
 
         }],
       });
@@ -145,13 +155,23 @@ class RedflagsController {
           error: 'no red-flag matches the specified id',
         });
       }
-
+      const formattedRedflag = {
+        id: redflag.id,
+        createdOn: redflag.created_on,
+        createdBy: redflag.created_by,
+        type: redflag.type,
+        location: redflag.location,
+        status: redflag.status,
+        Images: redflag.images,
+        Videos: redflag.videos,
+        comment: redflag.comment
+      }
       res.status(200).json({
         status: 200,
         data: [{
          id: redflag.id,
           message: 'Updated red-flag\'s status',
-          'red-flag': redflag,
+          'red-flag': formattedRedflag,
         }],
       });
     } catch (error) {
@@ -194,12 +214,23 @@ class RedflagsController {
       }
 
       const updatedRedflag = (await pool.query(queryStrUpdate, [req.location, req.params.id])).rows[0];
+      const formattedRedflag = {
+        id: updatedRedflag.id,
+        createdOn: updatedRedflag.created_on,
+        createdBy: updatedRedflag.created_by,
+        type: updatedRedflag.type,
+        location: updatedRedflag.location,
+        status: updatedRedflag.status,
+        Images: updatedRedflag.images,
+        Videos: updatedRedflag.videos,
+        comment: updatedRedflag.comment
+      }
       return res.status(200).json({
         status: 200,
         data: [{
           id: updatedRedflag.id,
           message: `Updated red-flag's location`,
-          "red-flag": updatedRedflag
+          "red-flag": formattedRedflag
         }]
       });
      
@@ -243,12 +274,23 @@ class RedflagsController {
       }
 
       const updatedRedflag = (await pool.query(queryStrUpdate, [req.comment, req.params.id])).rows[0];
+      const formattedRedflag = {
+        id: updatedRedflag.id,
+        createdOn: updatedRedflag.created_on,
+        createdBy: updatedRedflag.created_by,
+        type: updatedRedflag.type,
+        location: updatedRedflag.location,
+        status: updatedRedflag.status,
+        Images: updatedRedflag.images,
+        Videos: updatedRedflag.videos,
+        comment: updatedRedflag.comment
+      }
       return res.status(200).json({
         status: 200,
         data: [{
           id: updatedRedflag.id,
           message: `Updated red-flag's comment`,
-          "red-flag": updatedRedflag
+          "red-flag": formattedRedflag
         }]
       });
 
@@ -361,12 +403,23 @@ class RedflagsController {
       }
 
       const deletedRedflag = (await pool.query(queryStrDelete, [req.params.id])).rows[0];
+      const formattedRedflag = {
+        id: deletedRedflag.id,
+        createdOn: deletedRedflag.created_on,
+        createdBy: deletedRedflag.created_by,
+        type: deletedRedflag.type,
+        location: deletedRedflag.location,
+        status: deletedRedflag.status,
+        Images: deletedRedflag.images,
+        Videos: deletedRedflag.videos,
+        comment: deletedRedflag.comment
+      }
       return res.status(200).json({
         status: 200,
         data: [{
           id: deletedRedflag.id,
           message: `red-flag record has been deleted`,
-          "red-flag": deletedRedflag
+          "red-flag": formattedRedflag
         }]
       });
 
