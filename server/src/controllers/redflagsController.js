@@ -1,6 +1,7 @@
 import moment from 'moment';
 import nodemailer from 'nodemailer';
 import pool from '../db/config';
+import outputFormatter from '../middleware/formatOutput';
 
 const smtpTransport = require('nodemailer-smtp-transport');
 
@@ -110,9 +111,10 @@ class RedflagsController {
       }
     }
 
+      const formattedRecord = outputFormatter(redflags);
       return res.status(200).json({
         status: 200,
-        data: [{ redflags }]
+        data: [{ formattedRecord }]
       });
 
     } catch (error) {
@@ -298,9 +300,22 @@ class RedflagsController {
         redflag.videos = formattedVidArr;
       }
 
+      console.log(redflag);
+      const formattedRedflag = {
+        id: redflag.id,
+        createdOn: redflag.created_on,
+        createdBy: redflag.created_by,
+        type: redflag.type,
+        location: redflag.location,
+        status: redflag.status,
+        Images: redflag.images,
+        Videos: redflag.videos,
+        comment: redflag.comment
+      }
+
       return res.status(200).json({
         status: 200,
-        data: [{ redflag }]
+        data: [{ formattedRedflag }]
       });
 
     } catch (error) {

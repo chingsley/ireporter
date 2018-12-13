@@ -1,6 +1,6 @@
-/** Import the needfuls */
 import moment from 'moment';
 import pool from '../db/config';
+import outputFormatter from '../middleware/formatOutput';
 
 
 class InterventionsController {
@@ -59,7 +59,7 @@ class InterventionsController {
         error: 'internal server error',
       });
     }
-  }// END newIntervention
+  }
 
 
   /**
@@ -104,9 +104,10 @@ class InterventionsController {
         }
       }
 
+      const formattedRecord = outputFormatter(interventions);
       return res.status(200).json({
         status: 200,
-        data: [{ interventions }]
+        data: [{ formattedRecord }]
       });
 
     } catch (error) {
@@ -296,9 +297,21 @@ class InterventionsController {
         intervention.videos = formattedVidArr;
       }
 
+      const formattedIntervention = {
+        id: intervention.id,
+        createdOn: intervention.created_on,
+        createdBy: intervention.created_by,
+        type: intervention.type,
+        location: intervention.location,
+        status: intervention.status,
+        Images: intervention.images,
+        Videos: intervention.videos,
+        comment: intervention.comment
+      }
+
       return res.status(200).json({
         status: 200,
-        data: [{ intervention }]
+        data: [{ formattedIntervention }]
       });
 
     } catch (error) {
@@ -309,8 +322,6 @@ class InterventionsController {
       });
     }
   }
-
-
 
   /**
      * 
