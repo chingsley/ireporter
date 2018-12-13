@@ -1,15 +1,21 @@
 language: node_js
-node_js: 
-  - "lts/*"
+node_js:
+- lts/*
 cache:
   directories:
-    - "node_modules"
+  - node_modules
 services:
-  - postgresql
- before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-script:
-  - npm run test
-after_script: ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-after_success: 
-  - npm run cover
+- postgresql
+before_script:
+- psql -c 'create database ireporter;' -U postgres
+- curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+- chmod +x ./cc-test-reporter
+- "./cc-test-reporter before-build"
+after_script: "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+after_success:
+- npm run cover
+deploy:
+  api_key:
+    secure: fFdibDP7cOwU79Ul0njbln7MCaoCCrdboOgkqPPnCaT1urCW7e3KALphZP2FphE/AvuPkwVJ793X8jd5GQhlgCyHryJmD8dvR4rZFK+AWxwFpUQSYblGG70qywS7nFqIMTTe7cwByQaUJmY2X2yb9IOkmmulao62bJAldy33B0TKqdJjfQ8fpD6yqtZ7M+x6vIkIy5cE/gk6RQ+riatWB88MMbsBJUPKoHKqdl2TYdnr5zzLkfsl7j8rIZ6e7Ey3Hqyp9DetZAHZw5t5HJSVOsH59hWVO3m1cQMS2dwt03MdiujIG1PYWhRloWpj9dzlZqN8kzDDOn/2KrPlhgPia3t9Wq1q3Cp+hBFoWsJUweyIc/d7ZijnDfsQq7g8EwTg31vY+bU6Q6lYqRTYMrLpdCEfDiil2FNXDF5uP8IR060X6FBbXJQoYIZBoXf9YvIQwlw5g3an02cgJcwhu2FQPiUGkoO+pJa42dcN5Xgo5KSly11ViEEn61+X0AcKU2YB+iEFDlyF5oPUOaLxKnmWvJp55n8ZaONUstJvmScr/ZA5C+Dis0QyD9SKneLkNBwZy3Hg7fVyPKUSMldTsITgYveSDSryzBzjd2lCi0O3o1EH/DoCZMWWB6FOGMz6YHqyVmM8hvEE1BsNe+aLA9t9ADthGfoLjDC45tNAYxyzmd0=
+  provider: heroku
+
