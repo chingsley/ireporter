@@ -50,7 +50,6 @@ class Inspect {
     if (!Validator.isValidName(firstname)) errObj["firstname"] = `Must be a minimum of 2 characters, (no numbers)`;
     if (!Validator.isValidName(lastname)) errObj["lastname"] = `Must be a minimum of 2 characters, (no numbers)`;
     if (username && !Validator.isValidName(username)) errObj["username"] = `Must be a minimum of 2 characters, (no numbers)`;
-    console.log('username = ', username);
     if(email){
       if (Validator.customValidateEmail(email).error) {
         errObj["email"] = `${Validator.customValidateEmail(email).message}`;

@@ -15,7 +15,9 @@ class InspectRedflag {
    * @returns {next}
    */
   static async newRecord(req, res, next) {
+   
 
+    let errObj = {};
     const { location, comment } = req.body;
     const response400 = message => res.status(400).json({ status: 400, error: message });
 
@@ -25,7 +27,7 @@ class InspectRedflag {
    
     if (!comment) return response400(`Please provide comment.`);
     if (comment.toString().trim() === '') return response400(`Please provide comment`);
-    if (!Validator.isValidComment(comment)) return response400(`Comment must be a minium of 3 words`);
+    if (!Validator.isValidComment(comment)) return response400(`Please provide valid comment`);
 
     const imageArr = [];
     const videoArr = [];
@@ -35,6 +37,9 @@ class InspectRedflag {
     if (req.files) {
       if (req.files.images) {
         req.files.images.forEach((image) => {
+          if (image.size > 5000000) {
+            errObj["images"] = `${image.filename} is too large, Max size: 5M`;
+          }
           imageArr.push(image.path);
         });
         imageStr = imageArr.join(', ');
@@ -42,12 +47,21 @@ class InspectRedflag {
 
       if (req.files.videos) {
         req.files.videos.forEach((video) => {
+          if (video.size > 10000000) {
+            errObj["videos"] = `${video.filename} is too large, Max size: 10MB`;
+          }
           videoArr.push(video.path);
         });
         videoStr = videoArr.join(', ');
       }
     }
 
+    if(Object.keys(errObj).length > 0 ) {
+      return res.status(400).json({
+        status: 400,
+        error: errObj
+      });
+    }
     req.createdBy = req.userId;
     // 'type' will be set in the individual controllers
     req.location = location.toString().trim();
@@ -103,6 +117,7 @@ class InspectRedflag {
    * @returns {next}
    */
   static async editLocation(req, res, next) {
+    console.log('type-of-record: ', (req.baseUrl).split('/')[3])
     const {location} = req.body;
     const response400 = message => res.status(400).json({ status: 400, error: message });
     if (!location) return response400(`Please provide location coordinates`);

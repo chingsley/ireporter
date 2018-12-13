@@ -18,6 +18,9 @@ class RedflagsController {
    * @returns {object} 
    */
   static async newRedflag(req, res) {
+    const recordType = ((req.baseUrl).split('/')[3]).slice(1, -1);
+    console.log(recordType);
+    console.log(recordType === 'red-flags')
     const {
       createdBy,
       location,

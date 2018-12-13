@@ -99,12 +99,13 @@ class Validator {
    */
   static isValidComment(comment) {
     if (!comment) return false;
+    if (!Number.isNaN(Number(comment))) return false;
     if (comment.toString().trim() === '') return false;
     const arr = comment.toString().trim().split(' ');
     const arrOfActualWords = [];
     for (let i = 0; i < arr.length; i += 1) {
       arr[i] = arr[i].toString().trim();
-      if (arr[i] !== '') {
+      if (arr[i] !== '' && Number.isNaN(Number(arr[i]))) {
         arrOfActualWords.push(arr[i]);
       }
     }
