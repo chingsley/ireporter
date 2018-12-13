@@ -12,14 +12,12 @@ class Validator {
    * @returns {boolean} true or false 
    */
   static isValidRecordId(id) {
-    console.log('*************************************************************************',id);
     if (!Number.isInteger(Number(id))) return false;
     if ((Number(req.params.id) < 0)) return false;
 
   }
-  
+
   /**
-   *
    * @param {string} email user email
    * @returns {object} contains info about what is wrong with the mail
    */
@@ -33,17 +31,8 @@ class Validator {
  * @return {boolean} true or false
  */
   static isPasswordTooShort(password) {
+    if(!password) return false;
     return password.toString().trim().length < 6;
-  }
-
-  /**
-   *
-   * @param {string} password user's passowrd
-   * @param {string} confirmPassword same password
-   * @return {boolean} true or false
-   */
-  static isMatchingPasswords(password, confirmPassword) {
-    return password.toString().trim() === confirmPassword.toString().trim();
   }
 
   /**
@@ -52,6 +41,10 @@ class Validator {
    * @returns {boolean} true or false
    */
   static isValidName(name) {
+    if(!name) return false;
+    for(let i = 0; i < name.length; i++) {
+      if(!Number.isNaN(Number(name))) return false;
+    }
     return name.toString().trim().length >= 2;
   }
 
@@ -61,6 +54,10 @@ class Validator {
    * @return {boolean} true or false
    */
   static isValidPhoneNumber(phoneNumber) {
+    if(!phoneNumber) return false;
+    if(Number(phoneNumber) === 0) return false;
+    if(phoneNumber.toString().trim().length < 3) return false;
+    if(phoneNumber[0] !== '+' && !Number.isInteger(Number(phoneNumber[0]))) return false;
     const number = phoneNumber.toString().trim();
     const arr = number.split('');
     if (arr.length > 15) return false;
@@ -102,12 +99,13 @@ class Validator {
    */
   static isValidComment(comment) {
     if (!comment) return false;
+    if (!Number.isNaN(Number(comment))) return false;
     if (comment.toString().trim() === '') return false;
     const arr = comment.toString().trim().split(' ');
     const arrOfActualWords = [];
     for (let i = 0; i < arr.length; i += 1) {
       arr[i] = arr[i].toString().trim();
-      if (arr[i] !== '') {
+      if (arr[i] !== '' && Number.isNaN(Number(arr[i]))) {
         arrOfActualWords.push(arr[i]);
       }
     }

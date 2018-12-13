@@ -24,7 +24,7 @@ class AuthHandler {
     res.status(statusCode).json({
       status: statusCode,
       data: [{
-        token,
+        token: token,
         user: {
           id: userDetails.id,
           firstname: userDetails.firstname,
@@ -48,7 +48,7 @@ class AuthHandler {
    * @param {funtion} next calls next handler
    */
   static authorize(req, res, next) {
-    const token = req.header('x-auth');
+    const token = req.header('x-auth-token');
 
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);

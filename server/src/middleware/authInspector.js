@@ -3,32 +3,36 @@ import Validator from '../validators/validator';
 import pool from '../db/config';
 
 class Inspect {
+  /**
+   * 
+   * @param {object} req the request object
+   * @param {object} res the response object
+   * @param {method} next transfers controll
+   */
   static async signup(req, res, next) {
-    const response400 = message => res.status(400).json({ status: 400, error: message });
+     let errObj = {};
+  
     const {
       firstname,
       lastname,
-      othernames,
       username,
+      othernames,
       phoneNumber,
       email,
       password,
-      confirmPassword,
       adminSecret,
     } = req.body;
 
     const requiredFields = [
-      firstname, lastname, username, phoneNumber, email, password, confirmPassword,
+      firstname, lastname, phoneNumber, email, password
     ];
     const missingFields = requiredFields.map((field, index) => {
       const keys = {
         0: 'firstname',
         1: 'lastname',
-        2: 'username',
-        3: 'phoneNumber',
-        4: 'email',
-        5: 'password',
-        6: 'confirmPassword',
+        2: 'phoneNumber',
+        3: 'email',
+        4: 'password',
       };
       return (field === undefined || field === '') ? keys[index] : null;
     }).filter(field => field !== null).join(', ');
@@ -39,26 +43,34 @@ class Inspect {
       || !phoneNumber
       || !email
       || !password
-      || !confirmPassword
-      || !username
     ) {
-      return response400(`values are required for the following fields: ${missingFields}`);
+      errObj["missingFields"] = `Values are required for the field(s): ${missingFields}`;
     }
 
-    if (!Validator.isValidName(firstname)) return response400('invalid first name. First name must be a minimum of 2 characters');
-    if (!Validator.isValidName(lastname)) return response400('invalid last name. Last name must be a minimum of 2 characters');
-    if (Validator.customValidateEmail(email).error) {
-      return response400(Validator.customValidateEmail(email).message);
+    if (!Validator.isValidName(firstname)) errObj["firstname"] = `Must be a minimum of 2 characters, (no numbers)`;
+    if (!Validator.isValidName(lastname)) errObj["lastname"] = `Must be a minimum of 2 characters, (no numbers)`;
+    if (username && !Validator.isValidName(username)) errObj["username"] = `Must be a minimum of 2 characters, (no numbers)`;
+    if(email){
+      if (Validator.customValidateEmail(email).error) {
+        errObj["email"] = `${Validator.customValidateEmail(email).message}`;
+      }
+    } else {
+      errObj["email"] = `email field is missing`;
+    } 
+    if (!Validator.isValidPhoneNumber(phoneNumber)) errObj["phoneNumber"] = `Cannot contain alphabets, must be less than 16 digits long, cannot be preceded by '-', cannot be all 0 digits`;
+    if (Validator.isPasswordTooShort(password)) errObj["password"] = `Password should have a minimum of 6 characters`;
+    if( (Object.keys(errObj)).length > 0 ) {
+      return res.status(400).json({
+        status: 400,
+        error: errObj
+      });
     }
-    if (!Validator.isMatchingPasswords(password, confirmPassword)) return response400('the two passwords do not match');
-    if (!Validator.isValidPhoneNumber(phoneNumber)) return response400('Invalid phone number. Phone number cannot contain characters, and must be less than 16 digits long');
-    if (Validator.isPasswordTooShort(password)) return response400('Invalid password. Password should have a minimum of 6 characters');
-
+    const response401 = message => res.status(401).json({ status: 401, error: message });
     try {
       const userExists = (await pool.query('SELECT * FROM users WHERE email=$1', [email.toString().trim()])).rowCount;
-      if (userExists) return response400(`${email.toString().trim()} has been taken. Please choose another email`);
+      if (userExists) return response401(`${email.toString().trim()} has been taken. Please choose another email`);
     } catch (error) {
-      return response400(`${error}`); // keep an eye on this line
+      return res.status(500).json({error});
     }
     req.firstname = firstname.toString().trim();
     req.lastname = lastname.toString().trim();
@@ -72,7 +84,7 @@ class Inspect {
     req.adminSecret = adminSecret ? adminSecret.toString().trim() : null;
 
     return next();
-  } // END signup
+  } 
 
 
   static signin(req, res, next) {
@@ -94,7 +106,7 @@ class Inspect {
     req.email = email.toString().trim();
     req.password = password.toString().trim();
     return next();
-  }// END signin
-} // END class Inspect
+  }
+} 
 
 export default Inspect;

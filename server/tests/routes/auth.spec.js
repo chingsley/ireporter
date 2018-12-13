@@ -76,9 +76,9 @@ describe('POST /auth/signup', () => {
             .end((err, res) => {
                 if (err) done(err);
 
-                res.status.should.eql(400);
+                res.status.should.eql(401);
                 res.body.should.be.an('object').with.all.keys(['status', 'error']);
-                res.body.status.should.eql(400);
+                res.body.status.should.eql(401);
                 res.body.error.should.eql(`${users.validUserOne.email.toString().trim()} has been taken. Please choose another email`);
                 done();
             });
@@ -94,7 +94,6 @@ describe('POST /auth/signup', () => {
             res.status.should.eql(400);
             res.body.should.be.an('object').that.has.keys(['status', 'error']);
             res.body.status.should.eql(400);
-            res.body.error.should.eql('values are required for the following fields: firstname, lastname, username, phoneNumber, email, password, confirmPassword');
             done();
         });
     });
@@ -109,7 +108,6 @@ describe('POST /auth/signup', () => {
             res.status.should.eql(400);
             res.body.should.be.an('object').that.has.keys(['status', 'error']);
             res.body.status.should.eql(400);
-            res.body.error.should.eql('invalid first name. First name must be a minimum of 2 characters');
             done();
         });
     });
@@ -124,7 +122,6 @@ describe('POST /auth/signup', () => {
             res.status.should.eql(400);
             res.body.should.be.an('object').that.has.keys(['status', 'error']);
             res.body.status.should.eql(400);
-            res.body.error.should.eql('invalid last name. Last name must be a minimum of 2 characters');
             done();
         });
     });
@@ -139,25 +136,10 @@ describe('POST /auth/signup', () => {
             res.status.should.eql(400);
             res.body.should.be.an('object').that.has.keys(['status', 'error']);
             res.body.status.should.eql(400);
-            res.body.error.should.eql('email: leading dash in front of domain is not allowed');
             done();
         });
     });
 
-    it('it should respond with a 400 error message if the two passwords do not match', (done) => {
-        chai.request(app)
-        .post('/api/v1/auth/signup')
-            .send(users.invalidUserMissmatchedPassword)
-        .end((err, res) => {
-            if (err) done(err);
-
-            res.status.should.eql(400);
-            res.body.should.be.an('object').that.has.keys(['status', 'error']);
-            res.body.status.should.eql(400);
-            res.body.error.should.eql('the two passwords do not match');
-            done();
-        });
-    });
 
     it('it should respond with a 400 error message if password is less than 6 characters', (done) => {
         chai.request(app)
@@ -169,7 +151,6 @@ describe('POST /auth/signup', () => {
             res.status.should.eql(400);
             res.body.should.be.an('object').that.has.keys(['status', 'error']);
             res.body.status.should.eql(400);
-            res.body.error.should.eql('Invalid password. Password should have a minimum of 6 characters');
             done();
         });
     });
@@ -184,7 +165,6 @@ describe('POST /auth/signup', () => {
             res.status.should.eql(400);
             res.body.should.be.an('object').that.has.keys(['status', 'error']);
             res.body.status.should.eql(400);
-            res.body.error.should.eql('Invalid phone number. Phone number cannot contain characters, and must be less than 16 digits long');
             done();
         });
     });
@@ -210,7 +190,7 @@ describe('POST /auth/login', () => {
         });
     });
 
-    it('should a 400 error message if required fields are missing', (done) => {
+    it('should return a 400 error message if required fields are missing', (done) => {
         chai.request(app)
         .post('/api/v1/auth/login')
         .send(users.invalidUserNoData)
@@ -229,10 +209,10 @@ describe('POST /auth/login', () => {
         .end((err, res) => {
             if (err) done(err);
 
-            res.status.should.eql(400);
+            res.status.should.eql(401);
             res.body.should.not.have.keys(['data']);
             res.body.should.have.all.keys(['status', 'error']);
-            res.body.status.should.eql(400);
+            res.body.status.should.eql(401);
             res.body.error.should.eql('Invalid email or password');
             done();
         });
@@ -245,10 +225,10 @@ describe('POST /auth/login', () => {
         .end((err, res) => {
             if (err) done(err);
 
-            res.status.should.eql(400);
+            res.status.should.eql(401);
             res.body.should.not.have.keys(['data']);
             res.body.should.be.an('object').which.has.keys(['status', 'error']);
-            res.body.status.should.eql(400);
+            res.body.status.should.eql(401);
             res.body.error.should.eql('Invalid email or password');
             done();
         });

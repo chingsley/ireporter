@@ -16,7 +16,7 @@ describe('GET /interventions ', () => {
     it('It should let an admin successfully get all intervention record', (done) => {
         chai.request(app)
             .get('/api/v1/interventions')
-            .set('x-auth', generateValidToken(admin))
+            .set('x-auth-token', generateValidToken(admin))
             .end((err, res) => {
                 if (err) done(err);
 
@@ -30,7 +30,7 @@ describe('GET /interventions ', () => {
     it('It should let a registered successfully get their own intervention records', (done) => {
         chai.request(app)
             .get('/api/v1/interventions')
-            .set('x-auth', generateValidToken(validUserOne))
+            .set('x-auth-token', generateValidToken(validUserOne))
             .end((err, res) => {
                 if (err) done(err);
 
@@ -48,7 +48,7 @@ describe('GET /interventions ', () => {
     it('It should let an admin successfully get any intervention record', (done) => {
         chai.request(app)
             .get('/api/v1/interventions/2')
-            .set('x-auth', generateValidToken(admin))
+            .set('x-auth-token', generateValidToken(admin))
             .end((err, res) => {
                 if (err) done(err);
 
@@ -62,7 +62,7 @@ describe('GET /interventions ', () => {
     it('It should let a valid user successfully get their own intervention records', (done) => {
         chai.request(app)
             .get('/api/v1/interventions/2')
-            .set('x-auth', generateValidToken(validUserOne))
+            .set('x-auth-token', generateValidToken(validUserOne))
             .end((err, res) => {
                 if (err) done(err);
 
@@ -76,7 +76,7 @@ describe('GET /interventions ', () => {
     it(`It should not allow a user get another user's record`, (done) => {
         chai.request(app)
             .get('/api/v1/interventions/2')
-            .set('x-auth', generateValidToken(validUserTwo))
+            .set('x-auth-token', generateValidToken(validUserTwo))
             .end((err, res) => {
                 if (err) done(err);
 
@@ -94,7 +94,7 @@ describe('PATCH interventions/:id/status ', () => {
     it('It should let an admin successfully update the status of a intervention', (done) => {
         chai.request(app)
             .patch('/api/v1/interventions/2/status') // records 1 and 3 are interventions, while 2 and 4 are interventions. So id's 1 and 3 will fail this test, while 2 and 4 will pass the test
-            .set('x-auth', generateValidToken(admin))
+            .set('x-auth-token', generateValidToken(admin))
             .send({ status: 'resolved' })
             .end((err, res) => {
                 if (err) done(err);
@@ -110,7 +110,7 @@ describe('PATCH interventions/:id/status ', () => {
     it('It should return 404 if the id does not match the type', (done) => {
         chai.request(app)
             .patch('/api/v1/interventions/1/status') // the record with id 1 is intervention
-            .set('x-auth', generateValidToken(admin))
+            .set('x-auth-token', generateValidToken(admin))
             .send({ status: 'draft' })
             .end((err, res) => {
                 if (err) done(err);
@@ -130,7 +130,7 @@ describe('PATCH interventions/:id/location ', () => {
     it('It should let user successfully edit the location of a draft intervention', (done) => {
         chai.request(app)
             .patch('/api/v1/interventions/4/location') 
-            .set('x-auth', generateValidToken(validUserTwo))
+            .set('x-auth-token', generateValidToken(validUserTwo))
             .send({ location: '0.3344, -23.4454' })
             .end((err, res) => {
                 if (err) done(err);
@@ -146,7 +146,7 @@ describe('PATCH interventions/:id/location ', () => {
     it(`It should not allow change of location if status is not 'draft'`, (done) => {
         chai.request(app)
             .patch('/api/v1/interventions/2/location') // records 1 and 3 are interventions, while 2 and 4 are interventions. So id's 1 and 3 will pass this test, while 2 and 4 will fail the test
-            .set('x-auth', generateValidToken(validUserOne))
+            .set('x-auth-token', generateValidToken(validUserOne))
             .send({ location: '0.3344, -23.4454' })
             .end((err, res) => {
                 if (err) done(err);
@@ -167,7 +167,7 @@ describe('PATCH interventions/:id/comment ', () => {
     it('It should let user successfully edit the comment of a draft intervention', (done) => {
         chai.request(app)
             .patch('/api/v1/interventions/4/comment') 
-            .set('x-auth', generateValidToken(validUserTwo))
+            .set('x-auth-token', generateValidToken(validUserTwo))
             .send({ comment: 'a valid comment provided' })
             .end((err, res) => {
                 if (err) done(err);
@@ -183,7 +183,7 @@ describe('PATCH interventions/:id/comment ', () => {
     it(`It should not allow change of comment if status is not 'draft'`, (done) => {
         chai.request(app)
             .patch('/api/v1/interventions/2/comment') // records 1 and 3 are interventions, while 2 and 4 are interventions. So id's 1 and 3 will pass this test, while 2 and 4 will fail the test
-            .set('x-auth', generateValidToken(validUserOne))
+            .set('x-auth-token', generateValidToken(validUserOne))
             .send({ comment: 'some comment provided here' })
             .end((err, res) => {
                 if (err) done(err);
@@ -205,7 +205,7 @@ describe('DELETE interventions/:id ', () => {
     it('It should return a 404 if intervention is not found', (done) => {
         chai.request(app)
             .delete('/api/v1/interventions/10000') // record 1 becomes to validUserOne, so for validUserTwo cannot access/delete record 1
-            .set('x-auth', generateValidToken(validUserTwo))
+            .set('x-auth-token', generateValidToken(validUserTwo))
             .end((err, res) => {
                 if (err) done(err);
 
@@ -220,7 +220,7 @@ describe('DELETE interventions/:id ', () => {
     it(`It should not allow delete operation if status is not 'draft'`, (done) => {
         chai.request(app)
             .delete('/api/v1/interventions/2') // record 1 is in resolved state
-            .set('x-auth', generateValidToken(validUserOne))
+            .set('x-auth-token', generateValidToken(validUserOne))
             .end((err, res) => {
                 if (err) done(err);
 
@@ -235,7 +235,7 @@ describe('DELETE interventions/:id ', () => {
     it(`It should prevent users from deleting someone else's records`, (done) => {
         chai.request(app)
             .delete('/api/v1/interventions/4') //record 3 belongs to validUserTwo, so cannot be deleted by validUserOne
-            .set('x-auth', generateValidToken(validUserOne))
+            .set('x-auth-token', generateValidToken(validUserOne))
             .end((err, res) => {
                 if (err) done(err);
 

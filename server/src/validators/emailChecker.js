@@ -71,7 +71,7 @@ const emailTest = {
 
         // If mail does not contain '@' return error
         if (str.indexOf('@') < 0) {
-            msg = `email is missing the '@' character`;
+            msg = `Email is missing the '@' symbol`;
             return { error: true, message: msg };
         }
         let quoted = false;
@@ -98,20 +98,20 @@ const emailTest = {
         }
 
         if (lp.length > 64) {
-            msg = `the username part of your email cannot contain more than 64 characters`;
+            msg = `The username part of your email cannot contain more than 64 characters`;
             return { error: true, message: msg };
         }
 
 
 
         if (dom.length > 255) {
-            msg = `the domain part of your email cannot contain more than 255 characters`;
+            msg = `The domain part of your email cannot contain more than 255 characters`;
             return { error: true, message: msg };
         }
 
         // local-part cannot start or end with a dot
         if (lpArr[0] === '.' || lpArr[lpArr.length - 1] === '.') {
-            msg = `a dot (.) cannot start or end username part of your email, the username is unless quoted`;
+            msg = `A dot (.) cannot start or end username part of your email, the username is unless quoted`;
             return { error: true, message: msg };
         }
 
@@ -122,27 +122,27 @@ const emailTest = {
             // console.log(x);
             let y = x + 1; // n is index of the next character following the current dot
             if (lp[x] === lp[y]) {
-                msg = `email: consecutive dots are not allowed, unless the username is quoted`;
+                msg = `Email: consecutive dots are not allowed, unless the username is quoted`;
                 return { error: true, message: msg };
             }
         }
 
         // cannot contain more than one @ without quotes
         if ((lp.indexOf('@') > -1) && !quoted) {
-            msg = `email: only one @ is allowed outside quotation marks`;
+            msg = `Email: only one @ is allowed outside quotation marks`;
             return { error: true, message: msg };
         }
 
         // cannot contain a space without quotes
         if ((lp.indexOf(' ') > -1) && !quoted) {
-            msg = `email username cannot contain spaces, unless the username is quoted`;
+            msg = `Email username cannot contain spaces, unless the username is quoted`;
             return { error: true, message: msg };
         }
 
         // cannot contain some special chars like "(),:;<>@[\\] without qoutes
         for (let i = 0; i < specialChars.length; i++) {
             if ((lp.indexOf(specialChars[i]) > -1) && !quoted) {
-                msg = `email cannot contain '${specialChars[i]}' outside quotation marks`;
+                msg = `Email cannot contain '${specialChars[i]}' outside quotation marks`;
                 return { error: true, message: msg };
             }
         }
@@ -152,7 +152,7 @@ const emailTest = {
         // of character codes from 0 to 32
         for (let i = 0; i < 32; i++) {
             if ((lp.indexOf(String.fromCodePoint(i)) > -1)) {
-                msg = `email cannot contain line formatting characters like \\n, \\t, etc`;
+                msg = `Email cannot contain line formatting symbols like \\n, \\t, etc`;
                 return { error: true, message: msg };
             }
         }
@@ -163,44 +163,44 @@ const emailTest = {
             m = dom.indexOf('.', m + 1); // starts from index 0, and finds the next instance of '.' with every loop
             let n = m + 1; // n is index of the next character following the current dot
             if (domArr[m] === domArr[n]) {
-                msg = `email: consecutive dots after @ is not allowed.`;
+                msg = `Email: consecutive dots after @ is not allowed.`;
                 return { error: true, message: msg };
             }
         }
 
         // domain name connot contain spaces
         if ((dom.indexOf(' ') > -1)) {
-            msg = `email cannot contain spaces after @`;
+            msg = `Email cannot contain spaces after @`;
             return { error: true, message: msg };
         }
         // domain should end with .com, .org, .net, ...
         if (!this.dotCom(str) && !this.dotOrg(str) && !this.dotNet(str)) {
-            msg = `email domain name must end with '.com', '.org' or '.net'`;
+            msg = `Email domain name must end with '.com', '.org' or '.net'`;
             return { error: true, message: msg };
         }
 
         // leading dash in front of domain is invalid
         if (dom[0] === '-') {
-            msg = `email: leading dash in front of domain is not allowed`;
+            msg = `Email: leading dash in front of domain is not allowed`;
             return { error: true, message: msg }
         }
 
         // Rejects special characters in the domain name except '.' and non-leading dash (-)
         for (let i = 0; i < dom.length; i++) {
             if (!this.isValidDomChar(dom[i], dom)) {
-                msg = `email: special characters like " ${dom[i]} " is not allowed in the domain`;
+                msg = `Email: special symbols like " ${dom[i]} " is not allowed in the domain`;
                 return { error: true, message: msg };
             }
         }
 
         // Return false if there is no dot in the domain (there must be a .*)
         if (dom.indexOf('.') < 0) {
-            msg = `your email has an invalid domain name. Use .com, .org, or .net`;
+            msg = `your Email has an invalid domain name. Use .com, .org, or .net`;
             return { error: true, message: msg };
         }
 
-        // If an email passes all the tests above, then return this:
-        return { error: false, message: 'email is valid' };
+        // If an Email passes all the tests above, then return this:
+        return { error: false, message: 'Email is valid' };
 
     }
 }
