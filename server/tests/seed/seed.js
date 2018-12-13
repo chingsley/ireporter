@@ -10,7 +10,6 @@ const users = {
         phoneNumber: '09063550695',
         email: 'eneja.kc@gmail.com',
         password: 'kingsley',
-        confirmPassword: 'kingsley',
         adminSecret: 'nimdamai',
         username: 'enejakc'
     },
@@ -22,7 +21,6 @@ const users = {
         phoneNumber: '08023875011',
         email: 'johnsnow@gmail.com',
         password: 'johnsnow',
-        confirmPassword: 'johnsnow',
         adminSecret: '',
     },
     validUserTwo: {
@@ -33,7 +31,6 @@ const users = {
         phoneNumber: '0808822928',
         email: 'theongreyjoy@gmail.com',
         password: 'theongreyjoy',
-        confirmPassword: 'theongreyjoy',
         adminSecret: '',
     },
     validUserInvalidPassword: {
@@ -51,7 +48,6 @@ const users = {
         phoneNumber: '0808822928',
         email: 'theongreyjoy@gmail.com',
         password: 'theon',
-        confirmPassword: 'theon',
     },
     invalidUserNoEmail: {
         firstname: 'theon',
@@ -59,7 +55,6 @@ const users = {
         username: 'ironborne',
         phoneNumber: '0808822928',
         password: 'theon',
-        confirmPassword: 'theon',
         adminSecret: '',
     },
     invalidUserNoPass: {
@@ -77,7 +72,6 @@ const users = {
         phoneNumber: '0808822928',
         email: 'theongreyjoy@gmail.com',
         password: 'theon',
-        confirmPassword: 'nottheon',
         adminSecret: '',
     },
     incorrectFirstname: {
@@ -87,7 +81,6 @@ const users = {
         phoneNumber: '0808822928',
         email: 'theongreyjoy@gmail.com',
         password: 'theon',
-        confirmPassword: 'theon',
         adminSecret: ''
     },
     incorrectLastname: {
@@ -97,7 +90,6 @@ const users = {
         phoneNumber: '0808822928',
         email: 'theongreyjoy@gmail.com',
         password: 'theon',
-        confirmPassword: 'theon',
         adminSecret: ''
     },
     incorrectEmail: {
@@ -107,7 +99,6 @@ const users = {
         phoneNumber: '0808822928',
         email: 'kc@-gmail.com ', // email: leading dash in front of domain is not allowed
         password: 'theon',
-        confirmPassword: 'theon',
         adminSecret: ''
     },
     passwordTooShort: {
@@ -117,7 +108,6 @@ const users = {
         phoneNumber: '0808822928',
         email: 'eneja.kc@gmail.com ',
         password: 'theo',
-        confirmPassword: 'theo',
         adminSecret: ''
     },
 
@@ -128,7 +118,6 @@ const users = {
         phoneNumber: '08088a22928', // phone number cannot contain characters
         email: 'eneja.kc@gmail.com ',
         password: 'theo',
-        confirmPassword: 'theo',
         adminSecret: ''
     },
 };

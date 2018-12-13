@@ -5,7 +5,7 @@ dotenv.config();
 
 const env = process.env.NODE_ENV || 'development';
 const pool = new Pool({
-  connectionString: env === 'test' ? process.env.DATABASE_URL : process.env.LOCAL_DATABASE_URL,
+  connectionString: env === 'test' ? process.env.TEST_DATABASE_URL : process.env.TEST_DATABASE_URL,
 });
 
 export default pool;

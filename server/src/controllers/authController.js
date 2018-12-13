@@ -49,31 +49,28 @@ class AuthController {
       req.wantsToSignUp = true;
       return next();
     } catch (error) {
-      return res.status(400).json({ error });
+      return res.status(500).json({ error });
     }
-  }// END signup
+  }
 
 
   static async signin(req, res, next) {
     const { email, password } = req;
-    const response400 = message => res.status(400).json({ status: 400, error: message });
+    const response401 = message => res.status(401).json({ status: 401, error: message });
 
     try {
       const userDetails = (await pool.query('SELECT * FROM users WHERE email=$1', [email])).rows[0];
-      if (!userDetails) return response400('Invalid email or password');
-
-      // const userDetails = (await pool.query('SELECT * FROM users WHERE email=$1', [email])).rows[0];
+      if (!userDetails) return response401('Invalid email or password');
       const correctPassword = await bcrypt.compare(password, userDetails.password);
-      if (!correctPassword) return response400('Invalid email or password');
+      if (!correctPassword) return response401('Invalid email or password');
 
-      // Append important payload to request object
       req.userDetails = userDetails;
       req.userId = userDetails.id;
       req.userName = userDetails.username;
       req.userEmail = userDetails.email;
       req.userStatus = userDetails.is_admin ? 'admin' : 'customer';
-
       return next();
+
     } catch (error) {
       return res.status(500).json({
         status: 500,
