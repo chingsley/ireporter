@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
-// import fs from 'fs';
 
 // Import your routers here
 import redflagsRouter from './routes/redflagsRouter';
