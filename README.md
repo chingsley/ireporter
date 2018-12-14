@@ -35,72 +35,114 @@ npm start
 | Endpoint                      | Functionality            | Notes  										 	   				                  |
 | ----------------------------- | ----------------------   | ---------------------------------------------------------|
 | POST /auth/signup             | Registers a User         |                                                          |
-| POST /redflags                | create a new record      |                                                          |
-| GET /redflags                 | Get all records          |                                                          |
-| GET /redflags/:id             | Get a particular record  |                                                          |
-| PATCH /redflags/:id/location  | Edit a record's location | A user can only edit his own record, and no one else's   |
-| PATCH /redflags/:id/comment   | Edit a redflag's comment | A user can only edit his own record, and no one else's   |
-| DELETE /redflags/:id          | Delete a record          | A user can only delete his own record, and no one else's |
+| POST /auth/login              | login a User         |                                                          |
+| POST /red-flags               | create a new record      |                                                          |
+| GET /red-flags                | Get all records          |                                                          |
+| GET /red-flags/:id            | Get a particular record  |                                                          |
+| PATCH /red-flags/:id/location | Edit a record's location | A user can only edit his own record, and no one else's   |
+| PATCH /red-flags/:id/comment  | Edit a redflag's comment | A user can only edit his own record, and no one else's   |
+| PATCH /red-flags/:id/comment  | Edit a redflag's comment | A user can only edit his own record, and no one else's   |
+| DELETE /red-flags/:id         | Delete a record          | A user can only delete his own record, and no one else's |
+| ----------------------------- | ----------------------   | ---------------------------------------------------------|
+| POST /interventions           | create a new record      |                                                          |
+| GET /interventions            | Get all records          |                                                          |
+| GET /interventions/:id        | Get a particular record  |                                                          |
+| PATCH /interventions/:id/location| Edit location         | A user can only edit his own record, and no one else's   |
+| PATCH /interventions/:id/comment | Edit comment          | A user can only edit his own record, and no one else's   |
+| DELETE /interventions/:id     | Delete a record          | A user can only delete his own record, and no one else's |
 
 
 ### required Payload
 
 * `POST /api/v1/auth/signup`
-* Heroku => [heroku link](https://desolate-beyond-57360.herokuapp.com/api/v1/redflags)
 
 ```json
 {
-  "firstname": "User's first name", [required a minimum of 2 characters]
-  "email": "User's valid email", [required]
-  "password": "User's password", [required, a minimum of 6 characters ]
-  "phoneNumber": "User's phoneNumber", [required]
+  "firstname": "User's first name  [required a minimum of 2 characters]",
+  "email": "User's valid email [required]", 
+  "password": "User's password [required, a minimum of 6 characters ]", 
+  "phoneNumber": "User's phoneNumber [required]", 
   "lastnames": "User's last name", 
   "othernames": "User's other names", 
-  "username": "Preferred username", [required]
+  "username": "Preferred username", 
 }
 ```
 
-*`POST /api/v1/redflags`
-* Heroku => [heroku link](https://desolate-beyond-57360.herokuapp.com/api/v1/redflags)
+*`POST /api/v1/red-flags`
 ```json
 {
-  "email": "user email", [required]
-  "type": "red-flag", [required]
-  "location": "latitude,longitude", [required]
-  "comment": "User's comment", [required]
+  "location": "latitude,longitude [required]", 
+  "comment": "User's comment [required]", 
   "Image": ["array of uploaded images"], 
   "Video": ["array of uploaded videos"] 
 }
 ```
 
-* `PATCH /redflags/:id/location`
-* Heroku => [heroku link](https://desolate-beyond-57360.herokuapp.com/api/v1/redflags)
-
+*`POST /api/v1/interventions`
 ```json
 {
-  "email": "user email", [required]
-  "location": "latitude,longitude, [required]
+  "location": "latitude,longitude",
+  "comment": "User's comment",
+  "Image": ["array of uploaded images"], 
+  "Video": ["array of uploaded videos"] 
 }
 ```
 
-* `PATCH /redflags/:id/comment`
-* Heroku => [heroku link](https://desolate-beyond-57360.herokuapp.com/api/v1/redflags)
+* `PATCH /red-flags/:id/location`
 
 ```json
 {
-  "email": "user email", [required]
-  "comment": "User's comment", [required]
+  "location": "latitude,longitude, [required]"
+}
+```
+
+
+* `PATCH /red-flags/:id/commet`
+
+```json
+{
+  "comment": "some valid comment [required]"
+}
+```
+
+* `PATCH /interventions/:id/location`
+
+```json
+{
+  "location": "latitude,longitude, [required]"
+}
+```
+
+
+* `PATCH /interventions/:id/commet`
+
+```json
+{
+  "comment": "some valid comment [required]"
+}
+```
+
+
+* `PATCH /interventions/:id/status`
+
+```json
+{
+  "status": "under-investigation"
+}
+```
+
+* `PATCH /red-flags/:id/status`
+
+```json
+{
+  "status": "resolved"
 }
 ```
 
 * `DELETE /redflags/:id`
-* Heroku => [heroku link](https://desolate-beyond-57360.herokuapp.com/api/v1/redflags)
 
-```json
-{
-  "email": "user email", [required]
-}
-```
+* `DELETE /interventions/:id`
+
 
 ## Running Tests locally
 
@@ -112,9 +154,11 @@ npm test
 
 ## Deployment
 
-* UI Templates => [GitHub Pages](https://chingsley.github.io/gh-pages/login.html) 
+* UI Templates => [GitHub Pages](https://chingsley.github.io/gh-pages) 
 
-* Heroku => [heroku link](https://desolate-beyond-57360.herokuapp.com/api/v1/redflags) 
+* Heroku => [heroku link](https://ireporter-db.herokuapp.com) 
+
+* Apiary => [Apiary link](https://ireporter11.docs.apiary.io/#)
 
 
 ## Tecnologies Used
@@ -124,3 +168,4 @@ npm test
 * [Babel](https://babeljs.io/)
 * [Mocha](https://mochajs.org/) + [Chai](https://www.chaijs.com/) for testing
 * [ESLint](https://eslint.org/)
+* [Postgres](https://www.postgresql.org/)
