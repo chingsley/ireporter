@@ -8,6 +8,7 @@
         <meta name="author" content="Eneja Kingsley">
         <title>iReporter | Welcome</title>
         <link rel="stylesheet" href="./css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- <link rel="stylesheet" href="./css/testin.css"> -->
     </head>
     <body>
@@ -18,22 +19,16 @@
                         <h1><a href="index.html"><span class="special-coloring">i</span><span class="repa">Repa</span></a></h1>
                     </div>
                     <nav class="navigation">
+                        <div class="nav-div" id="nav-div">
+                           <a href="login.html" class="active link" id="first-link">sign in</a>
+                            <a href="register.html">sign up</a></li>
+                            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                        </div>
                         <ul class="nav-ul">
-                            <!-- <li class="li-outer animated-link active-link"><a href="#" class="links">Home</a></li> -->
-                            <li class="li-outer li-account"><a href="#" class="links">Account</a>
-                                <ul>
-                                    <li class="li-inner animated-link"><a href="login.html" class="links">Login</a></li>
-                                    <li class="li-inner animated-link"><a href="register.html" class="links">Register</a></li>
-                                </ul>
-                            </li>
-                            <li class="li-outer li-reports"><a href="#" class="links">Reports</a>
-                                <ul>
-                                    <li class="li-inner animated-link"><a href="report.html" class="links">Report a case</a></li>
-                                    <li class="li-inner animated-link"><a href="reporthistory.html" class="links">Report history</a></li>
-                                    <li class="li-inner animated-link"><a href="adminpage.html" class="links">All Reports</a></li>
-                                </ul>
-                            </li>
-                            <li class="li-outer animated-link"><a href="userprofile.html" class="links">User profile</a></li>
+                            <li class="li-outer animated-link"><a href="login.html" class="links">sign in</a></li>
+                            <li class="li-outer animated-link"><a href="register.html" class="links">sign up</a></li>
                         </ul>
                     </nav>
                 </div>
@@ -99,7 +94,7 @@
                         </p>
                     </div>
 
-                    <div class="link-container"><a href="#" class="link" id="link-on-white-bg">Learn more &rarr;</a></div>
+                    <div class="link-container"><a href="#card-info" class="link" id="link-on-white-bg">Learn more &rarr;</a></div>
                 </div>
                 <div class="col-1-of-2">
                     <div class="img-gallery">
@@ -122,7 +117,7 @@
                 <div class="row">
                     <div class="flex-box-card">
                         <div class="col-1-of-2">
-                            <div class="card">
+                            <div class="card" id="card-info">
                                 <div class="card-picture card-picture--1">
                                     &nbsp;
                                 </div>
@@ -139,7 +134,7 @@
                                         <li>... and many more</li>
                                     </ul>
                                 </div>
-                                <div class="link-container u-center-item"><a href="#" class="link">Report a case &rarr;</a></div>
+                                <div class="link-container u-center-item"><a href="report.html" class="link">Report a case &rarr;</a></div>
                             </div>
                         </div>
                         <div class="col-1-of-2">
@@ -159,7 +154,7 @@
                                             <li>... and many more</li>
                                         </ul>
                                     </div>
-                                    <div class="link-container u-center-item"><a href="#" class="link">Report a case &rarr;</a></div>
+                                    <div class="link-container u-center-item"><a href="report.html" class="link">Report a case &rarr;</a></div>
                             </div>
                         </div>
                     </div>

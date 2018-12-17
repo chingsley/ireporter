@@ -1,0 +1,389 @@
+FORMAT: 1A
+HOST: https://ireporter-db.herokuapp.com/
+
+# iReporter
+
+Sign up and let's **change**  the world **together**.
+
+## Authentication [/auth]
+
+### Create an Account [POST /auth/signup]
+
++ Request (application/json)
+
+        {
+            "firstname": "User's first name",
+            "lastname": "User's last name",
+            "username": "User's username",
+            "othernames": "User's other names [optional]",
+            "email": "User's valid email",
+            "password": "A password longer than 6 chars",
+            "phoneNumber": "Users phone number",
+            "adminSecret": "secret key for signing up admins [optional]"
+            "picture": "upload a picture for your profile [optional]"
+        }
+        
++ Response 201 (application/json)
+        
+    + Body
+            
+            {
+              "status": 201,
+              "data": "user signed up successfully",
+              "user":  {
+                  "id": <id>
+                  "auth_token": "generated auth token"
+                }
+            }
+            
+### Login to your Account [POST /auth/login]
+
++ Request (application/json)
+
+        {
+            "email": "valid email address",
+            "password": "valid password"
+        }
+        
++ Response 200 (application/json)
+        
+    + Body
+            
+            {
+                "status": 200,
+                "message": "user logged in successfully",
+                "user":  {
+                  "id": <id>
+                  "auth_token": "generated auth token"
+                }
+            }
+            
+## Red-flags [/red-flags]
+
+### Make New report about corruption [POST /red-flags]
+
++ Request (application/json)
+    
+        {
+            "location": "3.007778748499, 6.9988390328928",
+            "comment": "some valid comments",
+            "images" : "upload an array of images [optional Max-size: 5MB]",
+            "videos": "upload an array of videos [optional Max-size: 10MB]
+        }
+        
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+              "id": "red-flag id",
+              "message": "Created red-flag record"
+          }]
+        }
+    
++ Request (application/json)
+    
+        {
+            "location": "[invalid coordinates]",
+            "comment": "some valid comment"
+        }
+        
++ Response 400 (application/json)
+
+        {
+          "status": 400,
+          "error": "Invalid coordinates. A valid coordinates must be in the format: lat, lng  [lat ranges from -90 to 90, lng ranges from -180 to 180]"
+        }
+
+
++ Request (application/json)
+    
+        {
+            "coordinates": "[valid coordinates]",
+            "comment": "[invalid comment less than 3 words]"
+        }
+        
++ Response 400 (application/json)
+
+        {
+          "status": 400,
+          "error": "Please provide valid comment"
+        }
+        
+### Get All Red-flags [GET /red-flags]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [
+            {
+              "id": "red-flag id",
+              "createOn": "Date created",
+              "createdBy": "id of red-flag owner",
+              "type": "red-flag",
+              "location": "lat, lng",
+              "status": "draft [or] under-investigation [or] resolved [or] rejected"
+              "Images": [Array of images],
+              "Videos": [Array of videos],
+              "comment": "the user's comment"
+            },
+             {
+              "id": "red-flag id",
+              "createOn": "Date created",
+              "createdBy": "id of red-flag owner",
+              "type": "red-flag",
+              "location": "lat, lng",
+              "status": "draft [or] under-investigation [or] resolved [or] rejected"
+              "Images": [Array of images],
+              "Videos": [Array of videos],
+              "comment": "the user's comment"
+            },
+             {
+              "id": "red-flag id",
+              "createOn": "Date created",
+              "createdBy": "id of red-flag owner",
+              "type": "red-flag",
+              "location": "lat, lng",
+              "status": "draft [or] under-investigation [or] resolved [or] rejected"
+              "Images": [Array of images],
+              "Videos": [Array of videos],
+              "comment": "the user's comment"
+            }
+          ]
+        }
+        
+### Get Details Of a Specific Red-flag [GET /red-flag/:id]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+                "id": "red-flag id",
+              "createOn": "Date created",
+              "createdBy": "id of red-flag owner",
+              "type": "red-flag",
+              "location": "lat, lng",
+              "status": "draft [or] under-investigation [or] resolved [or] rejected"
+              "Images": [Array of images],
+              "Videos": [Array of videos],
+              "comment": "the user's comment"
+            }]
+        }
+
+### Update Red-flag Status [PATCH /red-flags/:id/status]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+              "id": "red-flag id",
+              "message": "updated red-flag record's status"
+          }]
+        }
+
+### Update Red-flag Location [PUT /red-flags/:id/location]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+              "id": "red-flag id",
+              "message": "updated red-flag record's location"
+          }]
+        }
+
+
+### Update Red-flag Comment [PATCH /red-flags/:id/comment]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+              "id": "red-flag id",
+              "message": "updated red-flag record's comment"
+          }]
+        }
+
+
+### Delete Red-flag Comment [DELETE /red-flags/:id]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+              "id": "red-flag id",
+              "message": "red-flag record has been deleted"
+          }]
+        }
+        
+            
+## Interventions [/interventions]
+
+### Make New report about corruption [POST /interventions]
+
++ Request (application/json)
+    
+        {
+            "location": "3.007778748499, 6.9988390328928",
+            "comment": "some valid comments",
+            "images" : "upload an array of images [optional Max-size: 5MB]",
+            "videos": "upload an array of videos [optional Max-size: 10MB]
+        }
+        
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+              "id": "intervention id",
+              "message": "Created intervention record"
+          }]
+        }
+    
++ Request (application/json)
+    
+        {
+            "location": "[invalid coordinates]",
+            "comment": "some valid comment"
+        }
+        
++ Response 400 (application/json)
+
+        {
+          "status": 400,
+          "error": "Invalid coordinates. A valid coordinates must be in the format: lat, lng  [lat ranges from -90 to 90, lng ranges from -180 to 180]"
+        }
+
+
++ Request (application/json)
+    
+        {
+            "coordinates": "[valid coordinates]",
+            "comment": "[invalid comment less than 3 words]"
+        }
+        
++ Response 400 (application/json)
+
+        {
+          "status": 400,
+          "error": "Please provide valid comment"
+        }
+        
+### Get All Interventions [GET /interventions]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [
+            {
+              "id": "intervention id",
+              "createOn": "Date created",
+              "createdBy": "id of intervention owner",
+              "type": "intervention",
+              "location": "lat, lng",
+              "status": "draft [or] under-investigation [or] resolved [or] rejected"
+              "Images": [Array of images],
+              "Videos": [Array of videos],
+              "comment": "the user's comment"
+            },
+             {
+              "id": "intervention id",
+              "createOn": "Date created",
+              "createdBy": "id of intervention owner",
+              "type": "intervention",
+              "location": "lat, lng",
+              "status": "draft [or] under-investigation [or] resolved [or] rejected"
+              "Images": [Array of images],
+              "Videos": [Array of videos],
+              "comment": "the user's comment"
+            },
+             {
+              "id": "intervention id",
+              "createOn": "Date created",
+              "createdBy": "id of intervention owner",
+              "type": "intervention",
+              "location": "lat, lng",
+              "status": "draft [or] under-investigation [or] resolved [or] rejected"
+              "Images": [Array of images],
+              "Videos": [Array of videos],
+              "comment": "the user's comment"
+            }
+          ]
+        }
+        
+### Get Details Of a Specific Intervention [GET /intervention/:id]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+                "id": "intervention id",
+              "createOn": "Date created",
+              "createdBy": "id of intervention owner",
+              "type": "intervention",
+              "location": "lat, lng",
+              "status": "draft [or] under-investigation [or] resolved [or] rejected"
+              "Images": [Array of images],
+              "Videos": [Array of videos],
+              "comment": "the user's comment"
+            }]
+        }
+
+### Update Intervention Status [PATCH /interventions/:id/status]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+              "id": "intervention id",
+              "message": "updated intervention record's status"
+          }]
+        }
+
+### Update Intervention Location [PUT /interventions/:id/location]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+              "id": "intervention id",
+              "message": "updated intervention record's location"
+          }]
+        }
+
+
+### Update Intervention Comment [PATCH /interventions/:id/comment]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+              "id": "intervention id",
+              "message": "updated intervention record's comment"
+          }]
+        }
+
+
+### Delete Intervention Comment [DELETE /interventions/:id]
+
++ Response 200 (application/json)
+
+        {
+          "status": 200,
+          "data": [{
+              "id": "intervention id",
+              "message": "intervention record has been deleted"
+          }]
+        }
+        

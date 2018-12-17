@@ -7,8 +7,9 @@
     <meta name="description" content="a web app designed for reporting corruption and need for intervention">
     <meta name="keywords" content="iReporter, report, redflag, intervention, incidence, corruption">
     <meta name="author" content="Eneja Kingsley">
-    <title>iReporter | Welcome</title>
+    <title>iReporter | Profile</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- <link rel="stylesheet" href="./css/testin.css"> -->
 </head>
 
@@ -20,11 +21,18 @@
                     <h1><a href="index.html"><span class="special-coloring">i</span><span class="repa">Repa</span></a></h1>
                 </div>
                 <nav class="navigation">
+                    <div class="nav-div" id="nav-div">
+                        <a href="report.html" class="active link" id="first-link">report a case</a>
+                        <a href="reporthistory.html">My records</a></li>
+                        <a href="index.html">sign out</a></li>
+                        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
                     <ul class="nav-ul">
-                        <!-- <li class="li-outer animated-link"><a href="index.html" class="links">Home</a></li> -->
-                        <!-- <li class="li-outer animated-link"><a href="login.html" class="links">Login</a></li> -->
+                        <li class="li-outer animated-link"><a href="report.html" class="links">report a case</a></li>
+                        <li class="li-outer animated-link"><a href="reporthistory.html" class="links">My records</a></li>
                         <li class="li-outer animated-link"><a href="index.html" class="links">sign out</a></li>
-                        <li class="li-outer animated-link active-link"><a href="#" class="links">Admin</a></li>
                     </ul>
                 </nav>
             </div>
@@ -126,7 +134,7 @@
         date.innerHTML = (new Date()).toLocaleString();
         console.log(Date.now());
     </script>
-    <!-- <script src="./js/script.js"></script> -->
+    <script src="./js/script.js"></script>
 </body>
 
 </html>

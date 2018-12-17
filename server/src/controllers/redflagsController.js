@@ -127,7 +127,7 @@ class RedflagsController {
       const formattedRecord = outputFormatter(redflags);
       return res.status(200).json({
         status: 200,
-        data: [{ formattedRecord }]
+        data: [ formattedRecord ]
       });
 
     } catch (error) {
@@ -345,7 +345,6 @@ class RedflagsController {
         redflag.videos = formattedVidArr;
       }
 
-      console.log(redflag);
       const formattedRedflag = {
         id: redflag.id,
         createdOn: redflag.created_on,
@@ -360,7 +359,7 @@ class RedflagsController {
 
       return res.status(200).json({
         status: 200,
-        data: [{ formattedRedflag }]
+        data: [ formattedRedflag ]
       });
 
     } catch (error) {

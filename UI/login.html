@@ -7,9 +7,9 @@
     <meta name="description" content="a web app designed for reporting corruption and need for intervention">
     <meta name="keywords" content="iReporter, report, redflag, intervention, incidence, corruption">
     <meta name="author" content="Eneja Kingsley">
-    <title>iReporter | Welcome</title>
+    <title>iReporter | login</title>
     <link rel="stylesheet" href="./css/style.css">
-    <!-- <link rel="stylesheet" href="./css/testin.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -20,11 +20,16 @@
                     <h1><a href="index.html"><span class="special-coloring">i</span><span class="repa">Repa</span></a></h1>
                 </div>
                 <nav class="navigation">
+                    <div class="nav-div" id="nav-div">
+                        <a href="register.html" class="" id="first-link">sign up</a>
+                        <a href="userprofile.html">my profile</a></li>
+                        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
                     <ul class="nav-ul">
-                        <!-- <li class="li-outer animated-link"><a href="index.html" class="links">Home</a></li> -->
-                        <li class="li-outer animated-link active-link"><a href="login.html" class="links">Login</a></li>
-                        <li class="li-outer animated-link"><a href="signup.html" class="links">Register</a></li>
-                        <li class="li-outer animated-link"><a href="#" class="links">My profile</a></li>
+                        <li class="li-outer animated-link"><a href="register.html" class="links">sign up</a></li>
+                        <li class="li-outer animated-link"><a href="userprofile.html" class="links">my profile</a></li>
                     </ul>
                 </nav>
             </div>
@@ -34,7 +39,7 @@
     <section class="section-login">
         <div class="row">
             <div class="div-over-form">
-                <form action="index.html" class="login-form">
+                <form action="" class="login-form">
                         <div class="login-form-group login-form-group-title u-margin-bottom-medium u-center-text">
                             <h2 class="heading-secondary-dark" id="form-register-title">
                                 sign in
@@ -86,7 +91,19 @@
         </div>
     </footer>
 
-
+    <script>
+        const password = document.getElementById('password');
+        const btnSubmit = document.getElementById('login-btn-submit');
+        btnSubmit.addEventListener('click', (event) => {
+            event.preventDefault();
+            console.log(password.value);
+            if (password.value === 'admin') {
+                location.href = 'adminpage.html';
+            } else {
+                location.href = 'reporthistory.html';
+            }
+        });
+    </script>
     <script src="./js/script.js"></script>
 </body>
 

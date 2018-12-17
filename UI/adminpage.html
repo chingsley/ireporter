@@ -7,8 +7,9 @@
     <meta name="description" content="a web app designed for reporting corruption and need for intervention">
     <meta name="keywords" content="iReporter, report, redflag, intervention, incidence, corruption">
     <meta name="author" content="Eneja Kingsley">
-    <title>iReporter | Welcome</title>
+    <title>iReporter | Admin</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- <link rel="stylesheet" href="./css/testin.css"> -->
 </head>
 
@@ -20,31 +21,21 @@
                     <h1><a href="index.html"><span class="special-coloring">i</span><span class="repa">Repa</span></a></h1>
                 </div>
                 <nav class="navigation">
+                    <div class="nav-div" id="nav-div">
+                        <a href="index.html" class="active link" id="first-link">sign out</a>
+                        <!-- <a href="index.html">home</a></li> -->
+                        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                            <i class="fa fa-bars"></i>
+                        </a>
+                    </div>
                     <ul class="nav-ul">
-                        <!-- <li class="li-outer animated-link"><a href="index.html" class="links">Home</a></li> -->
-                        <!-- <li class="li-outer animated-link"><a href="login.html" class="links">Login</a></li> -->
                         <li class="li-outer animated-link"><a href="index.html" class="links">sign out</a></li>
-                        <li class="li-outer animated-link active-link"><a href="#" class="links">Admin</a></li>
+                        <!-- <li class="li-outer animated-link"><a href="index.html" class="links">home</a></li> -->
                     </ul>
                 </nav>
             </div>
         </div>
     </header>
-
-    <section class="section-newsletter" id="section-newsletter-register-page">
-        <div class="container" id="newsletter-container">
-            <h1 id="h1-id">Subscribe To Our Newsletter</h1>
-            <form action="#" id="form-id">
-                <div class="input-and-label">
-                    <input type="email" class="input-class" id="email" placeholder="Enter Email..." required>
-                    <label for="email" class="label-class">Enter Email...</label>
-                </div>
-                <div class="btn-div">
-                    <button type="submit" id="btn__submit" class="btn">Subscribe</button>
-                </div>
-            </form>
-        </div>
-    </section>
     
     <section class="section-admin">
         <div class="section-admin-wrapper-div">
@@ -72,7 +63,7 @@
                             <td class="cell createdby">eneja.kc@gmail.com</td>
                             <td class="cell type">red-flag</td>
                             <td class="cell location">3.2342, 17.8392</td>
-                            <td class="cell comment-and-media"> <a href="#popup" class="comment-and-media-link">...</a> </td>
+                            <td class="cell comment-and-media"> <a href="#popup" class="comment-and-media-link">I want to ...</a> </td>
                             <td class="cell status">
                                 <select name="status" id="status">
                                     <option value="draft">draft</option>
@@ -88,7 +79,7 @@
                             <td class="cell createdby">john@yahoo.com</td>
                             <td class="cell type">intervention</td>
                             <td class="cell location">-2.0224, 45.9820</td>
-                            <td class="cell comment-and-media"> <a href="#popup-2" class="comment-and-media-link">...</a> </td>
+                            <td class="cell comment-and-media"> <a href="#popup-2" class="comment-and-media-link">There's severe ...</a> </td>
                             <td class="cell status">
                                 <select name="status" id="status">
                                     <option value="draft">draft</option>
@@ -105,7 +96,7 @@
                             <td class="cell createdby">james@gmail.com</td>
                             <td class="cell type">intervention</td>
                             <td class="cell location">-2.0224, 45.9820</td>
-                            <td class="cell comment-and-media"> <a href="#popup-2" class="comment-and-media-link">...</a> </td>
+                            <td class="cell comment-and-media"> <a href="#popup-2" class="comment-and-media-link">There has been a ...</a> </td>
                             <td class="cell status">
                                 <select name="status" id="status">
                                     <option value="draft">draft</option>
@@ -122,7 +113,7 @@
                             <td class="cell createdby">greyjoy@yahoo.com</td>
                             <td class="cell type">red-flag</td>
                             <td class="cell location">-2.0224, 45.9820</td>
-                            <td class="cell comment-and-media"> <a href="#popup" class="comment-and-media-link">...</a> </td>
+                            <td class="cell comment-and-media"> <a href="#popup" class="comment-and-media-link">I witnessed a ...</a> </td>
                             <td class="cell status">
                                 <select name="status" id="status">
                                     <option value="draft">draft</option>
@@ -138,7 +129,7 @@
                             <td class="cell createdby">ironborne@yahoo.com</td>
                             <td class="cell type">red-flag</td>
                             <td class="cell location">-2.0224, 45.9820</td>
-                            <td class="cell comment-and-media"> <a href="#popup" class="comment-and-media-link">...</a> </td>
+                            <td class="cell comment-and-media"> <a href="#popup" class="comment-and-media-link">I want to report...</a> </td>
                             <td class="cell status">
                                 <select name="status" id="status">
                                     <option value="draft">draft</option>
@@ -151,6 +142,11 @@
                     </table>
                 </div>
             </div>
+            <!-- <div class="report-input-flex" id="report-input-flex-for-btn">
+            <div class="div-report-form-btn">
+                <button class="btn" id="btn-send-report">save changes</button>
+            </div>
+            </div> -->
         </div>
     </section>
 
@@ -220,6 +216,7 @@
                 </p>
                 <!-- <a href="#table-admin" class="btn">OK</a> -->
             </div>
+            
         </div>
     </div>
 
