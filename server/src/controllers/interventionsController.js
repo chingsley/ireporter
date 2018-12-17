@@ -1,6 +1,7 @@
 import moment from 'moment';
 import pool from '../db/config';
 import outputFormatter from '../middleware/formatOutput';
+import formatRecord from '../middleware/formatOne';
 
 
 class InterventionsController {
@@ -42,13 +43,13 @@ class InterventionsController {
         videos,
         comment,
       ])).rows[0];
-
+      const formattedResult = formatRecord(newIntervention);
       res.status(201).json({
         status: 201,
         data: [{
           id: newIntervention.id,
           message: 'created intervention record',
-          intervention: newIntervention,
+          intervention: formattedResult,
 
         }],
       });
@@ -107,7 +108,7 @@ class InterventionsController {
       const formattedRecord = outputFormatter(interventions);
       return res.status(200).json({
         status: 200,
-        data: [{ formattedRecord }]
+        data: [formattedRecord ]
       });
 
     } catch (error) {
@@ -136,13 +137,13 @@ class InterventionsController {
           error: 'no intervention matches the specified id',
         });
       }
-
+      const formattedResult = formatRecord(intervention);
       res.status(200).json({
         status: 200,
         data: [{
           id: intervention.id,
           message: `Updated intervention's status`,
-          'intervention': intervention,
+          'intervention': formattedResult,
         }],
       });
     } catch (error) {
@@ -186,12 +187,13 @@ class InterventionsController {
       }
 
       const updatedIntervention = (await pool.query(queryStrUpdate, [req.location, req.params.id])).rows[0];
+      const formattedResult = formatRecord(updatedIntervention);
       return res.status(200).json({
         status: 200,
         data: [{
           id: updatedIntervention.id,
           message: `Updated intervention's location`,
-          "intervention": updatedIntervention
+          "intervention": formattedResult
         }]
       });
 
@@ -236,12 +238,13 @@ class InterventionsController {
       }
 
       const updatedIntervention = (await pool.query(queryStrUpdate, [req.comment, req.params.id])).rows[0];
+      const formattedResult = formatRecord(updatedIntervention);
       return res.status(200).json({
         status: 200,
         data: [{
           id: updatedIntervention.id,
           message: `Updated intervention's comment`,
-          "intervention": updatedIntervention
+          "intervention": formattedResult
         }]
       });
 
@@ -297,21 +300,22 @@ class InterventionsController {
         intervention.videos = formattedVidArr;
       }
 
-      const formattedIntervention = {
-        id: intervention.id,
-        createdOn: intervention.created_on,
-        createdBy: intervention.created_by,
-        type: intervention.type,
-        location: intervention.location,
-        status: intervention.status,
-        Images: intervention.images,
-        Videos: intervention.videos,
-        comment: intervention.comment
-      }
+      const formattedResult = formatRecord(intervention);
+      // const formattedIntervention = {
+      //   id: intervention.id,
+      //   createdOn: intervention.created_on,
+      //   createdBy: intervention.created_by,
+      //   type: intervention.type,
+      //   location: intervention.location,
+      //   status: intervention.status,
+      //   Images: intervention.images,
+      //   Videos: intervention.videos,
+      //   comment: intervention.comment
+      // }
 
       return res.status(200).json({
         status: 200,
-        data: [{ formattedIntervention }]
+        data: [{ formattedResult }]
       });
 
     } catch (error) {

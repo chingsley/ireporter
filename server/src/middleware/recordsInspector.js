@@ -117,7 +117,7 @@ class InspectRedflag {
    * @returns {next}
    */
   static async editLocation(req, res, next) {
-    console.log('type-of-record: ', (req.baseUrl).split('/')[3])
+    // console.log('type-of-record: ', (req.baseUrl).split('/')[3])
     const {location} = req.body;
     const response400 = message => res.status(400).json({ status: 400, error: message });
     if (!location) return response400(`Please provide location coordinates`);

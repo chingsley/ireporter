@@ -56,3 +56,15 @@ btn.addEventListener('click', function () {
     getLocation();  
 });
 
+
+
+/******************* FOR THE HAMBURGER MENU ****************/
+function myFunction() {
+    let x = document.getElementById("nav-div");
+    if (x.className === 'nav-div') {
+        x.className += " responsive";
+    } else {
+        x.className = "nav-div";
+    }
+}
+/********************************************************* */
