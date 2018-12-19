@@ -88,39 +88,39 @@ class RecordsController {
     const customerQueryStr = 'SELECT * FROM incidents WHERE type=$1 AND created_by=$2';
     const adminQueryStr = 'SELECT * FROM incidents WHERE type=$1';
     try {
-      let redflags;
+      let records;
       if (req.userStatus === 'admin') {
-        redflags = (await pool.query(adminQueryStr, [req.recordType])).rows;
+        records = (await pool.query(adminQueryStr, [req.recordType])).rows;
       } else {
-        redflags = (await pool.query(customerQueryStr, [req.recordType, req.userId])).rows;
+        records = (await pool.query(customerQueryStr, [req.recordType, req.userId])).rows;
       }
 
 
-      for (let k = 0; k < redflags.length; k += 1) {
-        if (redflags[k].images.length > 0) {
-          const imageArr = redflags[k].images.split(',');
+      for (let k = 0; k < records.length; k += 1) {
+        if (records[k].images.length > 0) {
+          const imageArr = records[k].images.split(',');
           const formattedImgArr = [];
           for (let i = 0; i < imageArr.length; i += 1) {
             formattedImgArr.push(`http://localhost:${process.env.PORT}/${imageArr[i].trim()}`);
           }
-          redflags[k].images = formattedImgArr;
+          records[k].images = formattedImgArr;
         } else {
-          redflags[k].images = [];
+          records[k].images = [];
         }
 
-        if (redflags[k].videos.length > 0) {
-          const videoArr = redflags[k].videos.split(',');
+        if (records[k].videos.length > 0) {
+          const videoArr = records[k].videos.split(',');
           const formattedVidArr = [];
           for (let i = 0; i < videoArr.length; i += 1) {
             formattedVidArr.push(`http://localhost:${process.env.PORT}/${videoArr[i].trim()}`);
           }
-          redflags[k].videos = formattedVidArr;
+          records[k].videos = formattedVidArr;
         } else {
-          redflags[k].videos = [];
+          records[k].videos = [];
         }
       }
 
-      const formattedRecord = outputFormatter(redflags);
+      const formattedRecord = outputFormatter(records);
       return res.status(200).json({
         status: 200,
         data: [formattedRecord],
