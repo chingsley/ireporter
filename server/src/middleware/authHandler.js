@@ -3,11 +3,15 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+/**
+ * Handles authorization
+ */
 class AuthHandler {
   /**
-   * 
-   * @param {object} req the request object
-   * @param {object} res the response object
+   *
+   * @param {object} req
+   * @param {object} res
+   * @returns {undefined} nothing
    */
   static async generateAuthToken(req, res) {
     const {
@@ -24,7 +28,7 @@ class AuthHandler {
     res.status(statusCode).json({
       status: statusCode,
       data: [{
-        token: token,
+        token,
         user: {
           id: userDetails.id,
           firstname: userDetails.firstname,
@@ -42,10 +46,11 @@ class AuthHandler {
   }
 
   /**
-   * 
-   * @param {object} req request object
-   * @param {object} res response object
-   * @param {funtion} next calls next handler
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {function} next
    */
   static authorize(req, res, next) {
     const token = req.header('x-auth-token');
@@ -66,10 +71,11 @@ class AuthHandler {
   }
 
   /**
-   * 
-   * @param {object} req request object
-   * @param {object} res response object
-   * @param {funcion} next to the next handler
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {function} next
    */
   static authorizeAdmin(req, res, next) {
     if (req.userStatus !== 'admin') {
