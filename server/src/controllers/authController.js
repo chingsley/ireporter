@@ -1,7 +1,17 @@
 import bcrypt from 'bcrypt';
 import pool from '../db/config';
 
+/**
+ * The controller for signup and login
+ */
 class AuthController {
+  /**
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {function} next
+   */
   static async signup(req, res, next) {
     const {
       firstname,
@@ -53,7 +63,13 @@ class AuthController {
     }
   }
 
-
+  /**
+   *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {function} next
+   */
   static async signin(req, res, next) {
     const { email, password } = req;
     const response401 = message => res.status(401).json({ status: 401, error: message });
@@ -70,7 +86,6 @@ class AuthController {
       req.userEmail = userDetails.email;
       req.userStatus = userDetails.is_admin ? 'admin' : 'customer';
       return next();
-
     } catch (error) {
       return res.status(500).json({
         status: 500,
@@ -78,6 +93,6 @@ class AuthController {
       });
     }
   }
-} 
+}
 
 export default AuthController;

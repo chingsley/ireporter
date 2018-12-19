@@ -1,20 +1,19 @@
-import pool from '../db/config';
+// import pool from '../db/config';
 import emailChecker from './emailChecker';
 
 /**
  * class Validator contains the validator functions
  */
 class Validator {
-
   /**
-   * 
+   *
    * @param {string} id the id of record (red-flag or intervention)
-   * @returns {boolean} true or false 
+   * @returns {boolean} true or false
    */
   static isValidRecordId(id) {
     if (!Number.isInteger(Number(id))) return false;
-    if ((Number(req.params.id) < 0)) return false;
-
+    if ((Number(id) < 0)) return false;
+    return true;
   }
 
   /**
@@ -31,7 +30,7 @@ class Validator {
  * @return {boolean} true or false
  */
   static isPasswordTooShort(password) {
-    if(!password) return false;
+    if (!password) return false;
     return password.toString().trim().length < 6;
   }
 
@@ -41,9 +40,9 @@ class Validator {
    * @returns {boolean} true or false
    */
   static isValidName(name) {
-    if(!name) return false;
-    for(let i = 0; i < name.length; i++) {
-      if(!Number.isNaN(Number(name))) return false;
+    if (!name) return false;
+    for (let i = 0; i < name.length; i += 1) {
+      if (!Number.isNaN(Number(name))) return false;
     }
     return name.toString().trim().length >= 2;
   }
@@ -54,10 +53,10 @@ class Validator {
    * @return {boolean} true or false
    */
   static isValidPhoneNumber(phoneNumber) {
-    if(!phoneNumber) return false;
-    if(Number(phoneNumber) === 0) return false;
-    if(phoneNumber.toString().trim().length < 3) return false;
-    if(phoneNumber[0] !== '+' && !Number.isInteger(Number(phoneNumber[0]))) return false;
+    if (!phoneNumber) return false;
+    if (Number(phoneNumber) === 0) return false;
+    if (phoneNumber.toString().trim().length < 3) return false;
+    if (phoneNumber[0] !== '+' && !Number.isInteger(Number(phoneNumber[0]))) return false;
     const number = phoneNumber.toString().trim();
     const arr = number.split('');
     if (arr.length > 15) return false;
@@ -76,7 +75,7 @@ class Validator {
    */
   static isValidCoordinates(location) {
     if (!location) return false;
-    if (location && location.toString().trim() === '') return false
+    if (location && location.toString().trim() === '') return false;
     let trimmedLocation;
     if (location) {
       trimmedLocation = location.toString().trim();
@@ -113,17 +112,18 @@ class Validator {
   }
 
   /**
-   * 
+   *
    * @param {string} status the status of the record
    * @returns {boolean} true or false
    */
   static isValidStatus(status) {
     if (!status) return false;
-    if (status && status.toString().trim() === '') return false;
+    if (status.toString().trim() === '') return false;
     status = status.toLowerCase().trim();
-    if (status !== 'draft' && status != 'under investigation' && status !== 'rejected' && status !== 'resolved') {
+    if (status !== 'draft' && status !== 'under investigation' && status !== 'rejected' && status !== 'resolved') {
       return false;
     }
+    return true;
   }
 }
 

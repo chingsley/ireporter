@@ -13,6 +13,7 @@ pool.on('connect', () => {
 
 /**
  * Create users table
+ * @returns {undefined} nothing
  */
 const createTableUsers = () => {
   const queryText = `CREATE TABLE IF NOT EXISTS
@@ -44,6 +45,7 @@ const createTableUsers = () => {
 
 /**
  * Create incidents Table
+ * @returns {undefined} nothing
  */
 const createTableIncidents = () => {
   const queryText = `CREATE TABLE IF NOT EXISTS
@@ -73,6 +75,7 @@ const createTableIncidents = () => {
 
 /**
  * Drop users Table
+ * @returns {undefined} nothing
  */
 const dropTableUsers = () => {
   const queryText = 'DROP TABLE IF EXISTS users';
@@ -89,6 +92,7 @@ const dropTableUsers = () => {
 
 /**
  * Drop incidents Table
+ * @returns {undefined} nothing
  */
 const dropTableIncidents = () => {
   const queryText = 'DROP TABLE IF EXISTS incidents';
@@ -106,6 +110,7 @@ const dropTableIncidents = () => {
 
 /**
  * Create All Tables
+ * @returns {undefined} nothing
  */
 const createAllTables = () => {
   createTableUsers();
@@ -114,6 +119,7 @@ const createAllTables = () => {
 
 /**
  * Drop All Tables
+ * @returns {undefined} nothing
  */
 const dropAllTables = () => {
   dropTableUsers();

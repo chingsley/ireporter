@@ -5,8 +5,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 
 import authRouter from './routes/authRouter';
-import redflagsRouter from './routes/redflagsRouter';
-import interventionsRouter from './routes/interventionsRouter';
+import recordsRouter from './routes/recordsRouter';
 
 dotenv.config();
 const app = express();
@@ -22,8 +21,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/uploads', express.static('uploads'));
 
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/red-flags', redflagsRouter);
-app.use('/api/v1/interventions', interventionsRouter);
+app.use('/api/v1/red-flags', recordsRouter);
+app.use('/api/v1/interventions', recordsRouter);
 
 
 /** handle unknown routes in my server */

@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import multer from 'multer';
-// import Inspect from '../middleware/inspector';
 import Inspect from '../middleware/authInspector';
 import AuthController from '../controllers/authController';
 import AuthHandler from '../middleware/authHandler';
@@ -17,7 +16,7 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, callback) => {
-  if (file.mimetype === 'image/jpeg' 
+  if (file.mimetype === 'image/jpeg'
   || file.mimetype === 'image/png'
   || file.mimetype === 'image/gif') {
     callback(null, true); // accept the file
