@@ -11,6 +11,7 @@ class Validator {
    * @returns {boolean} true or false
    */
   static isValidRecordId(id) {
+    if (Number.isNaN(Number(id))) return false;
     if (!Number.isInteger(Number(id))) return false;
     if ((Number(id) < 0)) return false;
     return true;
