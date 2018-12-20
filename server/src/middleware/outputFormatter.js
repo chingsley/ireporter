@@ -1,28 +1,19 @@
-const formatOutput = (records) => {
-  for (let k = 0; k < records.length; k += 1) {
-    if (records[k].images.length > 0) {
-      const imageArr = records[k].images.split(',');
-      const formattedImgArr = [];
-      for (let i = 0; i < imageArr.length; i += 1) {
-        formattedImgArr.push(`http://localhost:${process.env.PORT}/${imageArr[i].trim()}`);
-      }
-      records[k].images = formattedImgArr;
-    } else {
-      records[k].images = [];
+const formatMedia = (media) => {
+  if (media.length > 0) {
+    const mediaArr = media.split(',');
+    const formattedMediaArr = [];
+    for (let i = 0; i < mediaArr.length; i += 1) {
+      formattedMediaArr.push(`http://localhost:${process.env.PORT}/${mediaArr[i].trim()}`);
     }
-
-    if (records[k].videos.length > 0) {
-      const videoArr = records[k].videos.split(',');
-      const formattedVidArr = [];
-      for (let i = 0; i < videoArr.length; i += 1) {
-        formattedVidArr.push(`http://localhost:${process.env.PORT}/${videoArr[i].trim()}`);
-      }
-      records[k].videos = formattedVidArr;
-    } else {
-      records[k].videos = [];
-    }
+    return formattedMediaArr;
   }
+  return [];
+};
+
+const formatOutput = (records) => {
   const formattedOutput = records.map((record) => {
+    const img = formatMedia(record.images);
+    const vid = formatMedia(record.videos);
     const formatted = {
       id: record.id,
       createdOn: record.created_on,
@@ -30,8 +21,8 @@ const formatOutput = (records) => {
       type: record.type,
       location: record.location,
       status: record.status,
-      Images: record.images,
-      Videos: record.videos,
+      Images: img,
+      Videos: vid,
       comment: record.comment,
     };
     return formatted;

@@ -16,7 +16,10 @@ const storage = multer.diskStorage({
   },
 });
 const fileFilter = (req, file, callback) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'video/mp4') {
+  if (file.mimetype === 'image/jpeg' 
+  || file.mimetype === 'image/png' 
+    || file.mimetype === 'video/mp4'
+    || file.mimetype === 'image/gif') {
     callback(null, true); // ie. accept the file
   } else {
     callback(null, false); // reject the file. Don't save the file, but don't throw an error
