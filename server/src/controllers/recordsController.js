@@ -1,7 +1,7 @@
 import moment from 'moment';
 // import nodemailer from 'nodemailer';
 import pool from '../db/config';
-import outputFormatter from '../middleware/formatOutput';
+import outputFormatter from '../middleware/outputFormatter';
 
 // const smtpTransport = require('nodemailer-smtp-transport');
 
@@ -38,6 +38,7 @@ class RecordsController {
          videos,
          comment
       ) VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`;
+      // 'rows' will return an array so we can format it using the outputFormatter
       const newRecord = (await pool.query(insertQuery, [
         moment(new Date()),
         createdBy,
@@ -47,24 +48,14 @@ class RecordsController {
         images,
         videos,
         comment,
-      ])).rows[0];
-
-      const formattedResult = {};
-      formattedResult.id = newRecord.id;
-      formattedResult.createdOn = newRecord.created_on;
-      formattedResult.createdBy = newRecord.created_by;
-      formattedResult.type = newRecord.type;
-      formattedResult.location = newRecord.location;
-      formattedResult.status = newRecord.status;
-      formattedResult.Images = newRecord.images;
-      formattedResult.Videos = newRecord.videos;
-      formattedResult.comment = newRecord.comment;
+      ])).rows;
+      const formattedRecord = outputFormatter(newRecord);
       res.status(201).json({
         status: 201,
         data: [{
-          id: newRecord.id,
+          id: newRecord[0].id,
           message: `created ${req.recordType} record`,
-          record: formattedResult,
+          record: formattedRecord,
 
         }],
       });
@@ -95,35 +86,10 @@ class RecordsController {
         records = (await pool.query(customerQueryStr, [req.recordType, req.userId])).rows;
       }
 
-
-      for (let k = 0; k < records.length; k += 1) {
-        if (records[k].images.length > 0) {
-          const imageArr = records[k].images.split(',');
-          const formattedImgArr = [];
-          for (let i = 0; i < imageArr.length; i += 1) {
-            formattedImgArr.push(`http://localhost:${process.env.PORT}/${imageArr[i].trim()}`);
-          }
-          records[k].images = formattedImgArr;
-        } else {
-          records[k].images = [];
-        }
-
-        if (records[k].videos.length > 0) {
-          const videoArr = records[k].videos.split(',');
-          const formattedVidArr = [];
-          for (let i = 0; i < videoArr.length; i += 1) {
-            formattedVidArr.push(`http://localhost:${process.env.PORT}/${videoArr[i].trim()}`);
-          }
-          records[k].videos = formattedVidArr;
-        } else {
-          records[k].videos = [];
-        }
-      }
-
       const formattedRecord = outputFormatter(records);
       return res.status(200).json({
         status: 200,
-        data: [formattedRecord],
+        data: formattedRecord,
       });
     } catch (error) {
       // console.log(error);
@@ -144,29 +110,18 @@ class RecordsController {
     const queryStr = 'UPDATE incidents SET status=$1 WHERE id=$2 AND type=$3 returning *';
     try {
       const record = (await pool.query(queryStr,
-        [req.status, req.params.id, req.recordType])).rows[0];
-      if (!record) {
+        [req.status, req.params.id, req.recordType])).rows;
+      if (!record[0]) {
         return res.status(404).json({
           status: 404,
           error: `no ${req.recordType} matches the specified id`,
         });
       }
-      const formattedRecord = {
-        id: record.id,
-        createdOn: record.created_on,
-        createdBy: record.created_by,
-        type: record.type,
-        location: record.location,
-        status: record.status,
-        Images: record.images,
-        Videos: record.videos,
-        comment: record.comment,
-      };
-
+      const formattedRecord = outputFormatter(record);
       res.status(200).json({
         status: 200,
         data: [{
-          id: record.id,
+          id: record[0].id,
           message: `Updated ${req.recordType}'s status`,
           record: formattedRecord,
         }],
@@ -211,22 +166,13 @@ class RecordsController {
       }
 
       const updatedRecord = (await pool.query(queryStrUpdate,
-        [req.location, req.params.id])).rows[0];
-      const formattedRecord = {
-        id: updatedRecord.id,
-        createdOn: updatedRecord.created_on,
-        createdBy: updatedRecord.created_by,
-        type: updatedRecord.type,
-        location: updatedRecord.location,
-        status: updatedRecord.status,
-        Images: updatedRecord.images,
-        Videos: updatedRecord.videos,
-        comment: updatedRecord.comment,
-      };
+        [req.location, req.params.id])).rows;
+
+      const formattedRecord = outputFormatter(updatedRecord);
       return res.status(200).json({
         status: 200,
         data: [{
-          id: updatedRecord.id,
+          id: updatedRecord[0].id,
           message: `Updated ${req.recordType}'s location`,
           record: formattedRecord,
         }],
@@ -271,22 +217,13 @@ class RecordsController {
       }
 
       const updatedRecord = (await pool.query(queryStrUpdate,
-        [req.comment, req.params.id])).rows[0];
-      const formattedRecord = {
-        id: updatedRecord.id,
-        createdOn: updatedRecord.created_on,
-        createdBy: updatedRecord.created_by,
-        type: updatedRecord.type,
-        location: updatedRecord.location,
-        status: updatedRecord.status,
-        Images: updatedRecord.images,
-        Videos: updatedRecord.videos,
-        comment: updatedRecord.comment,
-      };
+        [req.comment, req.params.id])).rows;
+
+      const formattedRecord = outputFormatter(updatedRecord);
       return res.status(200).json({
         status: 200,
         data: [{
-          id: updatedRecord.id,
+          id: updatedRecord[0].id,
           message: `Updated ${req.recordType}'s comment`,
           'red-flag': formattedRecord,
         }],
@@ -309,54 +246,26 @@ class RecordsController {
   static async getOne(req, res) {
     const queryStr = 'SELECT * FROM incidents WHERE id=$1 AND type=$2';
     try {
-      const record = (await pool.query(queryStr, [req.params.id, req.recordType])).rows[0];
-      if (!record) {
+      // NOTE: record is an array of one record. 'rows' is an array. 'rows[0] is an object
+      const record = (await pool.query(queryStr, [req.params.id, req.recordType])).rows;
+      if (!record[0]) {
         return res.status(404).json({
           status: 404,
           error: `No ${req.recordType} matches the id of ${req.params.id}`,
         });
       }
 
-      if (record.created_by !== req.userId && req.userStatus !== 'admin') {
+      if (record[0].created_by !== req.userId && req.userStatus !== 'admin') {
         return res.status(401).json({
           status: 401,
-          error: 'cannot get',
+          error: `cannot get ${req.recordType}. Not your record`,
         });
       }
 
-      if (record.images.length > 0) {
-        const imageArr = record.images.split(',');
-        const formattedImgArr = [];
-        for (let i = 0; i < imageArr.length; i += 1) {
-          formattedImgArr.push(`http://localhost:${process.env.PORT}/${imageArr[i].trim()}`);
-        }
-        record.images = formattedImgArr;
-      }
-
-      if (record.videos.length > 0) {
-        const videoArr = record.videos.split(',');
-        const formattedVidArr = [];
-        for (let i = 0; i < videoArr.length; i += 1) {
-          formattedVidArr.push(`http://localhost:${process.env.PORT}/${videoArr[i].trim()}`);
-        }
-        record.videos = formattedVidArr;
-      }
-
-      const formattedRecord = {
-        id: record.id,
-        createdOn: record.created_on,
-        createdBy: record.created_by,
-        type: record.type,
-        location: record.location,
-        status: record.status,
-        Images: record.images,
-        Videos: record.videos,
-        comment: record.comment,
-      };
-
+      const formattedRecord = outputFormatter(record);
       return res.status(200).json({
         status: 200,
-        data: [formattedRecord],
+        data: formattedRecord,
       });
     } catch (error) {
       // console.log(error);
@@ -387,7 +296,7 @@ class RecordsController {
       if (record.created_by !== req.userId) {
         return res.status(401).json({
           status: 401,
-          error: 'cannot delete',
+          error: 'cannot delete. A record can only be deleted by its owner',
         });
       }
       if (record.status !== 'draft') {
@@ -397,22 +306,12 @@ class RecordsController {
         });
       }
 
-      const deletedRecord = (await pool.query(queryStrDelete, [req.params.id])).rows[0];
-      const formattedRecord = {
-        id: deletedRecord.id,
-        createdOn: deletedRecord.created_on,
-        createdBy: deletedRecord.created_by,
-        type: deletedRecord.type,
-        location: deletedRecord.location,
-        status: deletedRecord.status,
-        Images: deletedRecord.images,
-        Videos: deletedRecord.videos,
-        comment: deletedRecord.comment,
-      };
+      const deletedRecord = (await pool.query(queryStrDelete, [req.params.id])).rows;
+      const formattedRecord = outputFormatter(deletedRecord);
       return res.status(200).json({
         status: 200,
         data: [{
-          id: deletedRecord.id,
+          id: deletedRecord[0].id,
           message: `${req.recordType} record has been deleted`,
           record: formattedRecord,
         }],
