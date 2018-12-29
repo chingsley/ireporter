@@ -50,7 +50,7 @@ class RecordsController {
         comment,
       ])).rows;
       const formattedRecord = outputFormatter(newRecord);
-      res.status(201).json({
+      return res.status(201).json({
         status: 201,
         data: [{
           id: newRecord[0].id,
@@ -61,7 +61,7 @@ class RecordsController {
       });
     } catch (error) {
       // console.log(error);
-      res.status(500).json({
+      return res.status(500).json({
         status: 500,
         error: 'internal server error',
       });
@@ -93,7 +93,7 @@ class RecordsController {
       });
     } catch (error) {
       // console.log(error);
-      res.status(500).json({
+      return res.status(500).json({
         status: 500,
         error: 'internal server error',
       });
@@ -118,7 +118,7 @@ class RecordsController {
         });
       }
       const formattedRecord = outputFormatter(record);
-      res.status(200).json({
+      return res.status(200).json({
         status: 200,
         data: [{
           id: record[0].id,
@@ -128,7 +128,7 @@ class RecordsController {
       });
     } catch (error) {
       // console.log(error);
-      res.status(500).json({
+      return res.status(500).json({
         status: 500,
         error: 'internal server error',
       });
@@ -179,7 +179,7 @@ class RecordsController {
       });
     } catch (error) {
       // console.log(error);
-      res.status(500).json({
+      return res.status(500).json({
         status: 500,
         error: 'internal server error',
       });
@@ -225,12 +225,100 @@ class RecordsController {
         data: [{
           id: updatedRecord[0].id,
           message: `Updated ${req.recordType}'s comment`,
-          'red-flag': formattedRecord,
+          record: formattedRecord,
         }],
       });
     } catch (error) {
       // console.log(error);
-      res.status(500).json({
+      return res.status(500).json({
+        status: 500,
+        error: 'internal server error',
+      });
+    }
+  }
+
+  /**
+  *
+  * @param {object} req
+  * @param {object} res
+  * @param {function} next
+  * @returns {function} next split
+  */
+  static async addMedia(req, res) {
+    const { mediaArr, mediaStr, mediaType } = req;
+    const fieldname = (mediaType === 'image') ? 'images' : 'videos';
+
+    const queryStr = 'SELECT * FROM incidents WHERE id=$1 AND type=$2';
+    const queryStrUpdate = `UPDATE incidents SET ${fieldname}=$1 WHERE id=$2 RETURNING *`;
+
+    try {
+      const record = (await pool.query(queryStr, [req.params.id, req.recordType])).rows[0];
+      if (!record) {
+        return res.status(404).json({
+          status: 404,
+          error: `No ${req.recordType} matches the id of ${req.params.id}`,
+        });
+      }
+      if (record.created_by !== req.userId) {
+        return res.status(401).json({
+          status: 401,
+          error: `You do not have the authorization to edit that ${req.recordType}`,
+        });
+      }
+      if (record.status !== 'draft') {
+        return res.status(403).json({
+          status: 403,
+          error: `The specified ${req.recordType} cannot be edited because it is ${record.status}`,
+        });
+      }
+      const existingMediaStr = record[`${fieldname}`];
+      const existingMediaArr = (existingMediaStr.length === 0) ? [] : existingMediaStr.split(',');
+      const existingMediaCount = existingMediaArr.length;
+      const newMediaCount = mediaArr.length;
+      const totalMediaCount = existingMediaCount + newMediaCount;
+      let allowableMediaCount = 0;
+      let mediaLimitMsg = `You have reached the 3/3 upload limit for ${fieldname}`;
+      if (totalMediaCount > 3 && existingMediaCount < 3) {
+        allowableMediaCount = 3 - existingMediaCount;
+        mediaLimitMsg = `You have ${existingMediaCount} of 3 ${fieldname} already. You can only upload ${allowableMediaCount} more`;
+      }
+
+      if (totalMediaCount > 3) {
+        return res.status(403).json({
+          status: 403,
+          error: mediaLimitMsg,
+        });
+      }
+
+      let duplicateFile = null;
+      mediaArr.forEach((file) => {
+        if (existingMediaArr.includes(file.path.toString().trim())) {
+          duplicateFile = file.filename;
+        }
+      });
+      if (duplicateFile) {
+        return res.status(400).json({
+          status: 400,
+          error: `${duplicateFile} already exists`,
+        });
+      }
+      // add the mediaStr (ie. req.mediaStr) to the existing media string
+      const newMediaStr = (existingMediaArr.length > 0) ? `${existingMediaStr},${mediaStr}` : mediaStr;
+      const updatedRecord = (await pool.query(queryStrUpdate,
+        [newMediaStr, req.params.id])).rows;
+
+      const formattedRecord = outputFormatter(updatedRecord);
+      return res.status(200).json({
+        status: 200,
+        data: [{
+          id: updatedRecord[0].id,
+          message: `${mediaType} added to ${req.recordType} record`,
+          record: formattedRecord,
+        }],
+      });
+    } catch (error) {
+      // console.log(error);
+      return res.status(500).json({
         status: 500,
         error: 'internal server error',
       });
@@ -269,7 +357,7 @@ class RecordsController {
       });
     } catch (error) {
       // console.log(error);
-      res.status(500).json({
+      return res.status(500).json({
         status: 500,
         error: 'internal server error',
       });
@@ -318,7 +406,7 @@ class RecordsController {
       });
     } catch (error) {
       // console.log(error);
-      res.status(500).json({
+      return res.status(500).json({
         status: 500,
         error: 'internal server error',
       });

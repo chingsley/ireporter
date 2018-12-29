@@ -1,13 +1,22 @@
 // import moment from 'moment';
+// import { stringify } from 'querystring';8
 import Validator from '../validators/validator';
 // import pool from '../db/config';
 
-
+const stringifyMedia = (files) => {
+  const fileArr = [];
+  let fileStr = '';
+  files.forEach((file) => {
+    fileArr.push(file.path);
+  });
+  fileStr += fileArr.join(',');
+  return fileStr;
+};
 /**
  * class for inspecting user inputs
  */
-class InspectRedflag {
-/**
+class InspectRecord {
+  /**
    * Inspect data for new record
    * @param {object} req
    * @param {object} res
@@ -21,31 +30,17 @@ class InspectRedflag {
     if (!Validator.isValidCoordinates(location)) errObj['invalid coordinates'] = 'Please provide valid location coordinates. Valid coordinates must be in the format: lat, lng  [lat ranges from -90 to 90, lng ranges from -180 to 180]';
     if (!Validator.isValidComment(comment)) errObj['invalid comment'] = 'Please provide a valid comment. Comment must be a minium of 3 words';
 
-    const imageArr = [];
-    const videoArr = [];
     let imageStr = '';
     let videoStr = '';
-
     if (req.files) {
-      if (req.files.images) {
-        req.files.images.forEach((image) => {
-          if (image.size > 50000) {
-            errObj['image too large'] = `${image.filename} is too large, Max allowed size: 50kg per image`;
-          }
-          imageArr.push(image.path);
+      if (req.fileFormatError) {
+        return res.status(400).json({
+          status: 400,
+          error: `${req.fieldError}: unsupported file format (${req.unsupportedFileFormat})`,
         });
-        imageStr = imageArr.join(', ');
       }
-
-      if (req.files.videos) {
-        req.files.videos.forEach((video) => {
-          if (video.size > 10000000) {
-            errObj['video too large: '] = `${video.filename} is too large, Max allowed size: 10MB per video`;
-          }
-          videoArr.push(video.path);
-        });
-        videoStr = videoArr.join(', ');
-      }
+      if (req.files.images) imageStr = stringifyMedia(req.files.images);
+      if (req.files.videos) videoStr = stringifyMedia(req.files.videos);
     }
 
     if (Object.keys(errObj).length > 0) {
@@ -60,6 +55,8 @@ class InspectRedflag {
     req.images = imageStr;
     req.videos = videoStr;
     req.comment = comment.toString().trim();
+
+    // res.send('testing');
     return next();
   }
 
@@ -124,6 +121,44 @@ class InspectRedflag {
 
   /**
    *
+   * @param {object} req
+   * @param {object} res
+   * @param {function} next
+   * @returns {function} next
+   */
+  static async addMedia(req, res, next) {
+    // req.baseUrl = /api/v1/interventions
+    // req.originalUrl = /api/v1/interventions/:id/images
+    const n = req.originalUrl.indexOf('addImage');
+    const mediaType = (n > -1) ? 'image' : 'video';
+    let mediaStr = '';
+    let mediaArr = [];
+    if (req.files) {
+      if (req.fileFormatError) {
+        return res.status(400).json({
+          status: 400,
+          error: `${req.fieldError}: unsupported file format (${req.unsupportedFileFormat})`,
+        });
+      }
+      if ((mediaType === 'image' && !req.files.images)
+          || (mediaType === 'video' && !req.files.videos)) {
+        return res.status(400).json({
+          status: 400,
+          error: `You have not provided any ${mediaType} for upload.`,
+        });
+      }
+      mediaArr = (mediaType === 'image') ? req.files.images : req.files.videos;
+      mediaStr = stringifyMedia(mediaArr);
+    }
+
+    req.mediaArr = mediaArr;
+    req.mediaStr = mediaStr;
+    req.mediaType = mediaType;
+    return next();
+  }
+
+  /**
+   *
    * @param {object} req request object
    * @param {object} res response object
    * @param {function} next transfers controll
@@ -149,4 +184,4 @@ class InspectRedflag {
   }
 }
 
-export default InspectRedflag;
+export default InspectRecord;

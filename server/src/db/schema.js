@@ -141,3 +141,8 @@ module.exports = {
 };
 
 require('make-runnable');
+
+/**
+ * Example of how to execute the above functions in a command line:
+ *  node server/src/db/schema.js createTableIncidents
+ */
