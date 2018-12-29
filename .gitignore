@@ -9,3 +9,4 @@ users_test.json
 users.json
 server/storage/
 server/index.js
+.env

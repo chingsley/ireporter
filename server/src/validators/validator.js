@@ -126,6 +126,10 @@ class Validator {
     }
     return true;
   }
+
+  // static isValidFileFormat(req) {
+  //   return req.fileFormatError ? false : true;
+  // }
 }
 
 export default Validator;
