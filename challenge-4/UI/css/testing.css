@@ -1,0 +1,142 @@
+/*---------------- COLORS --------------------*/
+/*
+    header-bg-color: #35424a;
+    reddish-color: #e8491d;
+    fav-color: lightgoldenrodyellow;
+*/
+/*---------------- ANIMATIONS ----------------*/
+    @keyframes moveInLeft {
+        0% {opacity: 0; transform: translate(-100px);}
+        80% {transform: translate(10px);}
+        100% {opacity: 1; transform: translate(0);}
+    }
+    
+    @keyframes moveInRight {
+        0% {opacity: 0; transform: translate(100px);}
+        80% {transform: translate(-10px);}
+        100% {opacity: 1; transform: translate(0);}
+    }
+    
+    @keyframes moveInFromBelow {
+        0% {opacity: 0; transform: translateY(30px);}
+        100% {opacity: 1; transform: translate(0);}
+    }
+/*-------------------------------------------*/
+
+
+/*--------------- GLOBALS -------------------*/
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* border: 2px solid black; */
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+ul{
+    list-style: none;
+}
+
+.current {
+    color: #e8491d !important;
+}
+/*------------------------------------------*/
+
+
+header {
+    height: 130px;
+    background: #35424a;
+    color: #fafad2;
+    padding-top: 30px;
+    border-bottom: #e8491d 3px solid;}
+    header .row {
+    width: 100%;
+    height: auto;
+    margin: auto;}
+    #header-flex-box {
+        display: flex;
+        padding: 2px;
+        align-items: flex-start;
+        justify-content: space-between;}
+    nav {
+        margin-top: 30px;}
+    .ul-list {
+        list-style: none;
+        display: flex;
+        min-width: 640px;}
+    .list-items {
+        text-align: center;
+        flex-basis: 25%;
+        position: relative;
+        background-color: rgba(53, 66, 74, .5);}
+    .links {
+        text-decoration: none;
+        text-transform: uppercase;
+        display: block;
+        font-size: 16px;
+        padding: 12px 0 12px 0;
+        color: lightgoldenrodyellow; }
+    .list-items::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 3px;
+        background-color: white;
+        transform: scaleY(0);
+        transition: transform .5s;}
+    .list-items:hover::before {
+        transform: scaleY(1);}
+    .links:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+        color: white;}
+    .li-reports{
+        flex-basis: 35% !important;}
+    .inner-list-items {
+        display: none;}
+    .list-items:hover .inner-list-items {
+        display: block;}
+
+.main-section-div {
+    background-image: linear-gradient(to right bottom,
+        rgba(0, 0, 0, 0.5),
+        rgba(0, 0, 0, 0.8)),
+        url(../img/nat-7.jpg);
+    min-height: 400px;  
+    background-size: cover;  
+    /* background-position: center; */
+    text-align: center;
+    /* position: relative; */
+}
+
+.mission-statement-big {
+    font-size: 55px;
+    margin-bottom: 15px;
+    animation: moveInLeft 1s ease-out;
+    background-image: linear-gradient(to left, #ffffff, yellow);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent
+}
+
+.mission-statement-small {
+    font-size: 16px;
+    color: lightgoldenrodyellow;
+    animation: moveInFromBelow .5s ease-out .75s;
+    animation-fill-mode: backwards
+}
+
+.mission-statement {
+    padding: 24px 0 24px 0;
+    width: 100%;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
