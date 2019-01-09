@@ -24,23 +24,24 @@ class AuthHandler {
       userStatus,
     }, process.env.JWT_SECRET);
 
+    const userInfo = {
+      id: userDetails.id,
+      firstname: userDetails.firstname,
+      lastname: userDetails.lastname,
+      othernames: userDetails.othernames || 'not specified',
+      email: userDetails.email,
+      phoneNumber: userDetails.phonenumber,
+      username: userDetails.username,
+      registered: userDetails.registered,
+      isAdmin: userDetails.is_admin,
+      picture: `http://localhost:${process.env.PORT}/${userDetails.picture}`,
+    };
     const statusCode = req.wantsToSignUp ? 201 : 200;
-    res.status(statusCode).json({
+    return res.status(statusCode).json({
       status: statusCode,
       data: [{
         token,
-        user: {
-          id: userDetails.id,
-          firstname: userDetails.firstname,
-          lastname: userDetails.lastname,
-          othernames: userDetails.othernames || 'not specified',
-          email: userDetails.email,
-          phoneNumber: userDetails.phonenumber,
-          username: userDetails.username,
-          registered: userDetails.registered,
-          isAdmin: userDetails.is_admin,
-          picture: `http://localhost:${process.env.PORT}/${userDetails.picture}`,
-        },
+        user: userInfo,
       }],
     });
   }
