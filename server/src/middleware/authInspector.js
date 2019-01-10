@@ -52,18 +52,26 @@ class Inspect {
       errObj.missingFields = `Values are required for the field(s): ${missingFields}`;
     }
 
-    if (!Validator.isValidName(firstname)) errObj.firstname = 'Must be a minimum of 2 characters, (no numbers)';
-    if (!Validator.isValidName(lastname)) errObj.lastname = 'Must be a minimum of 2 characters, (no numbers)';
-    if (username && !Validator.isValidName(username)) errObj.username = 'Must be a minimum of 2 characters, (no numbers)';
+    if (!Validator.isValidName(firstname)){
+      errObj.firstname = 'First Name must be a minimum of 2 characters, (no numbers)';
+    } 
+    if (!Validator.isValidName(lastname)){
+      errObj.lastname = 'Last Name must be a minimum of 2 characters, (no numbers)';
+    } 
+    if (username && (!Validator.isValidName(username))){
+      errObj.username = 'Must be a minimum of 2 characters, (no numbers)';
+    } 
     if (email) {
       if (Validator.customValidateEmail(email).error) {
         errObj.email = `${Validator.customValidateEmail(email).message}`;
       }
-    } else {
-      errObj.email = 'email field is missing';
     }
-    if (!Validator.isValidPhoneNumber(phoneNumber)) errObj.phoneNumber = 'Cannot contain alphabets, must be less than 16 digits long, cannot be preceded by \'-\', cannot be all 0 digits';
-    if (Validator.isPasswordTooShort(password)) errObj.password = 'Password should have a minimum of 6 characters';
+    if (!Validator.isValidPhoneNumber(phoneNumber)){
+      errObj.phoneNumber = `Phone number cannot contain alphabets, must be less than 16 digits long, cannot be preceded by '-', cannot be all 0 digits`;
+    } 
+    if (Validator.isPasswordTooShort(password)){
+      errObj.password = 'Password should have a minimum of 6 characters';
+    } 
     if ((Object.keys(errObj)).length > 0) {
       return res.status(400).json({
         status: 400,
