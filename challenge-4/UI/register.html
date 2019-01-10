@@ -9,6 +9,7 @@
     <meta name="author" content="Eneja Kingsley">
     <title>iReporter | Register</title>
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/register.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- <link rel="stylesheet" href="./css/testin.css"> -->
 </head>
@@ -92,7 +93,7 @@
                </div> <!--END div-flexbox-->
                <div class="div-flexbox" id="div-flexbox-btn">
                    <div class="flex-child div-btn-reg">
-                       <button class="btn-reg"> REGISTER </button>
+                       <button class="btn-reg btn" id="btn-reg"> REGISTER </button>
                    </div>
                </div> <!--END div-flexbox-->
            </form>
@@ -129,8 +130,27 @@
         </div>
     </footer>
 
+    <div class="popup-dialog-window" id="popup-dialog-window">
+        <div class="dialog-box" id="dialog-box">
+            <div class="div-dialog-title" id="div-dialog-title">
+                <h3 class="dialog-title" id="dialog-title">
+                    Error !
+                </h3>
+            </div>
+            <div class="div-dialog-msg" id="div-dialog-msg">
+                <p class="dialog-msg" id="dialog-msg">
+                    Invalid email and/or password.
+                    <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium provident possimus incidunt ipsum consequuntur quisquam distinctio odio dignissimos dolore, assumenda animi est ab inventore qui in, commodi sunt fuga ex. -->
+                </p>
+            </div>
+    
+            <span class="close-dialog-box" id="close-dialog-box">&times;</span>
+        </div>
+    </div>
 
     <script src="./js/script.js"></script>
+    <script src="./js/register.js"></script>
+
 </body>
 
 </html>

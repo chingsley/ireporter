@@ -1,17 +1,10 @@
 const password = document.getElementById('password');
 const email = document.getElementById('email');
 const btnSubmit = document.getElementById('login-btn-submit');
-const uri = 'http://localhost:3000/api/v1/auth/login';
-// const uri = 'https://ireporter-db.herokuapp.com/api/v1/auth/login';
-const dialogWindow = document.getElementById('popup-dialog-window');
-const closeBtn = document.getElementById('close-dialog-box');
-const dialogTitle = document.getElementById('dialog-title');
-const dialogMsg = document.getElementById('dialog-msg');
-
+const uri = `${root}/auth/login`;
 
 btnSubmit.addEventListener('click', (event) => {
     event.preventDefault();
-
 
     let formdata = new FormData();
     formdata.append('email', email.value);
@@ -27,12 +20,6 @@ btnSubmit.addEventListener('click', (event) => {
     fetch(req)
         .then(response => {
             return response.json();
-            // if (response.ok) {
-            //     return response.json();
-            // } else {
-            //     return response.json();
-            //     // throw new Error(response.json());
-            // }
         })
         .then(response => {
             if(response.status === 200) {
@@ -48,26 +35,12 @@ btnSubmit.addEventListener('click', (event) => {
             }
         })
         .catch(err => {
-            dialogWindow.style.display = "block";
-            dialogTitle.textContent = "Error !!";
-            dialogMsg.textContent = err.message;
-
-            // close the dialogbox if when the user clicks
-            // on the 'x' button;
-            closeBtn.onclick = () => {
-                dialogWindow.style.display = "none";
+            console.log(err);
+            if (err.message === 'Failed to fetch') {
+                showDialogMsg(0, 'Error', 'Connection failed. <br> Ensure you are well connected to the internet');
+            } else {
+                showDialogMsg(0, 'Error', err.message);
             }
-            
-            // also close the dialog box if the user clicks
-            // anywhere on the dialog box (which covers
-            // the whole window [remember!]), except on the 
-            // content.
-            window.onclick = (event) => {
-                if(event.target === dialogWindow) {
-                    dialogWindow.style.display = "none";
-                }
-            }
-
+            // showDialogMsg(1, 'Success', 'Udate successful');
         });
-
 });
