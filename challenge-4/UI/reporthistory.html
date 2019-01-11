@@ -54,8 +54,9 @@
     </section> -->
 
     <section class="section-reporthistory">
-        <div class="section-reporthistory-wrapper">
+        <div class="section-reporthistory-wrapper" id="section-reporthistory-wrapper">
             <div class="flex-box-reporthistory">
+
                 <div class="report" id="report-cards">
                     <button class="btn-report-delete">&times;</button>
                     <div class="div-report-img">
@@ -73,7 +74,7 @@
                             </tr>
                             <tr>
                                 <td>Details :</td>
-                                <td style='position:relative;' class="animated-link"><a href="#popup" class="report-card-comments-and-media" style="z-index:1000;">...</a></td>
+                                <td class="animated-link td-details"><a href="#popup" class="report-card-comments-and-media">...</a></td>
                             </tr>
                             <tr>
                                 <td>Status :</td>
@@ -225,6 +226,7 @@
                         <button class="btn disabled-btn" id="btn-edit-report">Edit</button>
                     </div>
                 </div>
+                 
             </div>
         </div>
     </section>
@@ -259,13 +261,13 @@
     </footer>
 
     <div class="popup" id="popup">
-        <div class="popup-content">
+        <div class="popup-content" id="popup-content">
             <div class="popup-left">
                 <img src="img/download (5).jpeg" alt="Tour photo" class="popup-img">
                 <img src="img/download (2).jpeg" alt="Tour photo" class="popup-img">
             </div>
             <div class="popup-right">
-                <a href="#report-card" class="popup-close">&times;</a>
+                <a href="#report-card" class="popup-close"  id="popup-close">&times;</a>
                 <!-- <h2 class="heading-secondary">Reporter's Comments & Media</h2> -->
                 <h3 class="heading-tertiary-dark u-margin-bottom-small">Reporter's comment &ndash;</h3>
                 <p class="popup-text">
@@ -289,7 +291,7 @@
                 <img src="img/1543732393583.jpg" alt="Tour photo" class="popup-img">
             </div>
             <div class="popup-right">
-                <a href="#div-table-title" class="popup-close">&times;</a>
+                <a href="#div-table-title" class="popup-close" id="popup-close">&times;</a>
                 <!-- <h2 class="heading-secondary">Reporter's Comments & Media</h2> -->
                 <h3 class="heading-tertiary-dark u-margin-bottom-small">Reporter's comment &ndash;</h3>
                 <p class="popup-text">
