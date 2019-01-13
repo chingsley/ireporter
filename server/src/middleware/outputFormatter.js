@@ -3,7 +3,8 @@ const formatMedia = (media) => {
     const mediaArr = media.split(',');
     const formattedMediaArr = [];
     for (let i = 0; i < mediaArr.length; i += 1) {
-      formattedMediaArr.push(`http://localhost:${process.env.PORT}/${mediaArr[i].trim()}`);
+      // formattedMediaArr.push(`http://localhost:${process.env.PORT}/${mediaArr[i].trim()}`);
+      formattedMediaArr.push(`${mediaArr[i].trim()}`);
     }
     return formattedMediaArr;
   }

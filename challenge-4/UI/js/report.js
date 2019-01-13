@@ -1,3 +1,5 @@
+console.log(sessionStorage.recordId);
+
 let btn = document.getElementById('btn-get-current-location');
 let coords = document.getElementById('coords');
 function initMap() {

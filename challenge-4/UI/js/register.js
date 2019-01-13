@@ -36,18 +36,27 @@ btnRegister.addEventListener('click', (event) => {
                             <br>
                             You can now sign in and start reporting cases.
                             <br><br>
-                            Great to have you on board.`;
-                showDialogMsg(1, 'Congratulations', msg);
+                            * Great to have you on board.`;
+                showDialogMsg(2, 'Congratulations', msg);
             } else {
-                throw new Error(JSON.stringify(response.error));
+                // throw new Error(JSON.stringify(response.error));
+                if ((typeof response.error === 'string')) {
+                    showDialogMsg(0, 'Error', response.error, 'center');
+                } else {
+                    const errStr = getErrString(response.error);
+                    showDialogMsg(0, 'Error', errStr);
+                }
             }
         })
         .catch(err => {
-            if((typeof JSON.parse(err.message)) === 'string') {
-                showDialogMsg(0, 'Error', err.message);
+            if (err.message === 'Failed to fetch') {
+                const msg = `<ul class="dialog-box-ul">Try:
+                                <li>Checking the network cables, modem, and router</li>
+                                <li>Reconnecting to Wi-Fi</li>
+                             </ul>`;
+                showDialogMsg(0, 'Connection failure', msg);
             } else {
-                const errStr = getErrString(err.message);
-                showDialogMsg(0, 'Error', errStr);
+                showDialogMsg(0, 'Error', err.message, 'center');
             }
         });
 });
