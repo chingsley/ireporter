@@ -24,6 +24,7 @@ btnSubmit.addEventListener('click', (event) => {
         .then(response => {
             if(response.status === 200) {
                 sessionStorage.token = response.data[0].token;
+                sessionStorage.firstname = response.data[0].user.firstname;
                 if(response.data[0].user.isAdmin) {
                     location.href = 'adminpage.html';
                 } else {
@@ -37,10 +38,13 @@ btnSubmit.addEventListener('click', (event) => {
         .catch(err => {
             console.log(err);
             if (err.message === 'Failed to fetch') {
-                showDialogMsg(0, 'Error', 'Connection failed. <br> Ensure you are well connected to the internet');
+                const msg = `<ul class="dialog-box-ul">Try:
+                                <li>Checking the network cables, modem, and router</li>
+                                <li>Reconnecting to Wi-Fi</li>
+                             </ul>`;
+                showDialogMsg(0, 'Connection failure', msg);
             } else {
-                showDialogMsg(0, 'Error', err.message);
+                showDialogMsg(0, 'Error', err.message, 'center');
             }
-            // showDialogMsg(1, 'Success', 'Udate successful');
         });
 });
