@@ -1585,7 +1585,7 @@ select {
 .div-welcome-user {
     text-align: center;
     margin: 2rem;
-    animation: moveInLeft 1s ease 1s; /* this works with some additional settings in reporthistory.js - the first block of code there*/
+    animation: moveInLeft 1s ease .5s; /* this works with some additional settings in reporthistory.js */
     font-style: oblique;
     letter-spacing: .1rem;
     opacity: 0;
@@ -1593,6 +1593,8 @@ select {
 .div-no-records {
     border: 1px solid white;
     padding: 1rem 0 1rem 10rem;
+    animation: moveInRight 1s ease .5s; /* this works with some additional settings in reporthistory.js */
+    opacity: 0;
 }
 .div-no-records p {
     padding: .5rem 2rem;

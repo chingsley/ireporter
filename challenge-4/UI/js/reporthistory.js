@@ -156,13 +156,10 @@ const process = (promisedJson) => {
                     // replace popup comments with record's comment
                     const popupText = document.getElementsByClassName('popup-text');
                     const popupImg = document.getElementsByClassName('popup-img');
-                    console.log('popupText', popupText);
-                    console.log('popupImg', popupImg);
 
                     popupText[0].textContent = record.comment;
                     popupImg[0].src = record.Images[0] ? `${imgRoot}/${record.Images[0]}` : defaultImg;
                     popupImg[1].src = record.Images[1] ? `${imgRoot}/${record.Images[1]}` : defaultImg;
-                    console.log('record.Images[0]', record.Images[0]);
 
                     // close popup
                     const popupClose = document.getElementById('popup-close');
@@ -228,11 +225,26 @@ const process = (promisedJson) => {
                     const msg = `
                 Are you sure you want to delete this record ?
                 <br><br>
-                NOTE: This operation is not reversible !`;
+                NOTE: This operation is not reversible !
+                `;
+                
+                setTimeout(() => {
+                //    showDialogMsg(1, 'WARNING', msg, 'center');
 
-                    setTimeout(() => {
-                        showDialogMsg(1, 'WARNING', msg, 'center');
-                    }, 700);
+                    let p1 = new Promise((resolve, reject) => {
+                        let result = showDialogMsg(1, 'WARNING', msg, 'center');
+                        resolve (result);
+                    })
+                    
+                    p1.then(result => {
+                        console.log('result', result);
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                }, 700);
+
+                
+
                 });
 
                 reportHistory.appendChild(reportCard);
@@ -255,13 +267,17 @@ const process = (promisedJson) => {
             // as expected. Therefore, see the '.div-welcome-user' in 
             // 'reporthistory section' of 'style.css' for the animation
             // properties of this div. To be specific, the animation duration 
-            // in the css for this div is set to 1 seconds (1s) and the opacity
-            // is set to 0. But when the page loads, we wait for 1.5 seconds (1500)
+            // in the css for this div is set to .5 seconds (.5s) and the opacity
+            // is set to 0. But when the page loads, we wait for .6 seconds (600)
             // before setting the opacity to 1.
             const divWelcome = document.getElementsByClassName('div-welcome-user');
             setTimeout(() => {
                 divWelcome[0].style.opacity = 1;
-            }, 1500);
+            }, 600);
+            const divNoRecords = document.getElementsByClassName('div-no-records');
+            setTimeout(() => {
+                divNoRecords[0].style.opacity = 1;
+            }, 600);
             /****************************************************************** */
             reportSection.innerHTML = msg;
         }
