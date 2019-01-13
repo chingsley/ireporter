@@ -1,16 +1,4 @@
-/**************************************************************** */
-// This block needs some additional css settings to work 
-// as expected. Therefore, see the '.div-welcome-user' in 
-// 'reporthistory section' of 'style.css' for the animation
-// properties of this div. To be specific, the animation duration 
-// in the css for this div is set to 1 seconds (1s) and the opacity
-// is set to 0. But when the page loads, we wait for 1.5 seconds (1500)
-// before setting the opacity to 1.
-const divWelcome = document.getElementsByClassName('div-welcome-user');
-setTimeout(()=>{
-    divWelcome[0].style.opacity = 1;
-}, 1500);
-/****************************************************************** */
+
 
 const reportSection = document.getElementById('section-reporthistory-wrapper')
 const reportHistory = document.createElement('div');
@@ -44,11 +32,13 @@ Promise.all([reqRedflags, reqInterventions])
                                 <li>Checking the network cables, modem, and router</li>
                                 <li>Reconnecting to Wi-Fi</li>
                              </ul>`;
-        showDialogMsg(0, 'Connection failure', msg);
+        showDialogMsg(0, 'Connection failure', msg, 'left', 'index.html');
     } else {
-        showDialogMsg(0, 'Error', err.message, 'center');
+        showDialogMsg(0, 'Error', err.message, 'center', 'index.html');
     }
-    // showDialogMsg(0, 'Error', err.message);
+    // setTimeout(() => {
+    //     location.href = 'index.html';
+    // }, 3000);
 });
 
 
@@ -259,6 +249,20 @@ const process = (promisedJson) => {
                  in the navigation bar and start making reports.</p>
             </div>
             `;
+
+            /**************************************************************** */
+            // This block needs some additional css settings to work 
+            // as expected. Therefore, see the '.div-welcome-user' in 
+            // 'reporthistory section' of 'style.css' for the animation
+            // properties of this div. To be specific, the animation duration 
+            // in the css for this div is set to 1 seconds (1s) and the opacity
+            // is set to 0. But when the page loads, we wait for 1.5 seconds (1500)
+            // before setting the opacity to 1.
+            const divWelcome = document.getElementsByClassName('div-welcome-user');
+            setTimeout(() => {
+                divWelcome[0].style.opacity = 1;
+            }, 1500);
+            /****************************************************************** */
             reportSection.innerHTML = msg;
         }
     });
