@@ -45,18 +45,18 @@ const closeDialog = (target) => {
 
     // The 'CANCEL' btn for the WARNING dialog box: 
     btnConfirm[0].onclick = () => {
-        // localStorage.confirm = false;
         dialogWindow.style.display = "none";
-        return sessionStorage.confrim;
     }
 
     // The 'PROCEED' btn for the WARNING dialog box: 
-    btnConfirm[1].onclick = () => {
-        // localStorage.confirm = true;
-        dialogWindow.style.display = "none";
-        // return sessionStorage.confirm;
-        return true;
-    }
+    // this is done in the click event of 'delete' to 
+    // hide the dialog in addition to calling the function
+    // to delete the record.
+
+    // btnConfirm[1].onclick = () => {
+    //     dialogWindow.style.display = "none";
+    //     return true;
+    // }
 
     
 };
@@ -75,10 +75,10 @@ const showDialogMsg = (flag, title, msg, textAlign = 'left', target) => {
         dialogBox.style.border = "1px solid crimson";
         dialogBox.style.animation = "moveInFromBelow .5s ease-in";
         dialogTitle.style.color = `white`;
+        divConfirmation.style.display = 'none';
     } else if(flag === 1) { // warning
-        // localStorage.confirm = false;
         dialogTitle.parentNode.style.backgroundColor = "rgba(247, 178, 49, 1)";
-        // dialogTitle.parentNode.style.borderBottom = "2px solid black";
+        dialogTitle.parentNode.style.borderBottom = "none";
         dialogBox.style.border = "1px rgba(247, 178, 49, 1)";
         dialogBox.style.animation = "moveInLeft .5s ease";
         dialogTitle.style.color = `black`;
@@ -89,6 +89,7 @@ const showDialogMsg = (flag, title, msg, textAlign = 'left', target) => {
         dialogBox.style.border = "1px solid darkgreen";
         dialogBox.style.animation = "slideDownFast .5s ease-in";
         dialogTitle.style.color = `black`;
+        divConfirmation.style.display = 'none';
     } else {
         throw new Error(`showDialogMsg expects 'flag' to be 0, 1, or 2`);
     }

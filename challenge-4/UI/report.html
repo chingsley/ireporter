@@ -37,21 +37,6 @@
         </div>
     </header>
 
-    <!-- <section class="section-newsletter" id="section-newsletter-register-page">
-        <div class="container" id="newsletter-container">
-            <h1 id="h1-id">Subscribe To Our Newsletter</h1>
-            <form action="#" id="form-id">
-                <div class="input-and-label">
-                    <input type="email" class="input-class" id="email" placeholder="Enter Email..." required>
-                    <label for="email" class="label-class">Enter Email...</label>
-                </div>
-                <div class="btn-div">
-                    <button type="submit" id="btn__submit" class="btn">Subscribe</button>
-                </div>
-            </form>
-        </div>
-    </section> -->
-
     <section class="section-report">
         <div class="section-report-flex-box">
             <div class="div-over-form-report">
@@ -60,12 +45,12 @@
                         make a report
                     </h2>
                 </div>
-                <form action="#" class="report-form">
+                <form action="#" class="report-form" id="report-form">
                     <div id="radio-container" class= "report-input-flex">
                         <!-- <div class="form-radio-group-title">Select a type of report</div> -->
                         <div class="rep-field rep-field-for-radio">
                             <div class="form-radio-group">
-                                <input type="radio" class="form-radio-input" id="small" name="type" value="red-flag">
+                                <input type="radio" class="form-radio-input" id="small" name="type" value="red-flags">
                                 <label for="small" class="form-radio-label">
                                     <span class="form-radio-button"></span>
                                     red-flag
@@ -74,7 +59,7 @@
                         </div>
                         <div class="rep-field rep-field-for-radio">
                             <div class="form-radio-group">
-                                <input type="radio" class="form-radio-input" id="large" name="type" value="intervention">
+                                <input type="radio" class="form-radio-input" id="large" name="type" value="interventions">
                                 <label for="large" class="form-radio-label">
                                     <span class="form-radio-button"></span>
                                     intervention
@@ -87,7 +72,8 @@
                             <input type="text" class="report-form-input" id="address" placeholder="Enter your address">
                         </div>
                         <div class="rep-field">
-                            <input type="text" class="report-form-input" id="coords" required readonly>
+                            <input type="text" class="report-form-input" id="coords" required>
+                            <!-- <input type="text" class="report-form-input" id="coords" required readonly> -->
                         </div>
                         <div class="prompt">Don't know your address? Click <button id="btn-get-current-location">here</button> to allow us get your current location.</div>
                         <!-- <label for="lastname" class="form-label">Location</label> -->
@@ -108,7 +94,7 @@
                     </div>
                     <div class="report-input-flex" id="form-group-last-child">
                         <div class="rep-field" id="rep-field-textarea">
-                            <textarea name="comment" id="comment" rows="6">comment...</textarea>
+                            <textarea name="comment" id="comment" rows="6" placeholder="enter your comments"></textarea>
                         </div>
                     </div>
                     <!-- <div class="file-upload-group">
@@ -157,11 +143,32 @@
             </div>
         </div>
     </footer>
-        <script>
-           
-        </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsPc92ZcMDHK2wx3zgcu8ysBQVCOfBCSE&callback=initMap">
-        </script>
+
+    <div class="popup-dialog-window" id="popup-dialog-window">
+        <div class="dialog-box" id="dialog-box">
+            <div class="div-dialog-title" id="div-dialog-title">
+                <h3 class="dialog-title" id="dialog-title">
+                    WARNING !
+                </h3>
+            </div>
+            <div class="div-dialog-msg" id="div-dialog-msg">
+                <p class="dialog-msg" id="dialog-msg">
+                    Invalid email and/or password.
+                    <!-- Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium provident possimus incidunt ipsum consequuntur quisquam distinctio odio dignissimos dolore, assumenda animi est ab inventore qui in, commodi sunt fuga ex. -->
+                </p>
+            </div>
+            <div class="div-confirmation" id="div-confirmation">
+                <div class="link-container"><a href="#card-info" class="link btnConfirm" id="link-on-white-bg">Cancel</a></div>
+                <div class="link-container"><a href="#card-info" class="link btnConfirm" id="link-on-white-bg">Proceed
+                        &rarr;</a></div>
+            </div>
+    
+            <span class="close-dialog-box" id="close-dialog-box">&times;</span>
+        </div>
+    </div>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsPc92ZcMDHK2wx3zgcu8ysBQVCOfBCSE&callback=initMap">
+    </script>
 
     <script src="./js/script.js"></script>
     <script src="./js/report.js"></script>
