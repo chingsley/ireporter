@@ -20,6 +20,8 @@ btnRegister.addEventListener('click', (event) => {
     formdata.append('password', password.value);
     formdata.append('phoneNumber', phonenumber.value);
     formdata.append('picture', picture.files[0], `${email.value}.jpeg`);
+
+    console.log('formdata', formdata);
     
     const uri = `${root}/auth/signup`
     const options = { method: 'POST', mode: 'cors', body: formdata };
@@ -29,7 +31,7 @@ btnRegister.addEventListener('click', (event) => {
             return response.json();
         })
         .then(response => {
-            console.log('response = ', response);
+            // console.log('response = ', response);
             if(response.status === 201) {
                 sessionStorage.token = response.data[0].token;
                 const msg = `You have been successfully Registered !

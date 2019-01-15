@@ -26,6 +26,7 @@ class InspectRecord {
   static async newRecord(req, res, next) {
     const errObj = {};
     const { location, comment } = req.body;
+    console.log('recordsInpector.js line 29', req.body);
 
     if (!Validator.isValidCoordinates(location)) errObj['invalid coordinates'] = 'Please provide valid location coordinates. Valid coordinates must be in the format: lat, lng  [lat ranges from -90 to 90, lng ranges from -180 to 180]';
     if (!Validator.isValidComment(comment)) errObj['invalid comment'] = 'Please provide a valid comment. Comment must be a minium of 3 words';
