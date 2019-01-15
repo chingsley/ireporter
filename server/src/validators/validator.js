@@ -1,5 +1,6 @@
 // import pool from '../db/config';
 import emailChecker from './emailChecker';
+// import emailChecker from '../../../emailChecker';
 
 /**
  * class Validator contains the validator functions
