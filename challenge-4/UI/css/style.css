@@ -1666,7 +1666,7 @@ select {
     margin-left: 0;
 }
 #rep-field-for-address {
-    display: none;
+    /* display: none; */
 }
 .edit-btns {
     cursor: pointer;
@@ -1692,7 +1692,7 @@ select {
    padding: .5rem .5rem .5rem .5rem;
    outline: none;
    color: white;
-   background-color: transparent;
+   background-color: rgba(128, 128, 128, .5);
    /* height: 100%; */
 }
 textarea {
