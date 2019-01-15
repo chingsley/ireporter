@@ -216,8 +216,13 @@ const process = (promisedJson) => {
 
                    // add click event to 'edit button';
                    btnEdit.addEventListener('click', () => {
-                       sessionStorage.recordId = record.id;
-                       location.href = 'report.html'; // should be 'editRecord.html'
+                       localStorage.recordId = record.id;
+                       localStorage.recordType = record.type;
+                       localStorage.recordLocation = record.location;
+                       localStorage.recordComment = record.comment;
+                       localStorage.recordImages = record.Images;
+                       localStorage.recordVideos = record.Videos;
+                       location.href = 'editrecord.html'; // should be 'editrecord.html'
                    });
 
                    // add click event to 'delete button'
@@ -251,14 +256,14 @@ const process = (promisedJson) => {
            } else {
                const firstname = sessionStorage.firstname || '';
                const msg = `
-            <div class="div-welcome-user"><h1>Welcome ${firstname}</h1></div>
-            <div class="div-no-records">
-                <h2> No Records Found.</h2>
-                <p> It seems you have not reported any case yet.</p>
-                <p> To report a case, click on the 'report a case' link
-                 in the navigation bar and start making reports.</p>
-            </div>
-            `;
+                <div class="div-welcome-user"><h1>Welcome ${firstname}</h1></div>
+                <div class="div-no-records">
+                    <h2> No Records Found.</h2>
+                    <p> It seems you have not reported any case yet.</p>
+                    <p> To report a case, click on the 'report a case' link
+                    in the navigation bar and start making reports.</p>
+                </div>
+                `;
 
                /************************** animation ************************ */
                // This block needs some additional css settings to work 

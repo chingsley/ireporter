@@ -1,5 +1,5 @@
 // console.log(sessionStorage.recordId);
-console.log(sessionStorage.userId);
+// console.log(sessionStorage.userId);
 let msg = 'dialog message';
 
 {// HANDLING GEOLOCATION
@@ -105,7 +105,7 @@ let msg = 'dialog message';
 
         const token = sessionStorage.token;
         const myHeaders = new Headers();
-        // myHeaders.append('Content-Type', 'application/json');
+        // myHeaders.append('Content-Type', 'application/json'); // This results in error during fetch
         myHeaders.append('x-auth-token', token);
 
         const uri = `${root}/${reportForm.type.value}`
@@ -118,11 +118,11 @@ let msg = 'dialog message';
     const createReport = (req) => {
         fetch(req)
             .then(response => {
-                console.log('line 134 report.js', response);
+                // console.log('line 134 report.js', response);
                 return response.json();
             })
             .then(response => {
-                console.log('line 138 report.js, response = ', response);
+                // console.log('line 138 report.js, response = ', response);
                 if (response.status === 201) {
                     sessionStorage.recordId = response.data[0].id;
                     showDialogMsg(2, 'Saved', response.data[0].message, 'center');
