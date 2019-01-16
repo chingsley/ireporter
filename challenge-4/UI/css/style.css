@@ -1676,6 +1676,7 @@ select {
 }
 .flex-for-btns {
   /* border: 1px solid yellow; */
+  padding-left: 8px;
   margin-top: 2px;
   display: flex;
   justify-content: space-between;

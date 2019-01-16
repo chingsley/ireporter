@@ -10,6 +10,7 @@ const recordId = localStorage.recordId;
 const recordType = localStorage.recordType;
 const token = sessionStorage.token;
 let recordAddress = '';
+let msg = '';
 
 {// HANDLING GEOLOCATION
     // let btn = document.getElementById('btn-get-current-location');
@@ -122,7 +123,7 @@ let recordAddress = '';
     comment.value = localStorage.recordComment;
 
     // show the 'save changes' button when the user changes the address
-    address.addEventListener('focus', () => {
+    address.addEventListener('input', () => {
         address.style.backgroundColor = 'transparent';
         btnSaveLocation.style.display = 'block';
         btnSaveLocation.style.animation = 'moveInLeft 1s ease';
@@ -137,7 +138,9 @@ const patchLocation = (req) => {
         .then(response => {
             if (response.status === 200) {
                 // sessionStorage.recordId = response.data[0].id;
-                showDialogMsg(2, 'Saved', response.data[0].message, 'center');
+                msg = `<p>${response.data[0].message}</p>
+                       <p>Closest landmark: ${recordAddress}</p>`;
+                showDialogMsg(2, 'Saved', msg, 'center');
             } else {
                 // throw new Error(JSON.stringify(response.error));
                 if ((typeof response.error === 'string')) {
@@ -150,7 +153,7 @@ const patchLocation = (req) => {
         })
         .catch(err => {
             if (err.message === 'Failed to fetch') {
-                const msg = `<ul class="dialog-box-ul">Try:
+                msg = `<ul class="dialog-box-ul">Try:
                             <li>Checking the network cables, modem, and router</li>
                             <li>Reconnecting to Wi-Fi</li>
                             </ul>`;
