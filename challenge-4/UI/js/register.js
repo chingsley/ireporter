@@ -39,7 +39,7 @@ btnRegister.addEventListener('click', (event) => {
                             You can now sign in and start reporting cases.
                             <br><br>
                             * Great to have you on board.`;
-                showDialogMsg(2, 'Congratulations', msg);
+                showDialogMsg(2, 'Congratulations', msg, 'center');
             } else {
                 // throw new Error(JSON.stringify(response.error));
                 if ((typeof response.error === 'string')) {

@@ -46,7 +46,13 @@
                     </h2>
                 </div>
                 <form action="#" class="edit-form" id="edit-form">
-                    <div id="radio-container" class="edit-input-flex">
+                    <div class="div-over-file-upload-group edit-input-flex">
+                        <div class="rep-field rep-field-for-id-and-type">
+                                <h3>RECORD ID: <span id="record-id"></span></h3>
+                        </div>
+                        <div class="rep-field rep-field-for-id-and-type">
+                            <h3>RECORD TYPE: <span id="record-type"></span></h3>
+                        </div>
                     </div>
                     <div class="div-address-and-coords edit-input-flex">
                         <div class="rep-field" id="rep-field-for-address">
@@ -56,7 +62,6 @@
                         <div class="rep-field" id="rep-field-for-coords">
                             <label for="cords" class="form-label">Coordinates</label>
                             <input type="text" class="edit-form-input" id="coords" required readonly>
-                            <!-- <input type="text" class="edit-form-input" id="coords" required readonly> -->
                         </div>
                         <!-- <div class="prompt">Don't know your address? Click <button id="btn-get-current-location">here</button>
                             to allow us get your current location.</div> -->
@@ -65,7 +70,7 @@
                         <span class="span-prompt">Enter a new address</span>
                         <button class="edit-btns btn-save-location" id="btn-save-location">save changes</button>
                     </div>
-                    <div class="div-over-file-upload-group edit-input-flex">
+                    <!-- <div class="div-over-file-upload-group edit-input-flex">
                         <div class="rep-field rep-field-for-upload">
                             <div class="file-upload-group">
                                 <label for="pic" class="form-inputfile-label">Images</label>
@@ -80,19 +85,49 @@
                                     multiple>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="edit-input-flex" id="form-group-last-child">
+                        <span class="form-label">Comments</span>
                         <div class="rep-field" id="rep-field-textarea">
                             <textarea name="comment" id="comment" rows="6" placeholder="enter your comments"></textarea>
                         </div>
                     </div>
-                    <!-- <div class="file-upload-group">
-                        <label for="audio" class="form-inputfile-label">Audio</label>
-                        <input type="file" class="form-inputfile" id="audio" name="audio" accept="audio/*;capture=microphone" multiple>
-                    </div> -->
+                    <!-- <div class="edit-input-flex"> -->
+                        <div class="rep-field flex-for-btns">
+                            <span class="span-prompt">Edit your comments</span>
+                            <button class="edit-btns btn-save-comment" id="btn-save-comment">save changes</button>
+                        </div>
+                    <!-- </div> -->
+
+                    <div class="img-collection-container">
+                        <span class="form-label">Images</span>
+                        <div class="img-collection">
+                            <div class="ic_image-div"><img src="img/13477493.jpg" alt="Images"></div>
+                            <div class="ic_image-div"><img src="img/download (2).jpeg" alt="Images"></div>
+                            <div class="ic_image-div"></div>
+                            <!-- <div class="ic_image-div"><video src="img/video.mp4" alt="Images"></div> -->
+                        </div>
+                        <div class="img-upload-btn-container" class="img-upload-btn-container">
+                            <label for="pic" class="img-upload-label">Add Images</label>
+                            <input type="file" class="img-upload" id="pic" name="pic" accept="image/*;capture=camera" multiple>
+                        </div>
+                    </div>
+                    <div class="vid-collection-container">
+                        <span class="form-label">Videos</span>
+                        <div class="vid-collection">
+                            <div class="vc_video-div"><video src="img/video.mp4" alt="videos"></div>
+                            <div class="vc_video-div"><video src="img/video.mp4" alt="videos"></div>
+                            <div class="vc_video-div"><video src="img/video.mp4" alt="videos"></div>
+                        </div>
+                        <div class="vid-upload-btn-container" class="vid-upload-btn-container">
+                            <label for="vid" class="img-upload-label">Add Videos</label>
+                            <input type="file" class="vid-upload" id="vid" name="vid" accept="video/*;capture=camera" multiple>
+                        </div>
+                    </div>
+
                     <div class="edit-input-flex" id="edit-input-flex-for-btn">
                         <div class="div-edit-form-btn">
-                            <button class="btn" id="btn-send-edit">send</button>
+                            <button class="btn" id="btn-send-edit">save changes</button>
                         </div>
                     </div>
                 </form>

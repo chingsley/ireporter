@@ -1,8 +1,11 @@
 // DECLARE VARIABLES
 const btnChangeLocation = document.getElementById('btn-change-location');
 const btnSaveLocation = document.getElementById('btn-save-location');
+const btnSaveComment = document.getElementById('btn-save-comment');
 const addressContainer = document.getElementById('rep-field-for-address');
 const coordsContainer = document.getElementById('rep-field-for-coords');
+const spanRecordId = document.getElementById('record-id');
+const spanRecordType = document.getElementById('record-type');
 const coords = document.getElementById('coords');
 const address = document.getElementById('address');
 const comment = document.getElementById('comment');
@@ -11,8 +14,13 @@ const recordType = localStorage.recordType;
 const token = sessionStorage.token;
 let recordAddress = '';
 let msg = '';
+spanRecordId.innerText = recordId;
+spanRecordType.innerText = recordType.toString().toUpperCase();
+coords.value = localStorage.recordLocation;
+coords.title = 'readOnly';
+comment.value = localStorage.recordComment;
 
-{// HANDLING GEOLOCATION
+{// HANDLING GEOLOCATION (NOTE: THE CALL FOR THE 'PATCH' OPERATION HAPPENS WITHING THE 'geocodeAddress' FUNCTION
     // let btn = document.getElementById('btn-get-current-location');
     function initMap() {
         let map = new google.maps.Map(document.getElementById('map'), {
@@ -39,7 +47,7 @@ let msg = '';
         let p1 = new Promise((resolve, reject) => {
             geocoder.geocode({ 'address': address.value }, function (results, status) {
                 if (status === 'OK') {
-                    isValidCoords = true;
+                    // isValidCoords = true;
                     coords.value = `${results[0].geometry.location.lat()}, ${results[0].geometry.location.lng()}`;
                     resultsMap.setCenter(results[0].geometry.location);
                     let marker = new google.maps.Marker({
@@ -51,9 +59,17 @@ let msg = '';
                     infowindow.open(map, marker);
                     resolve(true);
                 } else {
-                    isValidCoords = false;
+                    // isValidCoords = false;
                     // alert('The address you entered is unknown: ' + status);
-                    reject('The address you entered is unknown: ' + status);
+                    if (status === 'ERROR') {
+                        msg = `Theres was a problem with geolocation. <br>Please check your internet connection: ` + status;
+                        // reject(`Theres was a problem with geolocation. <br>Please check your internet connection: ` + status);
+                        reject({message: msg, errType: 'network error'})
+                    } else {
+                        msg = 'The address you entered is unknown: ' + status;
+                        reject({ message: msg, errType: 'Geolocation error' })
+                    }
+                    // reject('The address you entered is unknown: ' + status);
                 }
             });
         });
@@ -74,7 +90,7 @@ let msg = '';
             // patchLocation(req);
             setTimeout(() => { patchLocation(req); }, 1000);
         }).catch(err => {
-            showDialogMsg(0, 'Unknown Address', err, 'center');
+            showDialogMsg(0, err.errType, err.message, 'center');
         });
     }
 
@@ -119,8 +135,6 @@ let msg = '';
 }
 
 {// POPULATE THE FIELDS WITH THE RECORD DETAILS WITH SOME ANIMATIONS
-    coords.value = localStorage.recordLocation;
-    comment.value = localStorage.recordComment;
 
     // show the 'save changes' button when the user changes the address
     address.addEventListener('input', () => {
@@ -128,6 +142,9 @@ let msg = '';
         btnSaveLocation.style.display = 'block';
         btnSaveLocation.style.animation = 'moveInLeft 1s ease';
     });
+    address.addEventListener('blur', () =>{
+        address.style.backgroundColor = 'rgba(128, 128, 128, .5)';
+    })
 }
 
 const patchLocation = (req) => {
@@ -163,3 +180,58 @@ const patchLocation = (req) => {
             }
         });
 };
+
+const patchComment = (req) => {
+    fetch(req)
+        .then(response => {
+            return response.json();
+        })
+        .then(response => {
+            if (response.status === 200) {
+                msg = `<p>${response.data[0].message}</p>`;
+                showDialogMsg(2, 'Saved', msg, 'center');
+            } else {
+                if ((typeof response.error === 'string')) {
+                    showDialogMsg(0, 'Error', response.error, 'center');
+                } else {
+                    const errStr = getErrString(response.error);
+                    showDialogMsg(0, 'Error', errStr);
+                }
+            }
+        })
+        .catch(err => {
+            if (err.message === 'Failed to fetch') {
+                msg = `<ul class="dialog-box-ul">Try:
+                            <li>Checking the network cables, modem, and router</li>
+                            <li>Reconnecting to Wi-Fi</li>
+                            </ul>`;
+                showDialogMsg(0, 'Connection failure', msg);
+            } else {
+                showDialogMsg(0, 'Error', err.message, 'center');
+            }
+        });
+};
+
+{// PATCH COMMENT
+    comment.addEventListener('input', () => {
+        btnSaveComment.style.display = 'block';
+        btnSaveComment.style.animation = 'moveInLeft 1s ease';
+        comment.style.backgroundColor = 'transparent';
+    });
+    comment.addEventListener('blur', () => {
+        comment.style.backgroundColor = 'rgba(128, 128, 128, .5)';
+    });
+
+    btnSaveComment.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        const uri = `${root}/${recordType}s/${recordId}/comment`; // notice to the addition of 's' to make interventions and red-flags
+        const formdata = new FormData();
+        formdata.append('comment', comment.value);
+        const myHeaders = new Headers();
+        myHeaders.append('x-auth-token', token);
+        const options = { method: 'PATCH', mode: 'cors', headers: myHeaders, body: formdata, };
+        const req = new Request(uri, options);
+        patchComment(req);
+    });
+}
