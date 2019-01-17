@@ -997,7 +997,7 @@ header {
     padding: 2px;
     width: 95%;
     margin: 0 auto;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* background-image: linear-gradient(180deg, rgba(6, 6, 29, .5) 50%,rgba(6, 6, 29, .5), 100%, transparent 0); */
 
     /* margin-top: 4rem; */
@@ -1146,15 +1146,19 @@ textarea {
     width: 100%;
 }
 .div-over-map {
-    width: auto;
+    /* width: auto; */
+    width: 30%;
     /* border: 1px solid yellow; */
-    padding: 10px;
+    /* padding: 10px; */
 }
 .map {
-    margin-top: 2.8rem;
-    width: 20rem;
+    margin-top: 3.3rem;
+    /* width: 20rem; */
+    width: 100%;
     height:29rem;
     border: 2px solid #35424a;
+    margin-left: 0;
+    padding: 0;
 }
     
     
@@ -1621,7 +1625,7 @@ select {
     padding: 2px;
     width: 95%;
     margin: 0 auto;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* background-image: linear-gradient(180deg, rgba(6, 6, 29, .5) 50%,rgba(6, 6, 29, .5), 100%, transparent 0); */
 
     /* margin-top: 4rem; */
@@ -1639,7 +1643,10 @@ select {
     /* background-color: rgba(238, 238, 238, .5); */
     background-image: linear-gradient(180deg, rgba(6, 6, 29, .5) 50%,rgba(6, 6, 29, .5), 100%, transparent 0);
 }
-
+#record-id,
+#record-type {
+    color: #e8491d;
+}
 .edit-input-flex {
     /* border: 1px solid red; */
     padding: 5px;
@@ -1671,7 +1678,8 @@ select {
 .edit-btns {
     cursor: pointer;
 }
-.btn-save-location {
+.btn-save-location,
+.btn-save-comment {
     display: none;
 }
 .flex-for-btns {
@@ -1681,8 +1689,10 @@ select {
   display: flex;
   justify-content: space-between;
 }
-.rep-field-for-upload {
+.rep-field-for-id-and-type {
     background-image: linear-gradient(180deg, rgba(6, 6, 29, .5) 50%,rgba(6, 6, 29, .5), 100%, transparent 0);
+    padding: 1rem 0 1rem 0;
+    border-bottom: 1px solid white;
 }
 
 .edit-form-input {
@@ -1696,10 +1706,11 @@ select {
    background-color: rgba(128, 128, 128, .5);
    /* height: 100%; */
 }
-textarea {
+.edit-form textarea {
     width: 100%;
     /* border-radius: 3px; */
-    background-color: transparent;
+    /* background-color: transparent; */
+    background-color: rgba(128, 128, 128, .5);
     outline: none;
     color: white;
     padding: 1rem;
@@ -1713,6 +1724,57 @@ textarea {
     margin: 5px;
     color: lightgoldenrodyellow;
 }
+.img-collection-container,
+.vid-collection-container {
+    margin-top: 2rem;
+}
+.img-collection,
+.vid-collection {
+    /* padding: 10px;
+    display: grid;
+    grid-row-gap: 1rem;
+    grid-template-columns: 33.33% 33.33% 33.33%;
+    grid-column-gap: 2px;
+    justify-items: center; */
+    padding: 5px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.ic_image-div,
+.vc_video-div {
+    /* width: 15rem; */
+    /* position: relative; */
+    width: 33.33%;
+    height: 10rem;
+    border: 1px solid white;
+}
+.ic_image-div img{
+    width: 100%;
+    height: 100%;
+}
+
+.vc_video-div {
+    position: relative;
+    overflow: hidden;
+}
+
+.vc_video-div video {
+    position: absolute;
+    top: 0rem;
+    left: 0rem;
+}
+.img-upload-btn-container,
+.vid-upload-btn-container {
+    padding-left: 8px;
+    /* border: 1px solid white; */
+    text-align: center;
+    width: 100%;
+    /* margin-left: 5px; */
+    /* margin-right: 5px; */
+}
+
+
 #btn-get-current-location {
     /* padding: 0 10px 0 10px; */
     border: none;
@@ -1722,14 +1784,6 @@ textarea {
     color: #e8491d;
     text-decoration: underline;
     cursor: pointer;
-}
-.div-over-file-upload-group {
-    text-align: center;
-}
-.file-upload-group {
-   padding-top: 10px;
-   padding-bottom: 10px;
-    
 }
 .edit-input-file-upload {
     box-sizing: border-box;
@@ -1749,15 +1803,19 @@ textarea {
     width: 100%;
 }
 .div-over-map {
-    width: auto;
+    /* width: auto; */
+    width: 30%;
     /* border: 1px solid yellow; */
-    padding: 10px;
+    /* padding: 10px; */
 }
 .map {
-    margin-top: 2.8rem;
-    width: 20rem;
+    margin-top: 3.3rem;
+    /* width: 20rem; */
+    width: 100%;
     height:29rem;
     border: 2px solid #35424a;
+    padding: 0;
+    margin-left: 0;
 }
 /********************** (END  EDIT-RECORD PAGE) *************/
 
@@ -1796,30 +1854,33 @@ textarea {
 
 /************************ MEDIA QUERY ******************/
 @media (max-width: 1063px) {
-      .section-report-flex-box {
+      .section-report-flex-box,
+      .section-edit-flex-box {
         /* display: flex; */
         flex-direction: column;
         width: 95%;
         /* justify-content: space-between; */
     }
 
-    .div-over-form-report {
+    .div-over-form-report,
+    .div-over-form-edit {
         /* border: 1px solid blue; */
-        width: 80%;
+        width: 100%;
         margin: auto;
     }
 
-    .report-input-flex {
+    .report-input-flex,
+    .edit-input-flex {
         background-color: transparent;
     } 
 
     .div-over-map {
-        width: 80%;
+        width: 100%;
         padding: 10px;
         margin: 0 auto;
     }
     .map {
-        width: 30rem;
+        width: 100%;
         height: 30rem;
         border: 2px solid #35424a;
         margin: 0 auto;
@@ -1830,18 +1891,20 @@ textarea {
     .form {
         width: 80%;
     }
-
+/* 
     .map {
         width: 20rem;
         height: 20rem;
         border: 2px solid #35424a;
         margin: 0 auto;
-    }
-    .report-input-flex {
+    } */
+    .report-input-flex,
+    .edit-input-flex {
         background-color: transparent;
         margin-top: 2.4rem;
-    } 
-}     
+    }
+}  
+
 @media(max-width: 768px) {
     .flex-box-footer {
         flex-direction: column;
@@ -1891,12 +1954,8 @@ textarea {
         width: 80%;
     }
 
-    .map {
-        width: 22rem;
-        height: 10rem;
-        
-    }
-    .div-report-form-btn {
+    .div-report-form-btn,
+    .div-edit-form-btn {
          width: 100%;
     }
 
@@ -1904,7 +1963,7 @@ textarea {
         width: 90%;
     }
 
-        .div-over-form {
+    .div-over-form {
         background-image: linear-gradient(105deg,rgba(6, 6, 29, .8) 0%,rgba(6, 6, 29, .8), 100%, transparent 0%), url(../img/nat-10.jpg);
     }
 
@@ -1924,7 +1983,8 @@ textarea {
         width: 90%;
     }
 
-     .report-input-flex {
+     .report-input-flex,
+     .edit-input-flex {
         flex-direction: column;
         /* background-color: #eeeeee; */
     } 
@@ -1933,8 +1993,17 @@ textarea {
         width: 100%;
     }
 
-    .div-report-form-btn {
+    .div-over-form-report,
+    .div-over-form-edit {
+        width: 95%;
+    }
+    .div-report-form-btn,
+    .div-edit-form-btn {
         width: 100%;
+    }
+    .ic_image-div,
+    .vc_video-div {
+        width: 20rem;
     }
 
     .reg-form .div-flexbox {
@@ -2002,13 +2071,6 @@ textarea {
     }
     #first-link {
         margin-top: 3rem;
-    }
-
-     .map {
-        width: 10rem;
-        height: 10rem;
-        border: 2px solid #35424a;
-        margin: 0 auto;
     }
 
 }
