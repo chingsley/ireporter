@@ -1,27 +1,63 @@
 // DECLARE VARIABLES
-const btnChangeLocation = document.getElementById('btn-change-location');
-const btnSaveLocation = document.getElementById('btn-save-location');
-const btnSaveComment = document.getElementById('btn-save-comment');
-const addressContainer = document.getElementById('rep-field-for-address');
-const coordsContainer = document.getElementById('rep-field-for-coords');
-const spanRecordId = document.getElementById('record-id');
-const spanRecordType = document.getElementById('record-type');
-const coords = document.getElementById('coords');
 const address = document.getElementById('address');
+const addressContainer = document.getElementById('rep-field-for-address');
+const btnChangeLocation = document.getElementById('btn-change-location');
+const btnSaveComment = document.getElementById('btn-save-comment');
+const btnSaveChanges = document.getElementById('btn-save-changes');
+const btnSaveLocation = document.getElementById('btn-save-location');
 const comment = document.getElementById('comment');
+const coords = document.getElementById('coords');
+const coordsContainer = document.getElementById('rep-field-for-coords');
+const imgContainer = document.querySelector('.img-collection');
+const imgFileInput = document.querySelector('.img-file-input'); 
+const imgFileInputContainer = document.querySelector('.img-file-input-container');
+const imgUploadInfo = document.querySelector('.img-upload-info');
+const MEDIA_MAX_COUNT = 3;
 const recordId = localStorage.recordId;
 const recordType = localStorage.recordType;
+const spanRecordId = document.getElementById('record-id');
+const spanRecordType = document.getElementById('record-type');
 const token = sessionStorage.token;
-let recordAddress = '';
+
+let allowedUploadCount = 0;
 let msg = '';
+let recordAddress = '';
+
+coords.title = 'readOnly';
 spanRecordId.innerText = recordId;
 spanRecordType.innerText = recordType.toString().toUpperCase();
-coords.value = localStorage.recordLocation;
-coords.title = 'readOnly';
-comment.value = localStorage.recordComment;
+
+console.log(imgFileInput);
+console.log(imgUploadInfo);
+console.log(imgContainer);
+
+{// FETCH THE SPECIFIC RECORD OF THE GIVEN recordId
+    const uri = `${root}/${recordType}s/${recordId}`;
+    const newHeaders = new Headers();
+    newHeaders.append('Content-Type', 'application/json');
+    newHeaders.append('x-auth-token', token);
+    const options = { method: 'GET', headers: newHeaders, };
+    req = new Request(uri, options);
+
+    fetch(req)
+    .then(response => {
+        return response.json();
+    })
+    .then(response => {
+        if(response.status === 200) {
+            displayContents(response);
+        } else {
+            handleResponseError(response);
+        }
+    })
+    .catch(err => {
+        handleError(err);
+    });
+
+}
 
 {// HANDLING GEOLOCATION (NOTE: THE CALL FOR THE 'PATCH' OPERATION HAPPENS WITHING THE 'geocodeAddress' FUNCTION
-    // let btn = document.getElementById('btn-get-current-location');
+    // let btnGetCurrentLocation = document.getElementById('btn-get-current-location');
     function initMap() {
         let map = new google.maps.Map(document.getElementById('map'), {
             zoom: 8,
@@ -39,6 +75,28 @@ comment.value = localStorage.recordComment;
             event.preventDefault();
             geocodeAddress(geocoder, map, infowindow);
         });
+
+        // // Use this to allow the user generate the coordinates of the current location
+        // btnGetCurrentLocation.addEventListener('click', function (event) {
+        //     event.preventDefault();
+        //     // getLocation();
+        //     // let outcome = getLocation();
+        //     let p1 = new Promise((resolve, reject) => {
+        //        let outcome =  getLocation();
+        //         if(outcome === true) {
+        //             resolve(outcome);
+        //         } else {
+        //             reject("Geolocation is not supported by this browser.");
+        //         }
+        //     });
+        //     p1.then(result => {
+        //         console.log(result);
+        //         console.log(coords.value);
+        //         geocodeLatLng(geocoder, map, infowindow);
+        //     }).catch(err => {
+        //         showDialogMsg(0, 'Error', err, 'center');
+        //     });
+        // });
 
     }
 
@@ -128,13 +186,15 @@ comment.value = localStorage.recordComment;
         coords.value = `${position.coords.latitude}, ${position.coords.longitude}`;
     }
 
-    // Use this to allow the user generate the coordinates of the current location
-    // btn.addEventListener('click', function () {
+    // // Use this to allow the user generate the coordinates of the current location
+    // btnGetCurrentLocation.addEventListener('click', function (event) {
+    //     event.preventDefault();
     //     getLocation();
+    //     geocodeLatLng(geocoder, map, infowindow);
     // });
 }
 
-{// POPULATE THE FIELDS WITH THE RECORD DETAILS WITH SOME ANIMATIONS
+{// ADD EVENT LISTENER TO THE ADDRESS INPUT WITH SOME ANIMATIONS
 
     // show the 'save changes' button when the user changes the address
     address.addEventListener('input', () => {
@@ -147,72 +207,7 @@ comment.value = localStorage.recordComment;
     })
 }
 
-const patchLocation = (req) => {
-    fetch(req)
-        .then(response => {
-            return response.json();
-        })
-        .then(response => {
-            if (response.status === 200) {
-                // sessionStorage.recordId = response.data[0].id;
-                msg = `<p>${response.data[0].message}</p>
-                       <p>Closest landmark: ${recordAddress}</p>`;
-                showDialogMsg(2, 'Saved', msg, 'center');
-            } else {
-                // throw new Error(JSON.stringify(response.error));
-                if ((typeof response.error === 'string')) {
-                    showDialogMsg(0, 'Error', response.error, 'center');
-                } else {
-                    const errStr = getErrString(response.error);
-                    showDialogMsg(0, 'Error', errStr);
-                }
-            }
-        })
-        .catch(err => {
-            if (err.message === 'Failed to fetch') {
-                msg = `<ul class="dialog-box-ul">Try:
-                            <li>Checking the network cables, modem, and router</li>
-                            <li>Reconnecting to Wi-Fi</li>
-                            </ul>`;
-                showDialogMsg(0, 'Connection failure', msg);
-            } else {
-                showDialogMsg(0, 'Error', err.message, 'center');
-            }
-        });
-};
-
-const patchComment = (req) => {
-    fetch(req)
-        .then(response => {
-            return response.json();
-        })
-        .then(response => {
-            if (response.status === 200) {
-                msg = `<p>${response.data[0].message}</p>`;
-                showDialogMsg(2, 'Saved', msg, 'center');
-            } else {
-                if ((typeof response.error === 'string')) {
-                    showDialogMsg(0, 'Error', response.error, 'center');
-                } else {
-                    const errStr = getErrString(response.error);
-                    showDialogMsg(0, 'Error', errStr);
-                }
-            }
-        })
-        .catch(err => {
-            if (err.message === 'Failed to fetch') {
-                msg = `<ul class="dialog-box-ul">Try:
-                            <li>Checking the network cables, modem, and router</li>
-                            <li>Reconnecting to Wi-Fi</li>
-                            </ul>`;
-                showDialogMsg(0, 'Connection failure', msg);
-            } else {
-                showDialogMsg(0, 'Error', err.message, 'center');
-            }
-        });
-};
-
-{// PATCH COMMENT
+{// SET UP FOR PATCH COMMENT
     comment.addEventListener('input', () => {
         btnSaveComment.style.display = 'block';
         btnSaveComment.style.animation = 'moveInLeft 1s ease';
@@ -235,3 +230,154 @@ const patchComment = (req) => {
         patchComment(req);
     });
 }
+
+
+const addImg = () => {
+    const formdata = new FormData();
+    const myHeaders = new Headers();
+    const uri = `${root}/${recordType}s/${recordId}/addImage`;
+    console.log(uri);
+    const images = imgFileInput.files;
+    
+
+    myHeaders.append('x-auth-token', token);
+    if(images.length > 0 ) {
+        for(let i = 0; i < images.length; i += 1) {
+            formdata.append('images', images[i], `${recordId}_${images[i].name}`);
+        }
+    }
+
+    const options = { 
+         method: 'PATCH',
+         mode: 'cors', 
+         headers: myHeaders, 
+         body: formdata, 
+    };
+
+    const req = new Request(uri, options);
+
+    fetch(req)
+    .then(response => {
+        return response.json();
+    })
+    .then(response => {
+        if(response.status === 200) {
+            showDialogMsg(2, 'Upload Successful', response.data[0].message, 'center');
+            setTimeout(() => {
+                window.location.reload(false);
+            }, 2000);
+        } else {
+            handleResponseError(response);
+        }
+    })
+    .catch(err => {
+        handleError(err);
+    });
+
+};
+
+const displayContents = (response) => {
+    console.log(response);
+    coords.value = response.data[0].location;
+    comment.value = response.data[0].comment;
+
+    let images = response.data[0].Images;
+    console.log(images);
+    let videos = response.data[0].Videos;
+    console.log(videos);
+    let info = '';
+    if(images.length === MEDIA_MAX_COUNT) {
+        info = `you have reached the maximum upload of ${MEDIA_MAX_COUNT} images`;
+        imgFileInputContainer.style.display = 'none'; // hide the img file input element
+    } else if (images.length < MEDIA_MAX_COUNT) {
+        allowedUploadCount = MEDIA_MAX_COUNT - images.length;
+        info = `you have uploaded ${images.length}/${MEDIA_MAX_COUNT} images`;
+    } else {
+        info = `you have exceeded the maximum upload count of ${MEDIA_MAX_COUNT}`;
+        imgFileInputContainer.style.display = 'none';
+    }
+
+    images.forEach(image => {
+        imgUploadInfo.innerHTML = info;
+        console.log(image);
+        const imgDiv = document.createElement('div');
+        imgDiv.classList.add('ic_image-div');
+        imgContainer.appendChild(imgDiv);
+        const img = document.createElement('img');
+        img.classList.add('record-img');
+        img.src = `${imgRoot}/${image}`;
+        imgDiv.appendChild(img);
+    });
+};
+
+const patchComment = (req) => {
+    fetch(req)
+        .then(response => {
+            return response.json();
+        })
+        .then(response => {
+            if (response.status === 200) {
+                msg = `<p>${response.data[0].message}</p>`;
+                showDialogMsg(2, 'Saved', msg, 'center');
+            } else {
+                handleResponseError(response);
+            }
+        })
+        .catch(err => {
+            handleError(err);
+        });
+};
+
+const patchLocation = (req) => {
+    fetch(req)
+        .then(response => {
+            return response.json();
+        })
+        .then(response => {
+            if (response.status === 200) {
+                // sessionStorage.recordId = response.data[0].id;
+                msg = `<p>${response.data[0].message}</p>
+                       <p>Closest landmark: ${recordAddress}</p>`;
+                showDialogMsg(2, 'Saved', msg, 'center');
+            } else {
+                handleResponseError(response);
+            }
+        })
+        .catch(err => {
+            handleError(err);
+        });
+};
+
+
+
+btnSaveChanges.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    addImg();
+});
+
+imgFileInput.addEventListener('change', () => {
+    const files = imgFileInput.files;
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+    for(let i = 0; i < files.length; i += 1) {
+        if(!allowedTypes.includes(files[i].type)) {
+            msg = `${files[i].name} is not supported
+                    </br> Supported formats are ${allowedTypes.join(', ')}`;
+            showDialogMsg(0, 'Unsupported Image Format', msg, 'center');
+
+            imgFileInput.value = ""; // clear the content of the the file input element
+        }
+    }
+
+    if(files.length > allowedUploadCount) {
+        msg = `Maximum image upload is ${MEDIA_MAX_COUNT} <br>
+               You can only upload ${allowedUploadCount} more image`;
+        showDialogMsg(0, 'Image Upload Error', msg, 'center');
+         
+        imgFileInput.value = "";
+    }
+    console.log(files);
+});
+
+
+// console.log([1, 2, 3].includes(4));

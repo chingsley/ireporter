@@ -106,6 +106,27 @@ const showDialogMsg = (flag, title, msg, textAlign = 'left', target) => {
 
 };
 
+const handleError = (err) => {
+    if (err.message === 'Failed to fetch') {
+        msg = `<ul class="dialog-box-ul">Try:
+                            <li>Checking the network cables, modem, and router</li>
+                            <li>Reconnecting to Wi-Fi</li>
+                            </ul>`;
+        showDialogMsg(0, 'Connection failure', msg);
+    } else {
+        showDialogMsg(0, 'Error', err.message, 'center');
+    }
+};
+
+const handleResponseError = (response) => {
+    if ((typeof response.error === 'string')) {
+        showDialogMsg(0, 'Error', response.error, 'center');
+    } else {
+        const errStr = getErrString(response.error);
+        showDialogMsg(0, 'Error', errStr);
+    }
+};
+
 /******** FUNCTION TO DELETE A ROW FROM A TABLE**************** */
 const deleteTableRow = () => {// I thinkd you need to pass 'event' as the argument in the function
     // event.target is the input button element. 

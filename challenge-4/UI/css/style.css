@@ -1724,6 +1724,12 @@ select {
     margin: 5px;
     color: lightgoldenrodyellow;
 }
+.edit-form .form-label {
+    display: inline-block;
+}
+.img-upload-info {
+    color: #e8491d;
+}
 .img-collection-container,
 .vid-collection-container {
     margin-top: 2rem;
@@ -1739,7 +1745,7 @@ select {
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    /* justify-content: center; */
 }
 .ic_image-div,
 .vc_video-div {
@@ -1749,7 +1755,7 @@ select {
     height: 10rem;
     border: 1px solid white;
 }
-.ic_image-div img{
+.record-img{
     width: 100%;
     height: 100%;
 }
@@ -1759,20 +1765,24 @@ select {
     overflow: hidden;
 }
 
-.vc_video-div video {
+.record-vid {
     position: absolute;
     top: 0rem;
     left: 0rem;
 }
-.img-upload-btn-container,
-.vid-upload-btn-container {
+.img-file-input-container,
+.vid-file-input-container {
     padding-left: 8px;
-    /* border: 1px solid white; */
-    text-align: center;
+    /* text-align: center; */
     width: 100%;
-    /* margin-left: 5px; */
-    /* margin-right: 5px; */
+    cursor: pointer;
 }
+
+.img-file-input,
+.vid-file-input {
+    cursor: pointer;
+}
+
 
 
 #btn-get-current-location {
@@ -1798,7 +1808,7 @@ select {
     /* border: 1px solid black; */
     width: 48%;
 }
-#btn-send-edit {
+#btn-save-changes {
     font-size: 1rem;
     width: 100%;
 }
@@ -2001,10 +2011,16 @@ select {
     .div-edit-form-btn {
         width: 100%;
     }
+
     .ic_image-div,
     .vc_video-div {
         width: 20rem;
     }
+
+    .img-collection,
+    .vid-collection  {
+    justify-content: center;
+}
 
     .reg-form .div-flexbox {
         flex-direction: column;

@@ -18,34 +18,25 @@ btnSubmit.addEventListener('click', (event) => {
     let req = new Request(uri, options);
 
     fetch(req)
-        .then(response => {
-            return response.json();
-        })
-        .then(response => {
-            if(response.status === 200) {
-                sessionStorage.token = response.data[0].token;
-                sessionStorage.firstname = response.data[0].user.firstname;
-                sessionStorage.userId = response.data[0].user.id;
-                if(response.data[0].user.isAdmin) {
-                    location.href = 'adminpage.html';
-                } else {
-                    location.href = 'reporthistory.html';
-                }
-                const jsonData = JSON.stringify(response); // in case you want to display the response as is on a html page
+    .then(response => {
+        return response.json();
+    })
+    .then(response => {
+        if(response.status === 200) {
+            sessionStorage.token = response.data[0].token;
+            sessionStorage.firstname = response.data[0].user.firstname;
+            sessionStorage.userId = response.data[0].user.id;
+            if(response.data[0].user.isAdmin) {
+                location.href = 'adminpage.html';
             } else {
-                throw new Error(response.error);
+                location.href = 'reporthistory.html';
             }
-        })
-        .catch(err => {
-            console.log(err);
-            if (err.message === 'Failed to fetch') {
-                const msg = `<ul class="dialog-box-ul">Try:
-                                <li>Checking the network cables, modem, and router</li>
-                                <li>Reconnecting to Wi-Fi</li>
-                             </ul>`;
-                showDialogMsg(0, 'Connection failure', msg);
-            } else {
-                showDialogMsg(0, 'Error', err.message, 'center');
-            }
-        });
+            const jsonData = JSON.stringify(response); // in case you want to display the response as is on a html page
+        } else {
+            throw new Error(response.error);
+        }
+    })
+    .catch(err => {
+        handleError(err);
+    });
 });
