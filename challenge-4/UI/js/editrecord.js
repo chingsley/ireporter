@@ -18,8 +18,13 @@ const recordType = localStorage.recordType;
 const spanRecordId = document.getElementById('record-id');
 const spanRecordType = document.getElementById('record-type');
 const token = sessionStorage.token;
+const vidContainer = document.querySelector('.vid-collection');
+const vidFileInputContainer = document.querySelector('.vid-file-input-container');
+const vidUploadInfo = document.querySelector('.vid-upload-info');
 
 let allowedUploadCount = 0;
+let x = 0;
+let y = 0;
 let msg = '';
 let recordAddress = '';
 
@@ -27,9 +32,9 @@ coords.title = 'readOnly';
 spanRecordId.innerText = recordId;
 spanRecordType.innerText = recordType.toString().toUpperCase();
 
-console.log(imgFileInput);
-console.log(imgUploadInfo);
-console.log(imgContainer);
+// console.log(imgFileInput);
+// console.log(imgUploadInfo);
+// console.log(imgContainer);
 
 {// FETCH THE SPECIFIC RECORD OF THE GIVEN recordId
     const uri = `${root}/${recordType}s/${recordId}`;
@@ -276,37 +281,96 @@ const addImg = () => {
 
 };
 
+const getAllowedUploadCount = (mediaArr) => {
+    return MEDIA_MAX_COUNT - mediaArr.length;
+}
+
 const displayContents = (response) => {
-    console.log(response);
     coords.value = response.data[0].location;
     comment.value = response.data[0].comment;
-
+    
     let images = response.data[0].Images;
-    console.log(images);
     let videos = response.data[0].Videos;
-    console.log(videos);
+
+    displayMedia(images, 'image');
+    displayMedia(videos, 'video');
+
+    // console.log(videos);
+    // let info = '';
+    // if(images.length === MEDIA_MAX_COUNT) {
+    //     info = `you have reached the maximum upload of ${MEDIA_MAX_COUNT} images`;
+    //     imgFileInputContainer.style.display = 'none'; // hide the img file input element
+    // } else if (images.length < MEDIA_MAX_COUNT) {
+    //     allowedUploadCount = MEDIA_MAX_COUNT - images.length;
+    //     info = `you have uploaded ${images.length}/${MEDIA_MAX_COUNT} images`;
+    // } else {
+    //     info = `you have exceeded the maximum upload count of ${MEDIA_MAX_COUNT}`;
+    //     imgFileInputContainer.style.display = 'none';
+    // }
+
+    // imgUploadInfo.innerHTML = info;
+    // images.forEach(image => {
+    //     const imgDiv = document.createElement('div');
+    //     imgDiv.classList.add('ic_image-div');
+    //     imgContainer.appendChild(imgDiv);
+    //     const img = document.createElement('img');
+    //     img.classList.add('record-img');
+    //     img.src = `${imgRoot}/${image}`;
+    //     imgDiv.appendChild(img);
+    // });
+};
+
+const displayMedia = (mediaArr, mediaType) => {
+    console.log(mediaType, mediaArr);
     let info = '';
-    if(images.length === MEDIA_MAX_COUNT) {
-        info = `you have reached the maximum upload of ${MEDIA_MAX_COUNT} images`;
-        imgFileInputContainer.style.display = 'none'; // hide the img file input element
-    } else if (images.length < MEDIA_MAX_COUNT) {
-        allowedUploadCount = MEDIA_MAX_COUNT - images.length;
-        info = `you have uploaded ${images.length}/${MEDIA_MAX_COUNT} images`;
+    let mediaContainer;
+    let mediaFileInputDiv;
+    let mediaUploadInfo;
+
+    
+    if (mediaType === 'image') {
+        x = getAllowedUploadCount(mediaArr);
+        mediaFileInputDiv = imgFileInputContainer;
+        mediaUploadInfo = imgUploadInfo;
+        mediaContainer = imgContainer;
+        console.log(imgContainer);
+        console.log(mediaContainer);
+    } else if (mediaType === 'video') {
+        y = getAllowedUploadCount(mediaArr);
+        mediaFileInputDiv = vidFileInputContainer;
+        mediaUploadInfo = vidUploadInfo;
+        mediaContainer = vidContainer;
+        console.log(vidContainer);
+        console.log(mediaContainer);
     } else {
-        info = `you have exceeded the maximum upload count of ${MEDIA_MAX_COUNT}`;
-        imgFileInputContainer.style.display = 'none';
+        throw new Error(`displayMedia() expects mediaType to 'image' or 'video' `);
     }
 
-    images.forEach(image => {
-        imgUploadInfo.innerHTML = info;
-        console.log(image);
-        const imgDiv = document.createElement('div');
-        imgDiv.classList.add('ic_image-div');
-        imgContainer.appendChild(imgDiv);
-        const img = document.createElement('img');
-        img.classList.add('record-img');
-        img.src = `${imgRoot}/${image}`;
-        imgDiv.appendChild(img);
+    if (mediaArr.length < MEDIA_MAX_COUNT) {
+        info = `you have uploaded ${mediaArr.length}/${MEDIA_MAX_COUNT} ${mediaType}s`;
+    } else {
+        info = `you have reached the maximum upload of ${MEDIA_MAX_COUNT} ${mediaType}s`;
+        mediaFileInputDiv.style.display = 'none';
+    }
+
+    mediaUploadInfo.innerHTML = info;
+    mediaArr.forEach(file => {
+        const mediaDiv = document.createElement('div');
+        let media;
+        if (mediaType === 'image') {
+            mediaDiv.classList.add('ic_image-div');
+            media = document.createElement('img');
+            console.log(media);
+            media.classList.add('record-img');
+        } else {
+            mediaDiv.classList.add('vc_video-div');
+            media = document.createElement('video');
+            console.log(media);
+            media.classList.add('record-vid');
+        }
+        mediaContainer.appendChild(mediaDiv);
+        media.src = `${imgRoot}/${file}`;
+        mediaDiv.appendChild(media);
     });
 };
 
@@ -349,7 +413,6 @@ const patchLocation = (req) => {
 };
 
 
-
 btnSaveChanges.addEventListener('click', (event) => {
     event.preventDefault();
 
@@ -369,15 +432,12 @@ imgFileInput.addEventListener('change', () => {
         }
     }
 
-    if(files.length > allowedUploadCount) {
+    if(files.length > x) {
         msg = `Maximum image upload is ${MEDIA_MAX_COUNT} <br>
-               You can only upload ${allowedUploadCount} more image`;
+               You can only upload ${x} more image`;
         showDialogMsg(0, 'Image Upload Error', msg, 'center');
          
         imgFileInput.value = "";
     }
     console.log(files);
 });
-
-
-// console.log([1, 2, 3].includes(4));

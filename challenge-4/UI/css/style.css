@@ -1727,7 +1727,8 @@ select {
 .edit-form .form-label {
     display: inline-block;
 }
-.img-upload-info {
+.img-upload-info,
+.vid-upload-info {
     color: #e8491d;
 }
 .img-collection-container,
