@@ -460,8 +460,8 @@ const patchLocation = (req) => {
 btnSaveChanges.addEventListener('click', (event) => {
     event.preventDefault();
 
-    // addImg();
-    addVideo();
+    addImg();
+    // addVideo();
 });
 
 imgFileInput.addEventListener('change', () => {

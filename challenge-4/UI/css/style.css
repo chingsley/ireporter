@@ -993,6 +993,7 @@ header {
 }
 .section-report-flex-box {
     display: flex;
+    /* flex-direction: column; */
     /* border: 1px solid green; */
     padding: 2px;
     width: 95%;
@@ -1005,6 +1006,7 @@ header {
 .div-over-form-report {
     /* border: 1px solid blue; */
     width: 70%;
+    /* order: 2; */
 }
 
 .report-form {
