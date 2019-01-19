@@ -19,6 +19,7 @@ const spanRecordId = document.getElementById('record-id');
 const spanRecordType = document.getElementById('record-type');
 const token = sessionStorage.token;
 const vidContainer = document.querySelector('.vid-collection');
+const vidFileInput = document.querySelector('.vid-file-input');
 const vidFileInputContainer = document.querySelector('.vid-file-input-container');
 const vidUploadInfo = document.querySelector('.vid-upload-info');
 
@@ -241,7 +242,6 @@ const addImg = () => {
     const formdata = new FormData();
     const myHeaders = new Headers();
     const uri = `${root}/${recordType}s/${recordId}/addImage`;
-    console.log(uri);
     const images = imgFileInput.files;
     
 
@@ -270,6 +270,48 @@ const addImg = () => {
             showDialogMsg(2, 'Upload Successful', response.data[0].message, 'center');
             setTimeout(() => {
                 window.location.reload(false);
+            }, 2000);
+        } else {
+            handleResponseError(response);
+        }
+    })
+    .catch(err => {
+        handleError(err);
+    });
+
+};
+const addVideo = () => {
+    const formdata = new FormData();
+    const myHeaders = new Headers();
+    const uri = `${root}/${recordType}s/${recordId}/addVideo`;
+    const videos = vidFileInput.files;
+    
+
+    myHeaders.append('x-auth-token', token);
+    if(videos.length > 0 ) {
+        for(let i = 0; i < videos.length; i += 1) {
+            formdata.append('videos', videos[i], `${recordId}_${videos[i].name}`);
+        }
+    }
+
+    const options = { 
+         method: 'PATCH',
+         mode: 'cors', 
+         headers: myHeaders, 
+         body: formdata, 
+    };
+
+    const req = new Request(uri, options);
+
+    fetch(req)
+    .then(response => {
+        return response.json();
+    })
+    .then(response => {
+        if(response.status === 200) {
+            showDialogMsg(2, 'Upload Successful', response.data[0].message, 'center');
+            setTimeout(() => {
+                window.location.reload(false); // reload the page after 2 seconds
             }, 2000);
         } else {
             handleResponseError(response);
@@ -343,7 +385,7 @@ const displayMedia = (mediaArr, mediaType) => {
         console.log(vidContainer);
         console.log(mediaContainer);
     } else {
-        throw new Error(`displayMedia() expects mediaType to 'image' or 'video' `);
+        throw new Error(`displayMedia() expects mediaType to be 'image' or 'video' `);
     }
 
     if (mediaArr.length < MEDIA_MAX_COUNT) {
@@ -351,6 +393,7 @@ const displayMedia = (mediaArr, mediaType) => {
     } else {
         info = `you have reached the maximum upload of ${MEDIA_MAX_COUNT} ${mediaType}s`;
         mediaFileInputDiv.style.display = 'none';
+        mediaUploadInfo.style.color = '#e8491d';
     }
 
     mediaUploadInfo.innerHTML = info;
@@ -365,6 +408,7 @@ const displayMedia = (mediaArr, mediaType) => {
         } else {
             mediaDiv.classList.add('vc_video-div');
             media = document.createElement('video');
+            media.controls = true;
             console.log(media);
             media.classList.add('record-vid');
         }
@@ -416,7 +460,8 @@ const patchLocation = (req) => {
 btnSaveChanges.addEventListener('click', (event) => {
     event.preventDefault();
 
-    addImg();
+    // addImg();
+    addVideo();
 });
 
 imgFileInput.addEventListener('change', () => {
@@ -433,11 +478,37 @@ imgFileInput.addEventListener('change', () => {
     }
 
     if(files.length > x) {
-        msg = `Maximum image upload is ${MEDIA_MAX_COUNT} <br>
-               You can only upload ${x} more image`;
+        msg = `Maximum number of image upload is ${MEDIA_MAX_COUNT} <br>
+               You can only upload ${x} more`;
         showDialogMsg(0, 'Image Upload Error', msg, 'center');
          
         imgFileInput.value = "";
     }
     console.log(files);
+});
+
+vidFileInput.addEventListener('change', () => {
+    const files = vidFileInput.files;
+    const allowedTypes = ['video/mp4'];
+    for(let i = 0; i < files.length; i += 1) {
+        if(!allowedTypes.includes(files[i].type)) {
+            msg = `${files[i].name} is not supported
+                    </br> Supported formats are ${allowedTypes.join(', ')}`;
+            showDialogMsg(0, 'Unsupported Video Format', msg, 'center');
+            vidFileInput.value = ""; // clear the content of the the file input element
+        } else if(files[i].size > 10000000) {
+            msg = `${files[i].name} exceeds the limit of allowed video size <br>
+                    MAXIMUM ALLOWED SIZE : 10MB`;
+            showDialogMsg(0, 'Large Video detected', msg, 'center');
+            vidFileInput.value = "";
+        }
+    }
+
+    if(files.length > y) {
+        msg = `Maximum number of video upload is ${MEDIA_MAX_COUNT} <br>
+               You can only upload ${y} more`;
+        showDialogMsg(0, 'Video Upload Error', msg, 'center');
+         
+        vidFileInput.value = "";
+    }
 });
