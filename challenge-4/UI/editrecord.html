@@ -70,7 +70,6 @@
                     </div>
 
                     <div class="rep-field flex-for-btns">
-                        <span class="span-prompt">Enter a new address</span>
                         <button class="edit-btns btn-save-location" id="btn-save-location">save changes</button>
                     </div>
 
@@ -91,7 +90,7 @@
                         </div>
                     </div> -->
                     <div class="edit-input-flex" id="form-group-last-child">
-                        <span class="form-label">Comments</span>
+                        <span class="form-label form-label-comment">Comments</span>
                         <div class="rep-field" id="rep-field-textarea">
                             <textarea name="comment" id="comment" rows="6" placeholder="enter your comments"></textarea>
                         </div>
@@ -99,42 +98,46 @@
 
                     <!-- <div class="edit-input-flex"> -->
                         <div class="rep-field flex-for-btns">
-                            <span class="span-prompt">Edit your comments</span>
                             <button class="edit-btns btn-save-comment" id="btn-save-comment">save changes</button>
                         </div>
                     <!-- </div> -->
 
                     <div class="img-collection-container">
-                        <span class="form-label edit-form-label">Images (<span class="img-upload-info" id="img-upload-info">image count</span>) </span>
+                        <span class="form-label edit-form-label form-label-images">Images (<span class="img-upload-info" id="img-upload-info">image count</span>) </span>
                         <div class="img-collection">
                             <!-- <div class="ic_image-div"><img class="record-img" src="img/13477493.jpg" alt="Images"></div>
                             <div class="ic_image-div"><img class="record-img" src="img/download (2).jpeg" alt="Images"></div>
                             <div class="ic_image-div"></div> -->
                         </div>
                         <div class="img-file-input-container" class="img-file-input-container">
-                            <label for="pic" class="img-upload-label">Add Images</label>
+                            <!-- <label for="pic" class="img-upload-label">Add Images</label> -->
                             <input type="file" class="img-file-input" id="pic" name="pic" accept="image/*;capture=camera" multiple>
+                        </div>
+                        <div class="rep-field flex-for-btns">
+                            <button class="edit-btns btn-add-images" id="btn-add-images">Add Images</button>
                         </div>
                     </div>
 
                     <div class="vid-collection-container">
-                        <span class="form-label edit-form-label">Videos (<span class="vid-upload-info" id="vid-upload-info">video count</span>)</span>
+                        <span class="form-label edit-form-label form-label-videos">Videos (<span class="vid-upload-info" id="vid-upload-info">video count</span>)</span>
                         <div class="vid-collection">
                             <!-- <div class="vc_video-div"><video class="record-vid" src="img/video.mp4" alt="videos" controls></div> -->
                             <!-- <div class="vc_video-div"><video class="record-vid" src="img/video.mp4" alt="videos" controls></div> -->
                             <!-- <div class="vc_video-div"><video class="record-vid" src="img/video.mp4" alt="videos" controls></div> -->
                         </div>
                         <div class="vid-file-input-container" class="vid-file-input-container">
-                            <label for="vid" class="img-upload-label">Add Videos</label>
                             <input type="file" class="vid-file-input" id="vid" name="vid" accept="video/*;capture=camera" multiple>
+                        </div>
+                        <div class="rep-field flex-for-btns">
+                            <button class="edit-btns btn-add-videos" id="btn-add-videos">Add Videos</button>
                         </div>
                     </div>
 
-                    <div class="edit-input-flex" id="edit-input-flex-for-btn">
+                    <!-- <div class="edit-input-flex" id="edit-input-flex-for-btn">
                         <div class="div-edit-form-btn">
                             <button class="btn" id="btn-save-changes">save changes</button>
                         </div>
-                    </div>
+                    </div> -->
                 </form>
             </div>
             <div class="div-over-map">

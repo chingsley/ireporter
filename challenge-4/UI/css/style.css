@@ -1613,6 +1613,16 @@ select {
 
 
 /*********************** EDIT-RECORD PAGE *****************/
+#btn-save-changes {
+    font-size: 1rem;
+    width: 100%;
+}
+
+.btn-save-location,
+.btn-save-comment {
+    display: block;
+}
+
 .section-edit {
     background-image: linear-gradient(
     to bottom, 
@@ -1684,10 +1694,7 @@ select {
 .edit-btns {
     cursor: pointer;
 }
-.btn-save-location,
-.btn-save-comment {
-    display: none;
-}
+
 .flex-for-btns {
   /* border: 1px solid yellow; */
   padding-left: 8px;
@@ -1733,6 +1740,13 @@ select {
 .edit-form .form-label {
     display: inline-block;
 }
+.edit-form .form-label-comment{
+    margin-left: 0;
+}
+.edit-form .form-label-images,
+.edit-form .form-label-videos {
+    margin-left: 5px;
+}
 .img-upload-info,
 .vid-upload-info {
     color: silver;
@@ -1748,12 +1762,7 @@ select {
 }
 .img-collection,
 .vid-collection {
-    /* padding: 10px;
-    display: grid;
-    grid-row-gap: 1rem;
-    grid-template-columns: 33.33% 33.33% 33.33%;
-    grid-column-gap: 2px;
-    justify-items: center; */
+    margin-left: 4px;
     padding: 5px;
     display: flex;
     flex-wrap: wrap;
@@ -1800,8 +1809,6 @@ select {
     cursor: pointer;
 }
 
-
-
 #btn-get-current-location {
     /* padding: 0 10px 0 10px; */
     border: none;
@@ -1825,10 +1832,7 @@ select {
     /* border: 1px solid black; */
     width: 48%;
 }
-#btn-save-changes {
-    font-size: 1rem;
-    width: 100%;
-}
+
 .div-over-map {
     width: 80%;
     margin: 0 auto;
@@ -2027,6 +2031,11 @@ select {
     .div-report-form-btn,
     .div-edit-form-btn {
         width: 100%;
+    }
+
+    .vid-collection-container,
+    .img-collection-container {
+        text-align: center;
     }
 
     .ic_image-div,
