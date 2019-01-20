@@ -50,7 +50,7 @@ const upload = multer({
 const fileUpload = upload.fields([{ name: 'images', maxCount: 3 }, { name: 'videos', maxCount: 3 }]);
 const fileHandler = (req, res, next) => {
   fileUpload(req, res, (err) => {
-    console.log('recordsRouter, line 53', req.body);
+    // console.log('recordsRouter, line 53', req.body);
     if (err instanceof multer.MulterError) {
       const errMsg = err.code === 'LIMIT_UNEXPECTED_FILE'
         ? 'maximum file upload of 3 exceeded'

@@ -40,12 +40,13 @@
     <section class="section-edit">
         <div class="section-edit-flex-box">
             <div class="div-over-form-edit">
-                <div class="form-group-title" id="edit-title">
+                <!-- <div class="form-group-title" id="edit-title">
                     <h2 class="heading-secondary-dark" id="form-register-title">
                         Edit record
                     </h2>
-                </div>
+                </div> -->
                 <form action="#" class="edit-form" id="edit-form">
+
                     <div class="div-over-file-upload-group edit-input-flex">
                         <div class="rep-field rep-field-for-id-and-type">
                                 <h3>RECORD ID: <span id="record-id"></span></h3>
@@ -54,6 +55,7 @@
                             <h3>RECORD TYPE: <span id="record-type"></span></h3>
                         </div>
                     </div>
+
                     <div class="div-address-and-coords edit-input-flex">
                         <div class="rep-field" id="rep-field-for-address">
                             <label for="address" class="form-label">Address</label>
@@ -67,67 +69,42 @@
                             to allow us get your current location.</div> -->
                     </div>
                     <div class="rep-field flex-for-btns">
-                        <span class="span-prompt">Enter a new address</span>
-                        <button class="edit-btns btn-save-location" id="btn-save-location">save changes</button>
+                        <button class="edit-btns btn-save-location" id="btn-save-location" disabled>save changes</button>
                     </div>
-                    <!-- <div class="div-over-file-upload-group edit-input-flex">
-                        <div class="rep-field rep-field-for-upload">
-                            <div class="file-upload-group">
-                                <label for="pic" class="form-inputfile-label">Images</label>
-                                <input type="file" class="edit-input-file-upload" id="pic" name="pic" accept="image/*;capture=camera"
-                                    multiple>
-                            </div>
-                        </div>
-                        <div class="rep-field rep-field-for-upload">
-                            <div class="file-upload-group">
-                                <label for="video" class="form-inputfile-label">Videos</label>
-                                <input type="file" class="edit-input-file-upload" id="video" name="video" accept="video/*;capture=camcoder"
-                                    multiple>
-                            </div>
-                        </div>
-                    </div> -->
+
                     <div class="edit-input-flex" id="form-group-last-child">
-                        <span class="form-label">Comments</span>
+                        <span class="form-label form-label-comment">Comments</span>
                         <div class="rep-field" id="rep-field-textarea">
                             <textarea name="comment" id="comment" rows="6" placeholder="enter your comments"></textarea>
                         </div>
                     </div>
-                    <!-- <div class="edit-input-flex"> -->
-                        <div class="rep-field flex-for-btns">
-                            <span class="span-prompt">Edit your comments</span>
-                            <button class="edit-btns btn-save-comment" id="btn-save-comment">save changes</button>
-                        </div>
-                    <!-- </div> -->
+                    <div class="rep-field flex-for-btns">
+                        <button class="edit-btns btn-save-comment" id="btn-save-comment" disabled>save changes</button>
+                    </div>
 
                     <div class="img-collection-container">
-                        <span class="form-label">Images</span>
+                        <span class="form-label edit-form-label form-label-images">Images *<span class="img-upload-info" id="img-upload-info">image count</span> </span>
                         <div class="img-collection">
-                            <div class="ic_image-div"><img src="img/13477493.jpg" alt="Images"></div>
-                            <div class="ic_image-div"><img src="img/download (2).jpeg" alt="Images"></div>
-                            <div class="ic_image-div"></div>
-                            <!-- <div class="ic_image-div"><video src="img/video.mp4" alt="Images"></div> -->
+                            <!-- <div class="ic_image-div"><img class="record-img" src="img/13477493.jpg" alt="Images"></div> -->
                         </div>
-                        <div class="img-upload-btn-container" class="img-upload-btn-container">
-                            <label for="pic" class="img-upload-label">Add Images</label>
-                            <input type="file" class="img-upload" id="pic" name="pic" accept="image/*;capture=camera" multiple>
+                        <div class="img-file-input-container" class="img-file-input-container">
+                            <input type="file" class="img-file-input" id="pic" name="pic" accept="image/*;capture=camera" multiple>
                         </div>
-                    </div>
-                    <div class="vid-collection-container">
-                        <span class="form-label">Videos</span>
-                        <div class="vid-collection">
-                            <div class="vc_video-div"><video src="img/video.mp4" alt="videos"></div>
-                            <div class="vc_video-div"><video src="img/video.mp4" alt="videos"></div>
-                            <div class="vc_video-div"><video src="img/video.mp4" alt="videos"></div>
-                        </div>
-                        <div class="vid-upload-btn-container" class="vid-upload-btn-container">
-                            <label for="vid" class="img-upload-label">Add Videos</label>
-                            <input type="file" class="vid-upload" id="vid" name="vid" accept="video/*;capture=camera" multiple>
+                        <div class="rep-field flex-for-btns">
+                            <button class="edit-btns btn-add-images" id="btn-add-images" disabled>Upload</button>
                         </div>
                     </div>
 
-                    <div class="edit-input-flex" id="edit-input-flex-for-btn">
-                        <div class="div-edit-form-btn">
-                            <button class="btn" id="btn-send-edit">save changes</button>
+                    <div class="vid-collection-container">
+                        <span class="form-label edit-form-label form-label-videos">Videos *<span class="vid-upload-info" id="vid-upload-info">video count</span></span>
+                        <div class="vid-collection">
+                            <!-- <div class="vc_video-div"><video class="record-vid" src="img/video.mp4" alt="videos" controls></div> -->
+                        </div>
+                        <div class="vid-file-input-container" class="vid-file-input-container">
+                            <input type="file" class="vid-file-input" id="vid" name="vid" accept="video/*;capture=camera" multiple>
+                        </div>
+                        <div class="rep-field flex-for-btns">
+                            <button class="edit-btns btn-add-videos" id="btn-add-videos" disabled>Upload</button>
                         </div>
                     </div>
                 </form>

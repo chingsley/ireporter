@@ -15,25 +15,13 @@ const reqRedflags = fetch(redflagsURL, options);
 const reqInterventions = fetch(interventionsURL, options);
 
 
-// Promise.all([reqRedflags, reqInterventions])
 Promise.all([reqInterventions, reqRedflags])
 .then((responseArr) => {
-    // console.log('responseArr', responseArr);
     responseArr.forEach(response => {
-        // console.log('response.json()', response.json());
         process(response.json()); // the .json() method returns a promise
     });
 }).catch(err => {
-    console.log('error message: ', err);
-    if (err.message === 'Failed to fetch') {
-        const msg = `<ul class="dialog-box-ul">Try:
-        <li>Checking the network cables, modem, and router</li>
-        <li>Reconnecting to Wi-Fi</li>
-        </ul>`;
-        showDialogMsg(0, 'Connection failure', msg, 'left', 'index.html');
-    } else {
-        showDialogMsg(0, 'Error', err.message, 'center', 'index.html');
-    }
+    handleError(err);
 });
 
 let count = 0;

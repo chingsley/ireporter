@@ -87,19 +87,13 @@ let msg = 'dialog message';
         fd.append('comment', comment.value);
 
         if(images.files.length > 0) {
-            // fd.append('images', images.files);
             for (let i = 0; i < images.files.length; i++) {
-                fd.append('images', images.files[i], `${sessionStorage.userId}_${images.files[i].name}`)
-                console.log(images.files[i]);
-                console.log(images.files[i].name);
+                fd.append('images', images.files[i], `${sessionStorage.userId}_${images.files[i].name}`);
             }
         }
         if(videos.files.length > 0) {
-            // fd.append('videos', videos.files);
             for (let i = 0; i < videos.files.length; i++) {
-                fd.append('videos', videos.files[i], `${sessionStorage.userId}_${videos.files[i].name}`)
-                console.log(videos.files[i]);
-                console.log(videos.files[i].name);
+                fd.append('videos', videos.files[i], `${sessionStorage.userId}_${videos.files[i].name}`);
             }
         }
 
@@ -128,24 +122,11 @@ let msg = 'dialog message';
                     showDialogMsg(2, 'Saved', response.data[0].message, 'center');
                 } else {
                     // throw new Error(JSON.stringify(response.error));
-                    if ((typeof response.error === 'string')) {
-                        showDialogMsg(0, 'Error', response.error, 'center');
-                    } else {
-                        const errStr = getErrString(response.error);
-                        showDialogMsg(0, 'Error', errStr);
-                    }
+                    handleResponseError(response);
                 }
             })
             .catch(err => {
-                if (err.message === 'Failed to fetch') {
-                    const msg = `<ul class="dialog-box-ul">Try:
-                                <li>Checking the network cables, modem, and router</li>
-                                <li>Reconnecting to Wi-Fi</li>
-                             </ul>`;
-                    showDialogMsg(0, 'Connection failure', msg);
-                } else {
-                    showDialogMsg(0, 'Error', err.message, 'center');
-                }
+                handleError(err);
             });
     };
 
