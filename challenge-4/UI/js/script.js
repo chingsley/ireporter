@@ -127,6 +127,18 @@ const handleResponseError = (response) => {
     }
 };
 
+const handleGeolocationNetworkError = () => {
+    msg = `
+        <h3>There was an issue with locating the address of this record</h3>
+        <ul class="dialog-box-ul">
+            Try:
+            <li>Checking the network cables, modem, and router</li>
+            <li>Reconnecting to Wi-Fi</li>
+            <li>Also ensure that the address you entered is correct</li>
+        </ul>`;
+    showDialogMsg(0, 'Geolocation Error', msg);
+};
+
 /******** FUNCTION TO DELETE A ROW FROM A TABLE**************** */
 const deleteTableRow = () => {// I thinkd you need to pass 'event' as the argument in the function
     // event.target is the input button element. 

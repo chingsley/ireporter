@@ -1711,6 +1711,9 @@ select {
 .edit-form-input {
     /* border-radius: 2px; */
     /* border: 1px solid silver; */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* font-size: 17px; */
+    font-style: italic;
     font-size: 1rem;
    width: 100%;
    padding: .5rem .5rem .5rem .5rem;
@@ -1723,6 +1726,9 @@ select {
     width: 100%;
     /* border-radius: 3px; */
     /* background-color: transparent; */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 17px;
+    font-style: italic;
     background-color: rgba(128, 128, 128, .5);
     outline: none;
     color: white;
@@ -1739,6 +1745,9 @@ select {
 }
 .edit-form .form-label {
     display: inline-block;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+    color: rgb(218, 218, 49);
 }
 .edit-form .form-label-comment{
     margin-left: 0;
@@ -1747,14 +1756,23 @@ select {
 .edit-form .form-label-videos {
     margin-left: 5px;
 }
+
+.edit-btns {
+    /* background-color: #e8491d; */
+    /* color: white; */
+    padding: 2px 5px 2px 5px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    font-style: italic;
+    /* font-weight: bold; */
+}
 .img-upload-info,
 .vid-upload-info {
     color: silver;
     font-style: italic;
     font-size: 16px;
-    font-weight: bold;
+    /* font-weight: bold; */
     font-family: Georgia, 'Times New Roman', Times, serif;
-
 }
 .img-collection-container,
 .vid-collection-container {
@@ -1844,7 +1862,7 @@ select {
     margin-top: 3.3rem;
     /* width: 20rem; */
     width: 100%;
-    height:15rem;
+    height:10rem;
     border: 2px solid #35424a;
     padding: 0;
     margin-left: 0;

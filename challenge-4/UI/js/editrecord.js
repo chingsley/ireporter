@@ -1,6 +1,8 @@
 // DECLARE VARIABLES
 const address = document.getElementById('address');
 const addressContainer = document.getElementById('rep-field-for-address');
+const btnAddImages = document.getElementById('btn-add-images');
+const btnAddVideos = document.getElementById('btn-add-videos');
 const btnChangeLocation = document.getElementById('btn-change-location');
 const btnGetCurrentLocation = document.getElementById('btn-get-current-location');
 const btnSaveComment = document.getElementById('btn-save-comment');
@@ -30,10 +32,13 @@ let infowindow;
 let map;
 let msg = '';
 let recordAddress = '';
-let resultArr = [];
 let x = 0;
 let y = 0;
 
+btnAddVideos.title = 'no videos selected';
+btnAddImages.title = 'no images selected'
+btnSaveComment.title = 'no changes made yet';
+btnSaveLocation.title = 'no changes made yet';
 coords.title = 'readOnly';
 spanRecordId.innerText = recordId;
 spanRecordType.innerText = recordType.toString().toUpperCase();
@@ -77,31 +82,35 @@ spanRecordType.innerText = recordType.toString().toUpperCase();
 
     function geocodeAddress(geocoder, resultsMap, infowindow) {
         let p1 = new Promise((resolve, reject) => {
-            geocoder.geocode({ 'address': address.value }, function (results, status) {
-                if (status === 'OK') {
-                    // isValidCoords = true;
-                    coords.value = `${results[0].geometry.location.lat()}, ${results[0].geometry.location.lng()}`;
-                    resultsMap.setCenter(results[0].geometry.location);
-                    let marker = new google.maps.Marker({
-                        map: resultsMap,
-                        position: results[0].geometry.location
-                    });
-                    infowindow.setContent(results[0].formatted_address);
-                    recordAddress = results[0].formatted_address;
-                    infowindow.open(map, marker);
-                    resolve(true);
-                } else {
-                    if (status === 'ERROR') {
-                        msg = `Theres was a problem with geolocation. <br>Please check your internet connection: ` + status;
-                        // reject(`Theres was a problem with geolocation. <br>Please check your internet connection: ` + status);
-                        reject({message: msg, errType: 'network error'})
+            try {
+                geocoder.geocode({ 'address': address.value }, function (results, status) {
+                    if (status === 'OK') {
+                        // isValidCoords = true;
+                        coords.value = `${results[0].geometry.location.lat()}, ${results[0].geometry.location.lng()}`;
+                        resultsMap.setCenter(results[0].geometry.location);
+                        let marker = new google.maps.Marker({
+                            map: resultsMap,
+                            position: results[0].geometry.location
+                        });
+                        infowindow.setContent(results[0].formatted_address);
+                        recordAddress = results[0].formatted_address;
+                        infowindow.open(map, marker);
+                        resolve(true);
                     } else {
-                        msg = 'The address you entered is unknown: ' + status;
-                        reject({ message: msg, errType: 'Geolocation error' })
+                        if (status === 'ERROR') {
+                            msg = `Theres was a problem with geolocation. <br>Please check your internet connection: ` + status;
+                            reject({ message: msg, errType: 'network error' })
+                        } else {
+                            msg = 'The address you entered is unknown: ' + status;
+                            msg = `${status}: unknown address. <br> Please enter a valid address.`;
+                            reject({ message: msg, errType: 'Geolocation error' })
+                        }
                     }
-                    // reject('The address you entered is unknown: ' + status);
-                }
-            });
+                });
+            }
+            catch(err) {
+                handleGeolocationNetworkError();
+            }
         });
 
         return p1;
@@ -111,21 +120,28 @@ spanRecordType.innerText = recordType.toString().toUpperCase();
         let input = coords.value;
         let latlngStr = input.split(',', 2);
         let latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
-        geocoder.geocode({'location': latlng}, function(results, status) {
-            if (status === 'OK') {
-                resultsMap.setCenter(results[0].geometry.location);
-                let marker = new google.maps.Marker({
-                    map: resultsMap,
-                    position: results[0].geometry.location
-                });
-                infowindow.setContent(results[0].formatted_address);
-                recordAddress = results[0].formatted_address;
-                address.value = recordAddress;
-                infowindow.open(map, marker);
-            } else {
-                alert('The address you entered is unknown: ' + status);
-            }
-        });
+        try {
+            geocoder.geocode({ 'location': latlng }, function (results, status) {
+                if (status === 'OK') {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    let marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                    infowindow.setContent(results[0].formatted_address);
+                    recordAddress = results[0].formatted_address;
+                    address.value = recordAddress;
+                    infowindow.open(map, marker);
+                } else {
+                    handleGeolocationNetworkError();
+                    // alert('The address you entered is unknown: ' + status);
+                }
+            });
+        } catch(err){
+            console.log(err);
+            handleGeolocationNetworkError();
+        };
+        
 
     }
 
@@ -206,6 +222,7 @@ const displayMedia = (mediaArr, mediaType) => {
     let mediaContainer;
     let mediaFileInputDiv;
     let mediaUploadInfo;
+    let btnAddMedia;
 
     
     if (mediaType === 'image') {
@@ -213,15 +230,13 @@ const displayMedia = (mediaArr, mediaType) => {
         mediaFileInputDiv = imgFileInputContainer;
         mediaUploadInfo = imgUploadInfo;
         mediaContainer = imgContainer;
-        // console.log(imgContainer);
-        // console.log(mediaContainer);
+        btnAddMedia = btnAddImages;
     } else if (mediaType === 'video') {
         y = getAllowedUploadCount(mediaArr);
         mediaFileInputDiv = vidFileInputContainer;
         mediaUploadInfo = vidUploadInfo;
         mediaContainer = vidContainer;
-        // console.log(vidContainer);
-        // console.log(mediaContainer);
+        btnAddMedia = btnAddVideos;
     } else {
         throw new Error(`displayMedia() expects mediaType to be 'image' or 'video' `);
     }
@@ -231,6 +246,7 @@ const displayMedia = (mediaArr, mediaType) => {
     } else {
         info = `you have reached the maximum upload of ${MEDIA_MAX_COUNT} ${mediaType}s`;
         mediaFileInputDiv.style.display = 'none';
+        btnAddMedia.style.display = 'none';
         mediaUploadInfo.style.color = '#e8491d';
     }
 
@@ -314,6 +330,11 @@ const patchComment = () => {
             if (response.status === 200) {
                 msg = `<p>${response.data[0].message}</p>`;
                 showDialogMsg(2, 'Saved', msg, 'center');
+
+                // reload the page after 3 seconds
+                setTimeout(() => {
+                    window.location.reload(false);
+                }, 2000);
             } else {
                 handleResponseError(response);
             }
@@ -331,10 +352,14 @@ const patchLocation = () => {
     })
     .then(response => {
         if (response.status === 200) {
-            // sessionStorage.recordId = response.data[0].id;
             msg = `<p>${response.data[0].message}</p>
                     <p>Closest landmark: ${recordAddress}</p>`;
-            showDialogMsg(2, 'Saved', msg, 'center');
+            showDialogMsg(2, 'Location Updated', msg, 'center');
+
+            // reload the page after 3 seconds
+            setTimeout(() => {
+                window.location.reload(false);
+            }, 3000);
         } else {
             handleResponseError(response);
         }
@@ -344,91 +369,29 @@ const patchLocation = () => {
     });
 };
 
-let count;
-const saveChanges = () => {
-    count = 0;
-    resultArr = [];
-    msg = '';
-    const saveLocation = fetch(getRequestObj('location'));
-    const saveComment = fetch(getRequestObj('comment'));
-    const saveImages = fetch(getRequestObj('addImage'));
-    const saveVideos = fetch(getRequestObj('addVideo'));
-
-    promiseArr = [saveLocation, saveComment, saveImages, saveVideos];
-
-    Promise.all(promiseArr)
-    .then(responseArr => {
-        console.log(responseArr);
-        responseArr.forEach(response => {
-            process(response.json());
-        });
-    })
-    .catch(err => {
-        console.log(err);
-        showDialogMsg(0, 'Error', err.message, 'center');
-    });
-};
-
-const process = (jsonResult) => {
-    jsonResult.then((responseObj) => {
-        console.log(responseObj);
-        resultArr.push(responseObj);
-        console.log(count, promiseArr.length -1);
-        if(count === promiseArr.length - 1) { // 3 fetch operations : 0 , 1, 2
-            console.log(resultArr);
-            let errorResponse = checkForErrors(resultArr);
-            if (errorResponse.length > 0 ) {
-                errorResponse.forEach(response => {
-                    msg += `${response.error}<br>`;
-                })
-            }
-            showDialogMsg(0, 'Error', msg, 'center');
-        }
-        count += 1;
-    });
-};
-
-const checkForErrors = (resultArr) => {
-    let errResults = resultArr.filter(result => {
-        if(!(result.status >= 200 && result.status < 400)) {
-            return result;
-        }
-    });
-    console.log(errResults);
-    return errResults;
-};
-
-
-
-address.addEventListener('input', () => {
-    address.style.backgroundColor = 'transparent';
-    btnSaveLocation.style.display = 'block';
-    btnSaveLocation.style.animation = 'moveInLeft 1s ease';
-});
 
 address.addEventListener('blur', () => {
     address.style.backgroundColor = 'rgba(128, 128, 128, .5)';
 });
 
-btnSaveChanges.addEventListener('click', (event) => {
+address.addEventListener('input', () => {
+    address.style.backgroundColor = 'transparent';
+    btnSaveLocation.disabled = false;
+    btnSaveLocation.title = '';
+});
+
+btnAddImages.addEventListener('click', (event) => {
     event.preventDefault();
+    addImg();
+});
 
-    let p1 = geocodeAddress(geocoder, map, infowindow);
-
-    p1.then((result) => {
-        console.log('result', result); // true (because: resolve(true))
-
-        setTimeout(() => { saveChanges(); }, 1000);
-    }).catch(err => {
-        console.log(err);
-        showDialogMsg(0, err.errType, err.message, 'center');
-    });
-    // saveChanges();
+btnAddVideos.addEventListener('click', (event) => {
+    event.preventDefault();
+    addVideo();
 });
 
 btnSaveComment.addEventListener('click', (event) => {
     event.preventDefault();
-
     patchComment();
 });
 
@@ -450,9 +413,9 @@ comment.addEventListener('blur', () => {
 });
 
 comment.addEventListener('input', () => {
-    btnSaveComment.style.display = 'block';
-    btnSaveComment.style.animation = 'moveInLeft 1s ease';
     comment.style.backgroundColor = 'transparent';
+    btnSaveComment.disabled = false;
+    btnSaveComment.title = '';
 });
 
 imgFileInput.addEventListener('change', () => {
@@ -465,6 +428,7 @@ imgFileInput.addEventListener('change', () => {
             showDialogMsg(0, 'Unsupported Image Format', msg, 'center');
 
             imgFileInput.value = ""; // clear the content of the the file input element
+            return;
         }
     }
 
@@ -474,8 +438,11 @@ imgFileInput.addEventListener('change', () => {
         showDialogMsg(0, 'Image Upload Error', msg, 'center');
          
         imgFileInput.value = "";
+        return;
     }
     // console.log(files);
+    btnAddImages.disabled = false;
+    btnAddImages.title = '';
 });
 
 vidFileInput.addEventListener('change', () => {
@@ -487,11 +454,13 @@ vidFileInput.addEventListener('change', () => {
                     </br> Supported formats are ${allowedTypes.join(', ')}`;
             showDialogMsg(0, 'Unsupported Video Format', msg, 'center');
             vidFileInput.value = ""; // clear the content of the the file input element
+            return;
         } else if(files[i].size > 10000000) {
             msg = `${files[i].name} exceeds the limit of allowed video size <br>
                     MAXIMUM ALLOWED SIZE : 10MB`;
             showDialogMsg(0, 'Large Video detected', msg, 'center');
             vidFileInput.value = "";
+            return;
         }
     }
 
@@ -501,7 +470,11 @@ vidFileInput.addEventListener('change', () => {
         showDialogMsg(0, 'Video Upload Error', msg, 'center');
          
         vidFileInput.value = "";
+        return;
     }
+
+    btnAddVideos.disabled = false;
+    btnAddVideos.title = '';
 });
 
 window.addEventListener('load', () => {
@@ -540,3 +513,79 @@ window.addEventListener('load', () => {
 //     getLocation();
 //     geocodeLatLng(geocoder, map, infowindow);
 // });
+
+
+
+// btnSaveChanges.addEventListener('click', (event) => {
+//     event.preventDefault();
+
+//     let p1 = geocodeAddress(geocoder, map, infowindow);
+
+//     p1.then((result) => {
+//         console.log('result', result); // true (because: resolve(true))
+
+//         setTimeout(() => { saveChanges(); }, 1000);
+//     }).catch(err => {
+//         console.log(err);
+//         showDialogMsg(0, err.errType, err.message, 'center');
+//     });
+//     // saveChanges();
+// });
+
+
+
+// let resultArr = [];
+// let count;
+// const saveChanges = () => {
+//     count = 0;
+//     resultArr = [];
+//     msg = '';
+//     const saveLocation = fetch(getRequestObj('location'));
+//     const saveComment = fetch(getRequestObj('comment'));
+//     const saveImages = fetch(getRequestObj('addImage'));
+//     const saveVideos = fetch(getRequestObj('addVideo'));
+
+//     promiseArr = [saveLocation, saveComment, saveImages, saveVideos];
+
+//     Promise.all(promiseArr)
+//         .then(responseArr => {
+//             console.log(responseArr);
+//             responseArr.forEach(response => {
+//                 process(response.json());
+//             });
+//         })
+//         .catch(err => {
+//             console.log(err);
+//             showDialogMsg(0, 'Error', err.message, 'center');
+//         });
+// };
+
+
+// const process = (jsonResult) => {
+//     jsonResult.then((responseObj) => {
+//         console.log(responseObj);
+//         resultArr.push(responseObj);
+//         console.log(count, promiseArr.length - 1);
+//         if (count === promiseArr.length - 1) { // 3 fetch operations : 0 , 1, 2
+//             console.log(resultArr);
+//             let errorResponse = checkForErrors(resultArr);
+//             if (errorResponse.length > 0) {
+//                 errorResponse.forEach(response => {
+//                     msg += `${response.error}<br>`;
+//                 })
+//             }
+//             showDialogMsg(0, 'Error', msg, 'center');
+//         }
+//         count += 1;
+//     });
+// };
+
+// const checkForErrors = (resultArr) => {
+//     let errResults = resultArr.filter(result => {
+//         if (!(result.status >= 200 && result.status < 400)) {
+//             return result;
+//         }
+//     });
+//     console.log(errResults);
+//     return errResults;
+// };
