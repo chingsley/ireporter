@@ -8,6 +8,52 @@ const createCell = (arrOfClassNames, textContent) => {
     return td;
 }
 
+const displayRecords = async () => {
+    records = await getAllRecords();
+    console.log(records);
+
+    const table = document.getElementById('table-admin');
+
+    records.forEach(record => {
+        const tr = document.createElement('tr');
+        tr.classList.add('row');
+
+        const id = createCell(['cell', 'id'], record.id);
+        const dateCreated = JSON.stringify(record.createdOn).slice(1, 11);
+        const createdOn = createCell(['cell', 'createdon'], dateCreated);
+        const createdBy = createCell(['cell', 'createdby'], record.createdBy);
+        const type = createCell(['cell', 'type'], record.type);
+        const location = createCell(['cell', 'location'], record.location);
+        const commentAndMedia = createCell(['cell', 'comment-and-media']);
+        commentAndMedia.appendChild(popup(record));
+        const status = createCell(['cell', 'status']);
+        status.id = record.status === 'under investigation' ? 'under-investigation' : record.status;
+        console.log(status);
+
+        const select = document.createElement('select');
+        select.id = 'status';
+        const statusOptions = ['draft', 'under investigation', 'resolved', 'rejected'];
+        statusOptions.forEach(status => {
+            const option = document.createElement('option');
+            option.setAttribute('value', status);
+            option.textContent = status;
+            select.appendChild(option);
+        });
+        select.selectedIndex = statusOptions.indexOf(record.status);
+        status.appendChild(select);
+
+        // create the row for each record
+        tr.appendChild(id);
+        tr.appendChild(type);
+        tr.appendChild(commentAndMedia);
+        tr.appendChild(location);
+        tr.appendChild(createdOn);
+        tr.appendChild(createdBy);
+        tr.appendChild(status);
+        table.appendChild(tr);
+    });
+} 
+
 const getAllRecords = async () => {
 
     const token = sessionStorage.token;
@@ -42,14 +88,16 @@ const popup = (record) => {
         "../img/intervention-img.png";
 
     let a = document.createElement('a');
-    a.textContent = '...';
-    a.classList.add('report-card-comments-and-media');
+
+    console.log(record.comment.slice(0,record.comment.indexOf(' ')));
+    const firstWord = record.comment.slice(0, record.comment.indexOf(' '));
+    const slicedComment = record.comment.slice(0, 10);
+    a.textContent = (firstWord.length < 10) ? `${firstWord} ...` : `${slicedComment}...`;
+    a.classList.add('comment-and-media-link');
     a.addEventListener('click', () => {
         // display the popup with record comments and images
         const popup = document.getElementById('popup');
-        console.log(popup);
         const popupContent = document.getElementById('popup-content');
-        console.log(popupContent);
         popup.style.opacity = 1;
         popup.style.visibility = 'visible';
         popupContent.style.opacity = 1;
@@ -76,32 +124,7 @@ const popup = (record) => {
     return a;
 };
 
-const displayRecords = async () => {
-    records = await getAllRecords();
-    console.log(records);
-   
-    const table = document.getElementById('table-admin');
 
-    records.forEach(record => {
-        const tr = document.createElement('tr');
-        tr.classList.add('row');
-
-        const id = createCell(['cell', 'id'], record.id);
-        const dateCreated = JSON.stringify(record.createdOn).slice(1, 11);
-        const createdOn = createCell(['cell', 'createdon'], dateCreated);
-        const createdBy = createCell(['cell', 'createdby'], record.createdBy);
-        const type = createCell(['cell', 'type'], record.type);
-        const location = createCell(['cell', 'location'], record.location);
-        const commentAndMedia = createCell(['cell', 'comment-and-media']);
-        commentAndMedia.appendChild(popup(record));
-        
-        console.log(commentAndMedia);
-        document.body.appendChild(commentAndMedia);
-        tr.appendChild(commentAndMedia);
-        table.appendChild(tr);
-        // console.log(id, createdOn, createdBy);
-    });
-} 
 
 displayRecords();
 
