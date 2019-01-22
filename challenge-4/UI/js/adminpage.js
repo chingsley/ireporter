@@ -61,7 +61,7 @@ const displayRecords = async () => {
         tr.appendChild(status);
         table.appendChild(tr);
     });
-} 
+};
 
 const getAllRecords = async () => {
     const myHeaders = new Headers();

@@ -1170,6 +1170,10 @@ textarea {
 /*********************** ADMIN PAGE *******************/
 .section-admin {
     padding: 5px;
+    background-color: rgba(128, 128, 128, .2);
+    /* background-image: radial-gradient(rgba(255, 255, 255, 1), black); */
+    /* background-image: radial-gradient(rgba(255, 255, 255, 1), grey); */
+    /* background-image: linear-gradient(to right, white, grey); */
     /* border: 1px solid silver; */}
 .section-admin-wrapper-div {
     padding: 5px;
@@ -1191,9 +1195,16 @@ textarea {
 #table-wrapper {
     border: none;}
 .table-admin {
+    /* color: white; */
     width: 90%;
     margin: 0 auto;
-    border-collapse: collapse;}
+    /* background-image: linear-gradient(to left, grey, grey); */
+    border-collapse: collapse;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* font-size: 17px; */
+    font-style: italic;
+    /* font-size: 1rem; */
+}
 .table-admin .row {
     height: 30px;
     /* background-color: silver; */}
@@ -1203,7 +1214,9 @@ textarea {
     /* text-transform: uppercase; */
     font-weight: 700;}
 .table-admin tr:nth-child(odd) {
-    background-color: #f2f2f2;}
+    /* background-color: darkgray; */
+    background-color: rgba(128, 128, 128, .2);
+}
 .table-admin .row .cell {
     padding: 0 0.5rem 0 .5rem;
     border: 1px solid silver;}
@@ -1218,7 +1231,14 @@ textarea {
 select {
     padding: 2px;
     margin: 5px 0 5px 0;
-    width: 100%;}
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-size: 1rem;
+}
 .btn-delete-record {
     font-size: 2rem;
     color: #e8491d;
@@ -1232,7 +1252,11 @@ select {
     cursor: pointer;}
 #div-table-title {
     text-align: center;
-    /* padding-bottom: 4rem; */}
+    /* padding-bottom: 4rem; */
+}
+#draft {
+    background-color: transparent;
+}
 #under-investigation {
     background-color: yellow;
 }
@@ -1241,9 +1265,6 @@ select {
 }
 #rejected {
     background-color: pink;
-}
-select#status {
-    cursor: pointer;
 }
 /******************** (END ADMIN PAGE) *******************/
 
