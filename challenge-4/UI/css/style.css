@@ -1212,10 +1212,9 @@ textarea {
     color: black;
     display: block;
     font-style: italic;
-    /* padding: 2px 15px; */
     margin: 0 auto;
-    /* text-align: center; */
-    font-weight: bold;}
+    cursor: pointer;
+}
 select {
     padding: 2px;
     margin: 5px 0 5px 0;
@@ -1234,7 +1233,18 @@ select {
 #div-table-title {
     text-align: center;
     /* padding-bottom: 4rem; */}
-
+#under-investigation {
+    background-color: yellow;
+}
+#resolved {
+    background-color: lightgreen;
+}
+#rejected {
+    background-color: pink;
+}
+select#status {
+    cursor: pointer;
+}
 /******************** (END ADMIN PAGE) *******************/
 
 
