@@ -1,3 +1,4 @@
+const token = sessionStorage.token;
 
 const createCell = (arrOfClassNames, textContent) => {
     let td = document.createElement('td');
@@ -10,7 +11,6 @@ const createCell = (arrOfClassNames, textContent) => {
 
 const displayRecords = async () => {
     records = await getAllRecords();
-    console.log(records);
 
     const table = document.getElementById('table-admin');
 
@@ -27,11 +27,9 @@ const displayRecords = async () => {
         const commentAndMedia = createCell(['cell', 'comment-and-media']);
         commentAndMedia.appendChild(popup(record));
         const status = createCell(['cell', 'status']);
-        status.id = record.status === 'under investigation' ? 'under-investigation' : record.status;
-        console.log(status);
 
         const select = document.createElement('select');
-        select.id = 'status';
+        select.id = (record.status === 'under investigation')? 'under-investigation' : record.status;
         const statusOptions = ['draft', 'under investigation', 'resolved', 'rejected'];
         statusOptions.forEach(status => {
             const option = document.createElement('option');
@@ -40,6 +38,17 @@ const displayRecords = async () => {
             select.appendChild(option);
         });
         select.selectedIndex = statusOptions.indexOf(record.status);
+        
+        select.addEventListener('change', async (e) => {
+            const success = await patchStatus(record.id, record.type, e.target.value);
+            console.log(success);
+            if(success) {
+                e.target.id = (e.target.value === 'under investigation') ? 'under-investigation' : e.target.value;
+            } else {
+                e.target.selectedIndex = statusOptions.indexOf(record.status);
+                e.target.id = (record.status === 'under investigation') ? 'under-investigation' : record.status;
+            }
+        });
         status.appendChild(select);
 
         // create the row for each record
@@ -55,9 +64,6 @@ const displayRecords = async () => {
 } 
 
 const getAllRecords = async () => {
-
-    const token = sessionStorage.token;
-
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
     myHeaders.append('x-auth-token', token);
@@ -88,8 +94,6 @@ const popup = (record) => {
         "../img/intervention-img.png";
 
     let a = document.createElement('a');
-
-    console.log(record.comment.slice(0,record.comment.indexOf(' ')));
     const firstWord = record.comment.slice(0, record.comment.indexOf(' '));
     const slicedComment = record.comment.slice(0, 10);
     a.textContent = (firstWord.length < 10) ? `${firstWord} ...` : `${slicedComment}...`;
@@ -127,4 +131,37 @@ const popup = (record) => {
 
 
 displayRecords();
+
+const patchStatus = async (recordId, recordType, selectedStatus) => {
+    const formdata = new FormData();
+    const myHeaders = new Headers();
+    const uri = `${root}/${recordType}s/${recordId}/status`;
+
+    myHeaders.append('x-auth-token', token);
+    formdata.append('status', selectedStatus)
+    console.log(recordId, recordType, selectedStatus);
+
+    const options = {
+        method: 'PATCH',
+        mode: 'cors',
+        headers: myHeaders,
+        body: formdata,
+    };
+
+    const req = new Request(uri, options);
+
+    try {
+        const response = await fetch(req);
+        console.log(response);
+        const result = await response.json();
+        console.log(result);
+        return true;
+    } catch (err) {
+        console.log(err);
+        handleError(err);
+        return false;
+        // showDialogMsg(0, 'Error', err, 'center');
+    }
+    
+};
 
