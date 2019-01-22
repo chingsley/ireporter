@@ -1,4 +1,5 @@
 const token = sessionStorage.token;
+const errorDisplayBox = document.getElementById('outerErrorDisplayBox');
 
 const createCell = (arrOfClassNames, textContent) => {
     let td = document.createElement('td');
@@ -78,12 +79,13 @@ const getAllRecords = async () => {
         const redflags = await redflagsResponse.json();
         const interventionsResponse = await fetch(interventionsURL, options)
         const interventions = await interventionsResponse.json();
-  
-        return redflags.data.concat(interventions.data) ;
-
+        const allRecords = redflags.data.concat(interventions.data); // combine the records into one array
+        allRecords.sort((a, b) => a.id - b.id); // sort the records by id
+        return allRecords;
     } catch(err) {
         console.log(err);
         handleError(err);
+        errorDisplayBox.style.display = 'block';
     }
     
 };
