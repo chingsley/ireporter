@@ -1,5 +1,23 @@
 const token = sessionStorage.token;
 const errorDisplayBox = document.getElementById('outerErrorDisplayBox');
+const btnCloseMap = document.getElementById('map-popup-close');
+const mapPopup = document.getElementById('map-popup-window');
+const mapPopupCoords = document.getElementById('map-popup-coords');
+
+btnCloseMap.addEventListener('click', () => {
+    mapPopup.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if(event.target === mapPopup) {
+        mapPopup.style.display = 'none';
+    }
+});
+
+
+let geocoder;
+let infowindow;
+let map;
 
 const createCell = (arrOfClassNames, textContent) => {
     let td = document.createElement('td');
@@ -28,6 +46,15 @@ const displayRecords = async () => {
         const commentAndMedia = createCell(['cell', 'comment-and-media']);
         commentAndMedia.appendChild(popup(record));
         const status = createCell(['cell', 'status']);
+
+        location.addEventListener('click', async () => {
+            const successfulGeocoding = await geocodeLatLng(record.location, geocoder, map, infowindow);
+            console.log(successfulGeocoding);
+            if(successfulGeocoding) {
+                mapPopup.style.display = 'block';
+                mapPopupCoords.textContent = record.location;
+            }
+        });
 
         const select = document.createElement('select');
         select.id = (record.status === 'under investigation')? 'under-investigation' : record.status;
@@ -167,3 +194,42 @@ const patchStatus = async (recordId, recordType, selectedStatus) => {
     
 };
 
+// const initMap = () => {
+    function initMap() {
+    map = new google.maps.Map(document.getElementById('map-popup-map'), {
+        zoom: 8,
+        center: { lat: 6.465422, lng: 3.406448 }
+    });
+    geocoder = new google.maps.Geocoder();
+    infowindow = new google.maps.InfoWindow();
+}
+
+const geocodeLatLng = (location, geocoder, resultsMap, infowindow) => {
+    let input = location;
+    console.log(input);
+    let latlngStr = input.split(',', 2);
+    let latlng = { lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1]) };
+    try {
+        geocoder.geocode({ 'location': latlng }, function (results, status) {
+            if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);
+                let marker = new google.maps.Marker({
+                    map: resultsMap,
+                    position: results[0].geometry.location
+                });
+                infowindow.setContent(results[0].formatted_address);
+                // recordAddress = results[0].formatted_address;
+                // address.value = recordAddress;
+                infowindow.open(map, marker);
+            } else {
+                handleGeolocationNetworkError();
+                // alert('The address you entered is unknown: ' + status);
+            }
+        });
+        return true;
+    } catch (err) {
+        console.log(err);
+        handleGeolocationNetworkError();
+        return false;
+    };
+};

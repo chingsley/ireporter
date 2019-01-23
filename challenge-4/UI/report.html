@@ -29,6 +29,7 @@
                         </a>
                     </div>
                     <ul class="nav-ul">
+                        <li class="li-outer animated-link"><a href="reporthistory.html" class="links">report history</a></li>
                         <li class="li-outer animated-link"><a href="userprofile.html" class="links">my profile</a></li>
                         <li class="li-outer animated-link"><a href="index.html" class="links">sign out</a></li>
                     </ul>
@@ -39,12 +40,15 @@
 
     <section class="section-report">
         <div class="section-report-flex-box">
+            <div class="form-group-title" id="report-title">
+                <h2 class="heading-secondary-dark" id="form-register-title">
+                    make a report
+                </h2>
+            </div>
+            <div class="div-over-map-report">
+                <div class="map" id="map">Map Area</div>
+            </div>
             <div class="div-over-form-report">
-                <div class="form-group-title" id="report-title">
-                    <h2 class="heading-secondary-dark" id="form-register-title">
-                        make a report
-                    </h2>
-                </div>
                 <form action="#" class="report-form" id="report-form">
                     <div id="radio-container" class= "report-input-flex">
                         <!-- <div class="form-radio-group-title">Select a type of report</div> -->
@@ -72,7 +76,7 @@
                             <input type="text" class="report-form-input" id="address" placeholder="Enter your address">
                         </div>
                         <div class="rep-field">
-                            <input type="text" class="report-form-input" id="coords" required>
+                            <input type="text" class="report-form-input" id="coords" placeholder="coordinates (readonly)" required readonly>
                             <!-- <input type="text" class="report-form-input" id="coords" required readonly> -->
                         </div>
                         <div class="prompt">Don't know your address? Click <button id="btn-get-current-location">here</button> to allow us get your current location.</div>
@@ -107,9 +111,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="div-over-map">
-                <div class="map" id="map">Map Area</div>
             </div>
         </div>
     </section>

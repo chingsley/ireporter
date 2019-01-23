@@ -141,8 +141,6 @@ spanRecordType.innerText = recordType.toString().toUpperCase();
             console.log(err);
             handleGeolocationNetworkError();
         };
-        
-
     }
 
     function getLocation() {

@@ -1,33 +1,39 @@
-// console.log(sessionStorage.recordId);
-// console.log(sessionStorage.userId);
+const address = document.getElementById('address');
+
 let msg = 'dialog message';
+let geocoder;
+let infowindow;
+let map;
 
 {// HANDLING GEOLOCATION
     let btn = document.getElementById('btn-get-current-location');
     let coords = document.getElementById('coords');
+
     function initMap() {
-        let map = new google.maps.Map(document.getElementById('map'), {
+         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 8,
             center: { lat: 6.465422, lng: 3.406448 }
         });
-        let geocoder = new google.maps.Geocoder();
+        geocoder = new google.maps.Geocoder();
+        infowindow = new google.maps.InfoWindow();
 
         document.getElementById('address').addEventListener('change', function () {
-            geocodeAddress(geocoder, map);
+            geocodeAddress(geocoder, map, infowindow);
         });
     }
 
-    function geocodeAddress(geocoder, resultsMap) {
-        let address = document.getElementById('address').value;
-        geocoder.geocode({ 'address': address }, function (results, status) {
+    function geocodeAddress(geocoder, resultsMap, infowindow) {
+        geocoder.geocode({ 'address': address.value }, function (results, status) {
             if (status === 'OK') {
                 coords.value = `${results[0].geometry.location.lat()}, ${results[0].geometry.location.lng()}`;
                 resultsMap.setCenter(results[0].geometry.location);
-                // console.log(coords.value);
                 let marker = new google.maps.Marker({
                     map: resultsMap,
                     position: results[0].geometry.location
                 });
+                infowindow.setContent(results[0].formatted_address);
+                infowindow.open(map, marker);
+
             } else {
                 alert('The address you entered is unknown: ' + status);
             }
@@ -35,21 +41,76 @@ let msg = 'dialog message';
     }
 
     // const x = document.getElementById("demo");
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                msg = "User denied the request for Geolocation.";
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+            case error.POSITION_UNAVAILABLE:
+                msg = "Location information is unavailable.";
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+            case error.TIMEOUT:
+                msg = "The request to get user location timed out.";
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+            case error.UNKNOWN_ERROR:
+                msg = "An unknown error occurred.";
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+        }
+    }
+
+
+    function geocodeLatLng(geocoder, resultsMap, infowindow) {
+        let input = coords.value;
+        let latlngStr = input.split(',', 2);
+        let latlng = { lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1]) };
+        try {
+            geocoder.geocode({ 'location': latlng }, function (results, status) {
+                if (status === 'OK') {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    let marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                    infowindow.setContent(results[0].formatted_address);
+                    address.value = results[0].formatted_address;
+                    // address.value = recordAddress;
+                    infowindow.open(map, marker);
+                } else {
+                    handleGeolocationNetworkError();
+                    // alert('The address you entered is unknown: ' + status);
+                }
+            });
+        } catch (err) {
+            console.log(err);
+            handleGeolocationNetworkError();
+        };
+    }
+
     function getLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
         } else {
             alert("Geolocation is not supported by this browser.");
         }
     }
 
-    function showPosition(position) {
-        coords.value = `${position.coords.latitude}, ${position.coords.longitude}`;
+    async function showPosition(position) {
+        coords.value = await `${position.coords.latitude}, ${position.coords.longitude}`;
         console.log(position.coords);
+        console.log(coords.value);
+        console.log('here');
+        geocodeLatLng(geocoder, map, infowindow);
+        return true;
     }
 
-    btn.addEventListener('click', function () {
-        getLocation();
+    btn.addEventListener('click',  async (event) => {
+        event.preventDefault();
+        const res = await getLocation();
+        console.log(res);
     });
 }
 
