@@ -407,7 +407,7 @@ ul {
     background-color: rgba(0, 0, 0, .7);
     overflow: auto;
     z-index: 999;
-    /* display: none; */
+    display: none;
     transition: all .4s;
 }
 .map-popup-div-over-map {
@@ -1299,6 +1299,9 @@ textarea {
     display: block;
     font-style: italic;
     margin: 0 auto;
+    cursor: pointer;
+}
+.address {
     cursor: pointer;
 }
 select {

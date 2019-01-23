@@ -1,8 +1,12 @@
-const token = sessionStorage.token;
-const errorDisplayBox = document.getElementById('outerErrorDisplayBox');
 const btnCloseMap = document.getElementById('map-popup-close');
+const errorDisplayBox = document.getElementById('outerErrorDisplayBox');
 const mapPopup = document.getElementById('map-popup-window');
 const mapPopupCoords = document.getElementById('map-popup-coords');
+const token = sessionStorage.token;
+
+let geocoder;
+let infowindow;
+let map;
 
 btnCloseMap.addEventListener('click', () => {
     mapPopup.style.display = 'none';
@@ -14,10 +18,6 @@ window.addEventListener('click', (event) => {
     }
 });
 
-
-let geocoder;
-let infowindow;
-let map;
 
 const createCell = (arrOfClassNames, textContent) => {
     let td = document.createElement('td');
@@ -42,18 +42,13 @@ const displayRecords = async () => {
         const createdOn = createCell(['cell', 'createdon'], dateCreated);
         const createdBy = createCell(['cell', 'createdby'], record.createdBy);
         const type = createCell(['cell', 'type'], record.type);
-        const location = createCell(['cell', 'location'], record.location);
+        const location = createCell(['cell', 'address', 'location'], record.location.slice(0, 7).concat('...'));
         const commentAndMedia = createCell(['cell', 'comment-and-media']);
         commentAndMedia.appendChild(popup(record));
         const status = createCell(['cell', 'status']);
 
-        location.addEventListener('click', async () => {
-            const successfulGeocoding = await geocodeLatLng(record.location, geocoder, map, infowindow);
-            console.log(successfulGeocoding);
-            if(successfulGeocoding) {
-                mapPopup.style.display = 'block';
-                mapPopupCoords.textContent = record.location;
-            }
+        location.addEventListener('click', () => {
+            geocodeLatLng(record.location, geocoder, map, infowindow);
         });
 
         const select = document.createElement('select');
@@ -85,7 +80,7 @@ const displayRecords = async () => {
         tr.appendChild(commentAndMedia);
         tr.appendChild(location);
         tr.appendChild(createdOn);
-        tr.appendChild(createdBy);
+        tr.appendChild(createdBy); // uncomment this if you need to see the customer id
         tr.appendChild(status);
         table.appendChild(tr);
     });
@@ -157,10 +152,6 @@ const popup = (record) => {
     return a;
 };
 
-
-
-displayRecords();
-
 const patchStatus = async (recordId, recordType, selectedStatus) => {
     const formdata = new FormData();
     const myHeaders = new Headers();
@@ -194,8 +185,7 @@ const patchStatus = async (recordId, recordType, selectedStatus) => {
     
 };
 
-// const initMap = () => {
-    function initMap() {
+function initMap() {
     map = new google.maps.Map(document.getElementById('map-popup-map'), {
         zoom: 8,
         center: { lat: 6.465422, lng: 3.406448 }
@@ -206,7 +196,6 @@ const patchStatus = async (recordId, recordType, selectedStatus) => {
 
 const geocodeLatLng = (location, geocoder, resultsMap, infowindow) => {
     let input = location;
-    console.log(input);
     let latlngStr = input.split(',', 2);
     let latlng = { lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1]) };
     try {
@@ -221,15 +210,20 @@ const geocodeLatLng = (location, geocoder, resultsMap, infowindow) => {
                 // recordAddress = results[0].formatted_address;
                 // address.value = recordAddress;
                 infowindow.open(map, marker);
+                mapPopup.style.display = 'block';
+                mapPopupCoords.textContent = location;
+                return true;
             } else {
-                handleGeolocationNetworkError();
+                showDialogMsg(0, 'Geolocation Error', 'Unknown Address', 'center');
                 // alert('The address you entered is unknown: ' + status);
+                return false;
             }
         });
-        return true;
     } catch (err) {
-        console.log(err);
         handleGeolocationNetworkError();
         return false;
     };
 };
+
+displayRecords();
+
