@@ -13,6 +13,7 @@ const redflagsURL = `${root}/red-flags`;
 const interventionsURL = `${root}/interventions`;
 const reqRedflags = fetch(redflagsURL, options);
 const reqInterventions = fetch(interventionsURL, options);
+const errorDisplay = document.getElementById('outerErrorDisplayBox');
 
 
 Promise.all([reqInterventions, reqRedflags])
@@ -21,6 +22,8 @@ Promise.all([reqInterventions, reqRedflags])
         process(response.json()); // the .json() method returns a promise
     });
 }).catch(err => {
+    errorDisplay.style.display = 'block';
+    console.log(err);
     handleError(err);
 });
 
@@ -215,7 +218,7 @@ const process = (promisedJson) => {
 
                    // add click event to 'delete button'
                    btnDelete.addEventListener('click', (event) => {
-                       sessionStorage.recordId = record.id;
+                    //    sessionStorage.recordId = record.id;
                        const msg = `
                     Are you sure you want to delete this record ?
                     <br><br>
@@ -227,15 +230,28 @@ const process = (promisedJson) => {
                        }, 700);
 
                        // The 'PROCEED' btn for the WARNING dialog box: 
-                       btnConfirm[1].onclick = () => {
-                           dialogWindow.style.display = "none";
-                           console.log(record.id);
-                           console.log(event.target);
-                           console.log(event.target.parentNode);
-                           reportHistory.removeChild(event.target.parentNode);
-                           showDialogMsg(2, 'Deleted', `Record ${record.id} has been deleted`, 'center');
-                           return true;
-                       }
+                    //    btnConfirm[1].onclick = () => {
+                        btnConfirm[1].addEventListener('click', async () => {
+                            try {
+                                const successfulDelete = await deleteRecord(record.type, record.id);
+                                if(successfulDelete) {
+                                    dialogWindow.style.display = "none";
+                                    console.log(record.id);
+                                    console.log(event.target);
+                                    console.log(event.target.parentNode);
+                                    reportHistory.removeChild(event.target.parentNode);
+                                    showDialogMsg(2, 'Deleted', `Record ${record.id} has been deleted`, 'center');
+                                    return true;
+                                } else {
+                                    const msg = `Failed to delete record<br>
+                                    Please check your internet connection or try reconnecting to the wi-fi.`;
+                                    showDialogMsg(0, 'Error', msg, 'center');
+                                }
+                            } catch(err) {
+                                console.log(err);
+                                handleError(err);
+                            };
+                       });
                    });
 
                    reportHistory.appendChild(reportCard);
@@ -274,4 +290,36 @@ const process = (promisedJson) => {
            }
        }
     });
+};
+
+const deleteRecord = async (recordType, recordId) => {
+    const myHeaders = new Headers();
+    const uri = `${root}/${recordType}s/${recordId}`;
+
+    myHeaders.append('x-auth-token', token);
+    console.log(recordId, recordType);
+
+    const options = { method: 'DELETE', mode: 'cors', headers: myHeaders,};
+
+    const req = new Request(uri, options);
+
+    try {
+        const response = await fetch(req);
+        console.log(response);
+        const result = await response.json();
+        console.log(result);
+        console.log(result.status);
+        if(result.status === 200) {
+            return true;
+        } else {
+            handleResponseError(result);
+        }
+    } catch (err) {
+        console.log(err);
+        handleError(err);
+        setTimeout(() => {
+            // return false;
+        }, 3000);
+        // showDialogMsg(0, 'Error', err, 'center');
+    }
 };
