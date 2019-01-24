@@ -115,11 +115,12 @@ let map;
 }
 
 {// HANDLING FETCH TO POST A NEW RECORD
-    const reportForm = document.getElementById('report-form');
-    const location = document.getElementById('coords');
     const comment = document.getElementById('comment');
-    const sendBtn = document.getElementById('btn-send-report');
     const images = document.getElementById('pic');
+    const location = document.getElementById('coords');
+    const MEDIA_MAX_COUNT = 3;
+    const reportForm = document.getElementById('report-form');
+    const sendBtn = document.getElementById('btn-send-report');
     const videos = document.getElementById('video');
 
     sendBtn.addEventListener('click', (event) => {
@@ -191,5 +192,55 @@ let map;
             });
     };
 
+    images.addEventListener('change', () => {
+        const files = images.files;
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+        for (let i = 0; i < files.length; i += 1) {
+            if (!allowedTypes.includes(files[i].type)) {
+                msg = `"${files[i].name}" of type "${files[i].type}" is not supported
+                    </br> Supported formats are ${allowedTypes.join(', ')}`;
+                showDialogMsg(0, 'Unsupported Image Format', msg, 'center');
+
+                images.value = ""; // clear the content of the the file input element
+                return;
+            }
+        }
+
+        if (files.length > MEDIA_MAX_COUNT) {
+            msg = `Maximum number of image upload is ${MEDIA_MAX_COUNT}`;
+            showDialogMsg(0, 'Image Upload Error', msg, 'center');
+
+            imgFileInput.value = "";
+            return;
+        }
+    });
+
+    videos.addEventListener('change', () => {
+        const files = videos.files;
+        const allowedTypes = ['video/mp4'];
+        for (let i = 0; i < files.length; i += 1) {
+            if (!allowedTypes.includes(files[i].type)) {
+                msg = `"${files[i].name}" of type "${files[i].type}" is not supported
+                    </br> Supported formats are ${allowedTypes.join(', ')}`;
+                showDialogMsg(0, 'Unsupported Video Format', msg, 'center');
+                videos.value = ""; // clear the content of the the file input element
+                return;
+            } else if (files[i].size > 10000000) {
+                msg = `${files[i].name} exceeds the limit of allowed video size <br>
+                    MAXIMUM ALLOWED SIZE PER VIDEO IS 10MB`;
+                showDialogMsg(0, 'Large Video detected', msg, 'center');
+                videos.value = "";
+                return;
+            }
+        }
+
+        if (files.length > MEDIA_MAX_COUNT) {
+            msg = `Maximum number of video upload is ${MEDIA_MAX_COUNT}`;
+            showDialogMsg(0, 'Video Upload Error', msg, 'center');
+
+            videos.value = "";
+            return;
+        }
+    });
 }
 

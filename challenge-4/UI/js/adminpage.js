@@ -93,8 +93,8 @@ const getAllRecords = async () => {
 
     const options = { method: 'GET', headers: myHeaders, };
 
-    redflagsURL = `${root}/red-flags`;
-    interventionsURL = `${root}/interventions`;
+    const redflagsURL = `${root}/red-flags`;
+    const interventionsURL = `${root}/interventions`;
 
     try {
         const redflagsResponse = await fetch(redflagsURL, options);

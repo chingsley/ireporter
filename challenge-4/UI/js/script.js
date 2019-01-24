@@ -129,12 +129,12 @@ const handleResponseError = (response) => {
 
 const handleGeolocationNetworkError = () => {
     msg = `
-        <p style='text-align: center;'>There was an issue with locating the address of this record</p>
+        <p style='text-align: center;'>Could not show the address of this record on google map</p>
         <ul class="dialog-box-ul">
             Try:
             <li>Checking the network cables, modem, and router</li>
             <li>Reconnecting to Wi-Fi</li>
-            <li>Also ensure that the address is correct</li>
+            <li>Also ensure the address is correct</li>
         </ul>`;
     showDialogMsg(0, 'Geolocation Error', msg);
 };

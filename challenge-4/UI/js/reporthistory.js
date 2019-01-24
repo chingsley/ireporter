@@ -34,14 +34,11 @@ const process = (promisedJson) => {
         // const records = responseObj.data;
         count += 1;
         records = records.concat(responseObj.data); // merge new array with the existing one.
-        // console.log(records);
-        console.log('records.length', records.length);
-        console.log('count', count);
 
        if(count > 1) { // i. if process() function has been called twice, since we are making two requests
            if (records.length > 0) {
+               records.sort((a, b) => a.id - b.id);
                records.forEach(record => {
-                   // console.log(record);
                    const defaultImg = (record.type === 'red-flag') ?
                        "../img/redflag-img.png" :
                        "../img/intervention-img.png";
