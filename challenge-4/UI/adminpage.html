@@ -22,13 +22,15 @@
                 </div>
                 <nav class="navigation">
                     <div class="nav-div" id="nav-div">
+                        <a href="userprofile.html" class="active link" id="first-link">my profile</a>
                         <a href="index.html" class="active link" id="first-link">sign out</a>
                         <!-- <a href="index.html">home</a></li> -->
                         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                            <i class="fa fa-bars"></i>
-                        </a>
-                    </div>
-                    <ul class="nav-ul">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                        </div>
+                        <ul class="nav-ul">
+                        <li class="li-outer animated-link"><a href="userprofile.html" class="links">My profile</a></li>
                         <li class="li-outer animated-link"><a href="index.html" class="links">sign out</a></li>
                         <!-- <li class="li-outer animated-link"><a href="index.html" class="links">home</a></li> -->
                     </ul>
@@ -160,8 +162,21 @@
             <span class="close-dialog-box" id="close-dialog-box">&times;</span>
         </div>
     </div>
+    
+    <div class="map-popup-window" id="map-popup-window">
+        <div class="map-popup-div-over-map" id="map-popup-div-over-map">
+            <span class="map-popup-close" id="map-popup-close">&times;</span>
+            <h3 class="map-popup-coords" id="map-popup-coords">
+                <!-- 9.109869999999999, 7.404336999999941 -->
+            </h3>
+            <div class="map-popup-map" id="map-popup-map">
 
+            </div>
+        </div>
+    </div>
 
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsPc92ZcMDHK2wx3zgcu8ysBQVCOfBCSE&callback=initMap">
+    </script>
     <script src="./js/script.js"></script>
     <script src="./js/adminpage.js"></script>
 </body>

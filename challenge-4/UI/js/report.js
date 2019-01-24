@@ -1,33 +1,39 @@
-// console.log(sessionStorage.recordId);
-// console.log(sessionStorage.userId);
+const address = document.getElementById('address');
+
 let msg = 'dialog message';
+let geocoder;
+let infowindow;
+let map;
 
 {// HANDLING GEOLOCATION
     let btn = document.getElementById('btn-get-current-location');
     let coords = document.getElementById('coords');
+
     function initMap() {
-        let map = new google.maps.Map(document.getElementById('map'), {
+         map = new google.maps.Map(document.getElementById('map'), {
             zoom: 8,
             center: { lat: 6.465422, lng: 3.406448 }
         });
-        let geocoder = new google.maps.Geocoder();
+        geocoder = new google.maps.Geocoder();
+        infowindow = new google.maps.InfoWindow();
 
         document.getElementById('address').addEventListener('change', function () {
-            geocodeAddress(geocoder, map);
+            geocodeAddress(geocoder, map, infowindow);
         });
     }
 
-    function geocodeAddress(geocoder, resultsMap) {
-        let address = document.getElementById('address').value;
-        geocoder.geocode({ 'address': address }, function (results, status) {
+    function geocodeAddress(geocoder, resultsMap, infowindow) {
+        geocoder.geocode({ 'address': address.value }, function (results, status) {
             if (status === 'OK') {
                 coords.value = `${results[0].geometry.location.lat()}, ${results[0].geometry.location.lng()}`;
                 resultsMap.setCenter(results[0].geometry.location);
-                // console.log(coords.value);
                 let marker = new google.maps.Marker({
                     map: resultsMap,
                     position: results[0].geometry.location
                 });
+                infowindow.setContent(results[0].formatted_address);
+                infowindow.open(map, marker);
+
             } else {
                 alert('The address you entered is unknown: ' + status);
             }
@@ -35,30 +41,86 @@ let msg = 'dialog message';
     }
 
     // const x = document.getElementById("demo");
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                msg = "User denied the request for Geolocation.";
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+            case error.POSITION_UNAVAILABLE:
+                msg = "Location information is unavailable.";
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+            case error.TIMEOUT:
+                msg = "The request to get user location timed out.";
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+            case error.UNKNOWN_ERROR:
+                msg = "An unknown error occurred.";
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+        }
+    }
+
+
+    function geocodeLatLng(geocoder, resultsMap, infowindow) {
+        let input = coords.value;
+        let latlngStr = input.split(',', 2);
+        let latlng = { lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1]) };
+        try {
+            geocoder.geocode({ 'location': latlng }, function (results, status) {
+                if (status === 'OK') {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    let marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                    infowindow.setContent(results[0].formatted_address);
+                    address.value = results[0].formatted_address;
+                    // address.value = recordAddress;
+                    infowindow.open(map, marker);
+                } else {
+                    handleGeolocationNetworkError();
+                    // alert('The address you entered is unknown: ' + status);
+                }
+            });
+        } catch (err) {
+            console.log(err);
+            handleGeolocationNetworkError();
+        };
+    }
+
     function getLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
         } else {
             alert("Geolocation is not supported by this browser.");
         }
     }
 
-    function showPosition(position) {
-        coords.value = `${position.coords.latitude}, ${position.coords.longitude}`;
+    async function showPosition(position) {
+        coords.value = await `${position.coords.latitude}, ${position.coords.longitude}`;
         console.log(position.coords);
+        console.log(coords.value);
+        console.log('here');
+        geocodeLatLng(geocoder, map, infowindow);
+        return true;
     }
 
-    btn.addEventListener('click', function () {
-        getLocation();
+    btn.addEventListener('click',  async (event) => {
+        event.preventDefault();
+        const res = await getLocation();
+        console.log(res);
     });
 }
 
 {// HANDLING FETCH TO POST A NEW RECORD
-    const reportForm = document.getElementById('report-form');
-    const location = document.getElementById('coords');
     const comment = document.getElementById('comment');
-    const sendBtn = document.getElementById('btn-send-report');
     const images = document.getElementById('pic');
+    const location = document.getElementById('coords');
+    const MEDIA_MAX_COUNT = 3;
+    const reportForm = document.getElementById('report-form');
+    const sendBtn = document.getElementById('btn-send-report');
     const videos = document.getElementById('video');
 
     sendBtn.addEventListener('click', (event) => {
@@ -130,5 +192,55 @@ let msg = 'dialog message';
             });
     };
 
+    images.addEventListener('change', () => {
+        const files = images.files;
+        const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
+        for (let i = 0; i < files.length; i += 1) {
+            if (!allowedTypes.includes(files[i].type)) {
+                msg = `"${files[i].name}" of type "${files[i].type}" is not supported
+                    </br> Supported formats are ${allowedTypes.join(', ')}`;
+                showDialogMsg(0, 'Unsupported Image Format', msg, 'center');
+
+                images.value = ""; // clear the content of the the file input element
+                return;
+            }
+        }
+
+        if (files.length > MEDIA_MAX_COUNT) {
+            msg = `Maximum number of image upload is ${MEDIA_MAX_COUNT}`;
+            showDialogMsg(0, 'Image Upload Error', msg, 'center');
+
+            imgFileInput.value = "";
+            return;
+        }
+    });
+
+    videos.addEventListener('change', () => {
+        const files = videos.files;
+        const allowedTypes = ['video/mp4'];
+        for (let i = 0; i < files.length; i += 1) {
+            if (!allowedTypes.includes(files[i].type)) {
+                msg = `"${files[i].name}" of type "${files[i].type}" is not supported
+                    </br> Supported formats are ${allowedTypes.join(', ')}`;
+                showDialogMsg(0, 'Unsupported Video Format', msg, 'center');
+                videos.value = ""; // clear the content of the the file input element
+                return;
+            } else if (files[i].size > 10000000) {
+                msg = `${files[i].name} exceeds the limit of allowed video size <br>
+                    MAXIMUM ALLOWED SIZE PER VIDEO IS 10MB`;
+                showDialogMsg(0, 'Large Video detected', msg, 'center');
+                videos.value = "";
+                return;
+            }
+        }
+
+        if (files.length > MEDIA_MAX_COUNT) {
+            msg = `Maximum number of video upload is ${MEDIA_MAX_COUNT}`;
+            showDialogMsg(0, 'Video Upload Error', msg, 'center');
+
+            videos.value = "";
+            return;
+        }
+    });
 }
 

@@ -32,8 +32,8 @@ let infowindow;
 let map;
 let msg = '';
 let recordAddress = '';
-let x = 0;
-let y = 0;
+let allowedUploadCountForImg = 0;
+let allowedUploadCountForVideos = 0;
 
 btnAddVideos.title = 'no videos selected';
 btnAddImages.title = 'no images selected'
@@ -141,8 +141,6 @@ spanRecordType.innerText = recordType.toString().toUpperCase();
             console.log(err);
             handleGeolocationNetworkError();
         };
-        
-
     }
 
     function getLocation() {
@@ -226,13 +224,13 @@ const displayMedia = (mediaArr, mediaType) => {
 
     
     if (mediaType === 'image') {
-        x = getAllowedUploadCount(mediaArr);
+        allowedUploadCountForImg = getAllowedUploadCount(mediaArr);
         mediaFileInputDiv = imgFileInputContainer;
         mediaUploadInfo = imgUploadInfo;
         mediaContainer = imgContainer;
         btnAddMedia = btnAddImages;
     } else if (mediaType === 'video') {
-        y = getAllowedUploadCount(mediaArr);
+        allowedUploadCountForVideos = getAllowedUploadCount(mediaArr);
         mediaFileInputDiv = vidFileInputContainer;
         mediaUploadInfo = vidUploadInfo;
         mediaContainer = vidContainer;
@@ -423,7 +421,7 @@ imgFileInput.addEventListener('change', () => {
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
     for(let i = 0; i < files.length; i += 1) {
         if(!allowedTypes.includes(files[i].type)) {
-            msg = `${files[i].name} is not supported
+            msg = `"${files[i].name}" of type "${files[i].type}" is not supported
                     </br> Supported formats are ${allowedTypes.join(', ')}`;
             showDialogMsg(0, 'Unsupported Image Format', msg, 'center');
 
@@ -432,9 +430,9 @@ imgFileInput.addEventListener('change', () => {
         }
     }
 
-    if(files.length > x) {
+    if (files.length > allowedUploadCountForImg) {
         msg = `Maximum number of image upload is ${MEDIA_MAX_COUNT} <br>
-               You can only upload ${x} more`;
+               You can only upload ${allowedUploadCountForImg} more`;
         showDialogMsg(0, 'Image Upload Error', msg, 'center');
          
         imgFileInput.value = "";
@@ -450,7 +448,7 @@ vidFileInput.addEventListener('change', () => {
     const allowedTypes = ['video/mp4'];
     for(let i = 0; i < files.length; i += 1) {
         if(!allowedTypes.includes(files[i].type)) {
-            msg = `${files[i].name} is not supported
+            msg = `${files[i].name} of type "${files[i].type}" is not supported
                     </br> Supported formats are ${allowedTypes.join(', ')}`;
             showDialogMsg(0, 'Unsupported Video Format', msg, 'center');
             vidFileInput.value = ""; // clear the content of the the file input element
@@ -464,9 +462,9 @@ vidFileInput.addEventListener('change', () => {
         }
     }
 
-    if(files.length > y) {
+    if (files.length > allowedUploadCountForVideos) {
         msg = `Maximum number of video upload is ${MEDIA_MAX_COUNT} <br>
-               You can only upload ${y} more`;
+               You can only upload ${allowedUploadCountForVideos} more`;
         showDialogMsg(0, 'Video Upload Error', msg, 'center');
          
         vidFileInput.value = "";

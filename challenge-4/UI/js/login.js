@@ -25,7 +25,11 @@ btnSubmit.addEventListener('click', (event) => {
         if(response.status === 200) {
             sessionStorage.token = response.data[0].token;
             sessionStorage.firstname = response.data[0].user.firstname;
+            sessionStorage.lastname = response.data[0].user.lastname;
+            sessionStorage.username = response.data[0].user.username;
             sessionStorage.userId = response.data[0].user.id;
+            sessionStorage.userEmail = response.data[0].user.email;
+            sessionStorage.userPicture = response.data[0].user.picture;
             if(response.data[0].user.isAdmin) {
                 location.href = 'adminpage.html';
             } else {

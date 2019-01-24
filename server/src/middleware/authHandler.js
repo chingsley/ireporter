@@ -34,7 +34,7 @@ class AuthHandler {
       username: userDetails.username,
       registered: userDetails.registered,
       isAdmin: userDetails.is_admin,
-      picture: `http://localhost:${process.env.PORT}/${userDetails.picture}`,
+      picture: `${userDetails.picture}`,
     };
     const statusCode = req.wantsToSignUp ? 201 : 200;
     return res.status(statusCode).json({

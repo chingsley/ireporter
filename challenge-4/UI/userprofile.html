@@ -55,46 +55,47 @@
                     PROFILE
                 </div>
                 <div class="div-profile-content div-profile-content-picture u-margin-top-small">
-                    <div class="piture-div-img">
-                        <img src="img/1543731291418.jpg" alt="profile picture">
+                    <div class="piture-div-img" id="picture-div-img">
+                        <!-- <img id="profile-picture" alt="profile picture"> -->
+                        <!-- <img src="img/1543731291418.jpg" alt="profile picture"> -->
                     </div>
                 </div>
                 <div class="div-profile-content div-profile-content-userdetails">
-                    <p class="fullname">Julia James Junior</p>
-                    <h4 class="telephone">jj-junior@gmail.com</h4>
+                    <p class="fullname" id="fullname">Julia James Junior</p>
+                    <h4 class="email" id="email">jj-junior@gmail.com</h4>
                 </div>
                 <div class="div-profile-content div-profile-content-flexbox u-margin-top-small">
                     <div class="flex-child redflag">
-                        <h4>50</h4><p>RED-FLAGS</p>
+                        <h4 id="count-redflags">50</h4><p>RED-FLAGS</p>
                     </div>
                     <div class="flex-child incidence">
-                        <h4>45</h4><p>INCIDENCES</p>
+                        <h4 id="count-interventions">45</h4><p>INCIDENCES</p>
                     </div>
                 </div>
                 <div class="div-profile-content div-profile-content-flexbox u-margin-top-small">
                     <div class="flex-child stats redflag-stats">
                         <ul>
-                            <li>10 Draft</li>
-                            <li>15 Rejected</li>
-                            <li>14 Resolved</li>
-                            <li>11 Under Investigation</li>
+                            <li><span id="draft-redflags">10</span> Draft</li>
+                            <li><span id="rejected-redflags">15</span> Rejected</li>
+                            <li><span id="resolved-redflags">14</span> Resolved</li>
+                            <li><span id="ui-redflags">11</span> Under Investigation</li>
                         </ul>
                     </div>
                     <div class="flex-child stats incidence-stats">
                         <ul>
-                            <li>10 Draft</li>
-                            <li>10 Rejected</li>
-                            <li>14 Resolved</li>
-                            <li>11 Under Investigation</li>
+                            <li><span id="draft-interventions">10</span> Draft</li>
+                            <li><span id="rejected-interventions">10</span> Rejected</li>
+                            <li><span id="resolved-interventions">14</span> Resolved</li>
+                            <li><span id="ui-interventions">11</span> Under Investigation</li>
                         </ul>
                     </div>
                 </div>
                 <div class="div-profile-content div-profile-content-flexbox u-margin-top-small" id="div-profile-content-flexbox-username-part">
                     <div class="flex-child" id="pic-for-username">
-                        <img src="img/1543731291418.jpg" alt="profile picture">
+                        <!-- <img src="img/1543731291418.jpg" alt="profile picture"> -->
                     </div>
                     <div class="flex-child" id="profile-username">
-                        <h3>JuliaJ95Jnr</h3>
+                        <h3 id="username">JuliaJ95Jnr</h3>
                     </div>
                 </div>
             </div>
@@ -130,11 +131,12 @@
         </div>
     </footer>
     <script>
-        let date = document.getElementById('date');
-        date.innerHTML = (new Date()).toLocaleString();
-        console.log(Date.now());
+        // let date = document.getElementById('date');
+        // date.innerHTML = (new Date()).toLocaleString();
+        // console.log(Date.now());
     </script>
     <script src="./js/script.js"></script>
+    <script src="./js/userprofile.js"></script>
 </body>
 
 </html>

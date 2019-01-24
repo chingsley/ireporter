@@ -130,7 +130,7 @@ ul {
         /* text-shadow: .5rem 1rem 2rem rgba(250, 250, 210, 1); */}
 
 .heading-secondary-dark {
-    font-size: 2rem;
+    font-size: 1.5rem;
     text-transform: uppercase;
     font-weight: 700;
     display: inline-block;
@@ -397,6 +397,55 @@ ul {
     margin-bottom: 1rem;
 }
 
+/** MAP POPUP WINDWO **/
+.map-popup-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .7);
+    overflow: auto;
+    z-index: 999;
+    display: none;
+    transition: all .4s;
+}
+.map-popup-div-over-map {
+    position: relative;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+    width: 50%;
+    height: 20rem;
+    margin: 15% auto;
+    background-color: rgba(255, 255, 255, .8);
+    overflow: hidden;
+}
+.map-popup-coords {
+    /* color: white; */
+    text-align: center;
+    letter-spacing: .5px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    /* border: 1px solid salmon; */
+}
+.map-popup-map {
+    /* border: 1px solid salmon; */
+    width: 100%;
+    height: 90%;
+}
+.map-popup-close {
+    position: absolute;
+    top: .2rem;
+    right: 1rem;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: grey;
+}
+.map-popup-close:hover,
+.map-popup-close:focus {
+    color: black;
+}
 
 
 
@@ -993,8 +1042,8 @@ header {
 }
 .section-report-flex-box {
     display: flex;
-    /* flex-direction: column; */
-    /* border: 1px solid green; */
+    flex-direction: column;
+    /* border: 1px solid white; */
     padding: 2px;
     width: 95%;
     margin: 0 auto;
@@ -1006,10 +1055,14 @@ header {
 .div-over-form-report {
     /* border: 1px solid blue; */
     width: 70%;
+    margin: 0 auto;
     /* order: 2; */
 }
 
 .report-form {
+     font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    font-style: italic;
     color: rgba(250, 250, 210, .5);
     /* border: 1px solid red; */
     margin: 2px;
@@ -1048,19 +1101,16 @@ header {
     background-color: rgba(211, 211, 211, .1); */
 }
 .report-form-input {
-    /* border-radius: 2px; */
-    /* border: 1px solid silver; */
-    font-size: 1rem;
-   width: 100%;
+    font: inherit;
+     width: 100%;
    padding: .5rem .5rem .5rem .5rem;
    outline: none;
    color: white;
    background-color: transparent;
-   /* height: 100%; */
 }
 textarea {
+    font: inherit;
     width: 100%;
-    /* border-radius: 3px; */
     background-color: transparent;
     outline: none;
     color: white;
@@ -1074,6 +1124,9 @@ textarea {
     text-align: center;
     margin: 5px;
     color: lightgoldenrodyellow;
+    /* font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 1rem;
+    font-style: italic; */
 }
 #btn-get-current-location {
     /* padding: 0 10px 0 10px; */
@@ -1147,14 +1200,15 @@ textarea {
     font-size: 1rem;
     width: 100%;
 }
-.div-over-map {
-    /* width: auto; */
-    width: 30%;
+.div-over-map-report {
+    margin: 1rem auto;
+    /* margin-top: 1rem; */
+    width: 70%;
     /* border: 1px solid yellow; */
     /* padding: 10px; */
 }
-.map {
-    margin-top: 3.3rem;
+.map {/* NOTE: THERE IS ANOTHER .map IN THE REPORT SECTION, MIGHT AFFECT YOUR CHAGES*/
+    /* margin-top: 3.3rem; */
     /* width: 20rem; */
     width: 100%;
     height:29rem;
@@ -1170,10 +1224,10 @@ textarea {
 /*********************** ADMIN PAGE *******************/
 .section-admin {
     padding: 5px;
-    background-color: rgba(128, 128, 128, .5);
+    /* background-color: rgba(128, 128, 128, .5); */
     /* background-image: radial-gradient(rgba(255, 255, 255, 1), black); */
     /* background-image: radial-gradient(rgba(255, 255, 255, 1), grey); */
-    /* background-image: linear-gradient(to right, white, grey); */
+    background-image: linear-gradient(to right, white, grey);
     /* border: 1px solid silver; */}
 .section-admin-wrapper-div {
     padding: 5px;
@@ -1247,6 +1301,9 @@ textarea {
     margin: 0 auto;
     cursor: pointer;
 }
+.address {
+    cursor: pointer;
+}
 select {
     padding: 2px;
     margin: 5px 0 5px 0;
@@ -1254,6 +1311,7 @@ select {
     cursor: pointer;
     border: none;
     outline: none;
+    /* border-radius: 5px; */
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-style: italic;
     font-size: 1rem;
@@ -1283,7 +1341,7 @@ select {
     background-color: lightgreen;
 }
 #rejected {
-    background-color: pink;
+    background-color: salmon;
 }
 /******************** (END ADMIN PAGE) *******************/
 
@@ -1908,8 +1966,8 @@ select {
     /* padding: 10px; */
     order: 1;
 }
-.map {
-    margin-top: 3.3rem;
+.map { /* NOTE: THERE IS ANOTHER .map IN THE REPORT SECTION, MIGHT AFFECT YOUR CHAGES*/
+    /* margin-top: 3.3rem; */
     /* width: 20rem; */
     width: 100%;
     height:10rem;
@@ -1974,7 +2032,8 @@ select {
         background-color: transparent;
     } 
 
-    .div-over-map {
+    .div-over-map,
+    .div-over-map-report {
         width: 100%;
         padding: 10px;
         margin: 0 auto;
