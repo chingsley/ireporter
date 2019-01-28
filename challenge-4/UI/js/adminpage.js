@@ -29,6 +29,7 @@ const createCell = (arrOfClassNames, textContent) => {
 }
 
 const displayRecords = async () => {
+    startLoader();
     records = await getAllRecords();
 
     const table = document.getElementById('table-admin');
@@ -48,6 +49,7 @@ const displayRecords = async () => {
         const status = createCell(['cell', 'status']);
 
         location.addEventListener('click', () => {
+            startLoader();
             geocodeLatLng(record.location, geocoder, map, infowindow);
         });
 
@@ -63,8 +65,10 @@ const displayRecords = async () => {
         select.selectedIndex = statusOptions.indexOf(record.status);
         
         select.addEventListener('change', async (e) => {
+            startLoader();
             const success = await patchStatus(record.id, record.type, e.target.value);
             console.log(success);
+            stopLoader();
             if(success) {
                 e.target.id = (e.target.value === 'under investigation') ? 'under-investigation' : e.target.value;
             } else {
@@ -84,6 +88,8 @@ const displayRecords = async () => {
         tr.appendChild(status);
         table.appendChild(tr);
     });
+
+    stopLoader();
 };
 
 const getAllRecords = async () => {
@@ -212,14 +218,17 @@ const geocodeLatLng = (location, geocoder, resultsMap, infowindow) => {
                 infowindow.open(map, marker);
                 mapPopup.style.display = 'block';
                 mapPopupCoords.textContent = location;
+                stopLoader();
                 return true;
             } else {
+                stopLoader();
                 showDialogMsg(0, 'Geolocation Error', 'Unknown Address', 'center');
                 // alert('The address you entered is unknown: ' + status);
                 return false;
             }
         });
     } catch (err) {
+        stopLoader();
         handleGeolocationNetworkError();
         return false;
     };

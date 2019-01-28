@@ -6,7 +6,7 @@ let infowindow;
 let map;
 
 {// HANDLING GEOLOCATION
-    let btn = document.getElementById('btn-get-current-location');
+    let btnGetCurrentLocation = document.getElementById('btn-get-current-location');
     let coords = document.getElementById('coords');
 
     function initMap() {
@@ -18,45 +18,69 @@ let map;
         infowindow = new google.maps.InfoWindow();
 
         document.getElementById('address').addEventListener('change', function () {
+            startLoader();
             geocodeAddress(geocoder, map, infowindow);
         });
     }
 
     function geocodeAddress(geocoder, resultsMap, infowindow) {
-        geocoder.geocode({ 'address': address.value }, function (results, status) {
-            if (status === 'OK') {
-                coords.value = `${results[0].geometry.location.lat()}, ${results[0].geometry.location.lng()}`;
-                resultsMap.setCenter(results[0].geometry.location);
-                let marker = new google.maps.Marker({
-                    map: resultsMap,
-                    position: results[0].geometry.location
-                });
-                infowindow.setContent(results[0].formatted_address);
-                infowindow.open(map, marker);
-
-            } else {
-                alert('The address you entered is unknown: ' + status);
-            }
-        });
+        try {
+            geocoder.geocode({ 'address': address.value }, function (results, status) {
+                if (status === 'OK') {
+                    coords.value = `${results[0].geometry.location.lat()}, ${results[0].geometry.location.lng()}`;
+                    resultsMap.setCenter(results[0].geometry.location);
+                    let marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                    infowindow.setContent(results[0].formatted_address);
+                    infowindow.open(map, marker);
+                    stopLoader();
+                } else {
+                    stopLoader();
+                    if (status === 'ERROR') {
+                        msg = `${status}<br>
+                            Theres was a problem with geolocation.
+                            <br>Please check your internet connection and <strong>try again</strong> `;
+                        showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                    } else {
+                        // msg = 'The address you entered is unknown: ' + status;
+                        msg = `${status}<br> Unknown address. Please enter a valid address.`;
+                        showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                    }
+                    // msg = `Please enter a valid address.`
+                    // showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                    // alert('The address you entered is unknown: ' + status);
+                }
+            });
+        } catch(err) {
+            stopLoader();
+            handleGeolocationNetworkError();
+        };
+        
     }
 
-    // const x = document.getElementById("demo");
     function showError(error) {
         switch (error.code) {
             case error.PERMISSION_DENIED:
+                stopLoader();
                 msg = "User denied the request for Geolocation.";
                 showDialogMsg(0, 'Geolocation Error', msg, 'center');
                 break;
             case error.POSITION_UNAVAILABLE:
-                msg = "Location information is unavailable.";
+                stopLoader();
+                msg = `Location information is unavailable. Ensure your are connected to the internet, 
+                        then <strong>try again</strong>`;
                 showDialogMsg(0, 'Geolocation Error', msg, 'center');
                 break;
             case error.TIMEOUT:
+                stopLoader();
                 msg = "The request to get user location timed out.";
                 showDialogMsg(0, 'Geolocation Error', msg, 'center');
                 break;
             case error.UNKNOWN_ERROR:
-                msg = "An unknown error occurred.";
+                stopLoader();
+                msg = "An unknown error occurred while trying to locate the your address on google map";
                 showDialogMsg(0, 'Geolocation Error', msg, 'center');
                 break;
         }
@@ -79,13 +103,16 @@ let map;
                     address.value = results[0].formatted_address;
                     // address.value = recordAddress;
                     infowindow.open(map, marker);
+                    stopLoader();
                 } else {
+                    stopLoader();
                     handleGeolocationNetworkError();
                     // alert('The address you entered is unknown: ' + status);
                 }
             });
         } catch (err) {
             console.log(err);
+            stopLoader();
             handleGeolocationNetworkError();
         };
     }
@@ -94,21 +121,22 @@ let map;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition, showError);
         } else {
-            alert("Geolocation is not supported by this browser.");
+            msg = "Geolocation is not supported by this browser.";
+            showDialogMsg(0, 'Geolocation Error', msg, 'center');
+            // alert("Geolocation is not supported by this browser.");
         }
     }
 
     async function showPosition(position) {
         coords.value = await `${position.coords.latitude}, ${position.coords.longitude}`;
-        console.log(position.coords);
-        console.log(coords.value);
-        console.log('here');
         geocodeLatLng(geocoder, map, infowindow);
         return true;
     }
 
-    btn.addEventListener('click',  async (event) => {
+    btnGetCurrentLocation.addEventListener('click',  async (event) => {
         event.preventDefault();
+
+        startLoader();
         const res = await getLocation();
         console.log(res);
     });
@@ -150,12 +178,15 @@ let map;
 
         if(images.files.length > 0) {
             for (let i = 0; i < images.files.length; i++) {
-                fd.append('images', images.files[i], `${sessionStorage.userId}_${images.files[i].name}`);
+                // fd.append('images', images.files[i], `${sessionStorage.userId}_${images.files[i].name}`);
+                // fd.append('images', images.files[i], `${sessionStorage.userId}_${images.files[i]}`);
+                fd.append('images', images.files[i]);
             }
         }
         if(videos.files.length > 0) {
             for (let i = 0; i < videos.files.length; i++) {
-                fd.append('videos', videos.files[i], `${sessionStorage.userId}_${videos.files[i].name}`);
+                // fd.append('videos', videos.files[i], `${sessionStorage.userId}_${videos.files[i]}`);
+                fd.append('videos', videos.files[i]);
             }
         }
 
@@ -168,26 +199,26 @@ let map;
         const options = { method: 'POST', mode: 'cors', headers: myHeaders, body: fd, };
         const req = new Request(uri, options);
 
+        startLoader();
         createReport(req);
     });
 
     const createReport = (req) => {
         fetch(req)
             .then(response => {
-                // console.log('line 134 report.js', response);
                 return response.json();
             })
             .then(response => {
-                // console.log('line 138 report.js, response = ', response);
+                stopLoader();
                 if (response.status === 201) {
                     sessionStorage.recordId = response.data[0].id;
                     showDialogMsg(2, 'Saved', response.data[0].message, 'center');
                 } else {
-                    // throw new Error(JSON.stringify(response.error));
                     handleResponseError(response);
                 }
             })
             .catch(err => {
+                stopLoader();
                 handleError(err);
             });
     };

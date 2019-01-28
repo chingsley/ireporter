@@ -10,6 +10,8 @@ const btnRegister = document.getElementById('btn-reg');
 
 btnRegister.addEventListener('click', (event) => {
     event.preventDefault();
+
+    startLoader();
     
     let formdata = new FormData();
     formdata.append('firstname', firstname.value);
@@ -19,10 +21,8 @@ btnRegister.addEventListener('click', (event) => {
     formdata.append('email', email.value);
     formdata.append('password', password.value);
     formdata.append('phoneNumber', phonenumber.value);
-    formdata.append('picture', picture.files[0], `${email.value}.jpeg`);
+    formdata.append('picture', picture.files[0]);
 
-    console.log('formdata', formdata);
-    
     const uri = `${root}/auth/signup`
     const options = { method: 'POST', mode: 'cors', body: formdata };
     const req = new Request(uri, options);
@@ -32,6 +32,7 @@ btnRegister.addEventListener('click', (event) => {
         })
         .then(response => {
             // console.log('response = ', response);
+            stopLoader();
             if(response.status === 201) {
                 sessionStorage.token = response.data[0].token;
                 const msg = `You have been successfully Registered !

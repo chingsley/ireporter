@@ -6,6 +6,7 @@ const uri = `${root}/auth/login`;
 btnSubmit.addEventListener('click', (event) => {
     event.preventDefault();
 
+    startLoader()
     let formdata = new FormData();
     formdata.append('email', email.value);
     formdata.append('password', password.value);
@@ -22,6 +23,7 @@ btnSubmit.addEventListener('click', (event) => {
         return response.json();
     })
     .then(response => {
+        stopLoader();
         if(response.status === 200) {
             sessionStorage.token = response.data[0].token;
             sessionStorage.firstname = response.data[0].user.firstname;
@@ -42,5 +44,6 @@ btnSubmit.addEventListener('click', (event) => {
     })
     .catch(err => {
         handleError(err);
+        stopLoader();
     });
 });

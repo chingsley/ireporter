@@ -22,17 +22,19 @@
                 </div>
                 <nav class="navigation">
                     <div class="nav-div" id="nav-div">
-                        <a href="userprofile.html" class="active link" id="first-link">My Profile</a>
+                        <a href="report.html" class="active link" id="first-link">new report</a>
+                        <a href="reporthistory.html" class="active link">my reports</a>
+                        <a href="userprofile.html" class="active link">My Profile</a>
                         <a href="index.html">sign out</a></li>
                         <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                             <i class="fa fa-bars"></i>
                         </a>
                     </div>
                     <ul class="nav-ul">
-                        <li class="li-outer animated-link"><a href="report.html" class="links">report a case</a></li>
-                        <!-- <li class="li-outer animated-link"><a href="reporthistory.html" class="links">report history</a></li> -->
+                        <li class="li-outer animated-link"><a href="report.html" class="links">new report</a></li>
+                        <li class="li-outer animated-link"><a href="reporthistory.html" class="links">my reports</a></li>
                         <li class="li-outer animated-link"><a href="userprofile.html" class="links">my profile</a></li>
-                        <li class="li-outer animated-link"><a href="index.html" class="links">sign out</a></li>
+                        <!-- <li class="li-outer animated-link"><a href="index.html" class="links">sign out</a></li> -->
                     </ul>
                 </nav>
             </div>
@@ -67,11 +69,13 @@
                             <label for="cords" class="form-label">Coordinates</label>
                             <input type="text" class="edit-form-input" id="coords" required readonly>
                         </div>
-                        <!-- <div class="prompt">Don't know your address? Click <button id="btn-get-current-location">here</button>
-                            to allow us get your current location.</div> -->
+                        <div class="prompt">Don't know your address? Click <button id="btn-get-current-location">here</button>
+                            to allow us get your current location.</div>
                     </div>
                     <div class="rep-field flex-for-btns">
-                        <button class="edit-btns btn-save-location" id="btn-save-location" disabled>save changes</button>
+                        <button class="edit-btns btn-save-location" id="btn-save-location" disabled>
+                            save changes
+                        </button>
                     </div>
 
                     <div class="edit-input-flex" id="form-group-last-child">
@@ -168,6 +172,10 @@
 
             <span class="close-dialog-box" id="close-dialog-box">&times;</span>
         </div>
+    </div>
+
+    <div id="loader-window">
+        <div id="loader"></div>
     </div>
 
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDsPc92ZcMDHK2wx3zgcu8ysBQVCOfBCSE&callback=initMap">

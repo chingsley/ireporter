@@ -43,6 +43,14 @@
         from { top: -300px; opacity: 0; }
         to { top: 0; opacity: 1; }
     }
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg);}
+        100% { -webkit-transform: rotate(360deg);}
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg);}
+        100% { transform: rotate(360deg);}
+    }
 
 /*-------------------------------------------*/
 
@@ -446,6 +454,47 @@ ul {
 .map-popup-close:focus {
     color: black;
 }
+
+
+/************LOADER WINDOW **************/
+#loader-window {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* z-index: 500; */
+
+    background-color: rgba(255,255,255, .3);
+
+    display: none;
+   
+}
+/****************************************/
+/*********** LOADER ********************/
+#loader {
+    width: 5rem;
+    height: 5rem;
+    border: 2rem solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 2rem solid #e8491d;
+
+    position: fixed;
+    /* top: 31%; */
+    /* left: 41%; */
+    top: 37%;
+    left: 44%;
+    transform: translate(-50%, -50%);
+
+    /* z-index: 10000; */
+
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin .8s linear infinite;
+
+    /* display: none; */
+}
+/***************************************/
 
 
 
@@ -1357,7 +1406,7 @@ select {
     /* background-image: radial-gradient(rgba(255, 255, 255, 1), rgba(6, 6, 29, .5)); */
     background-image: radial-gradient(rgba(255, 255, 255, 1), black);
     background-size: cover;
-    padding-bottom: 4rem;
+    padding-bottom: 18rem;
     padding-top: 2rem;
 }
 .section-reporthistory-wrapper {
@@ -1482,10 +1531,31 @@ select {
 #btn-edit-report:active {
     box-shadow: none;
 }
-/* 
-.disabled-btn {
+.div-no-records {
+    border: 1px solid white;
+    animation: moveInRight 1s ease .5s; /* this works with some additional settings in reporthistory.js */
     opacity: 0;
-} */
+    padding: 1rem 0 1rem 0rem;
+    text-align: center;
+    animation: moveInRight 1s ease .5s;
+}
+.div-no-records p {
+    padding: .5rem 2rem;
+    font-size: 1rem;
+}
+.div-no-records h2 {
+    color: #e8491d;
+}
+
+#testingDiv {
+    width:  20rem;
+    height: 20rem;
+    margin: 1rem auto;
+    border: 2rem solid red;
+    overflow: hidden;
+    display: none;
+}
+
 /******************** (END REPORT HISTORY PAGE) *******************/
 
 
@@ -1704,19 +1774,7 @@ select {
     letter-spacing: .1rem;
     opacity: 0;
 }
-.div-no-records {
-    border: 1px solid white;
-    padding: 1rem 0 1rem 10rem;
-    animation: moveInRight 1s ease .5s; /* this works with some additional settings in reporthistory.js */
-    opacity: 0;
-}
-.div-no-records p {
-    padding: .5rem 2rem;
-    font-size: 1rem;
-}
-.div-no-records h2 {
-    color: #e8491d;
-}
+
 /******************* REGISTER ******************/
 
 
@@ -1732,12 +1790,15 @@ select {
 }
 
 .section-edit {
-    background-image: linear-gradient(
+    /* background-image: linear-gradient(
     to bottom, 
     rgba(0, 0, 0, 0.5), 
     rgba(173, 216, 230, .5)), 
-    url(../img/nat-4.jpg);
+    url('../img/nat-4.jpg'); */
+    background-image: radial-gradient(black, rgba(255, 255, 255, .8)), url('../img/nat-4.jpg');
     background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .section-edit-flex-box {
     display: flex;
@@ -1855,7 +1916,9 @@ select {
     display: inline-block;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-style: italic;
-    color: rgb(218, 218, 49);
+    /* color: rgb(218, 218, 49);*/
+    color: lightgoldenrodyellow;
+
 }
 .edit-form .form-label-comment{
     margin-left: 0;

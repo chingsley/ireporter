@@ -50,6 +50,7 @@ const getAllRecords = async () => {
         const obj = {redflags: redflags.data, interventions: interventions.data};
         return obj;
     } catch(err) {
+        stopLoader();
         console.log(err);
         handleError(err);
     };
@@ -57,6 +58,8 @@ const getAllRecords = async () => {
 
 const displayContents = async () => {
     const records = await getAllRecords();
+
+    stopLoader();
     const interventions = records.interventions;
     const redflags = records.redflags;
     img.src = `${imgRoot}/${userPicture}`;
@@ -84,8 +87,14 @@ const displayContents = async () => {
     uiInterventions.textContent = get('under investigation', interventions);
 };
 
+// This function takes an array of incidents or redflags as the 2nd argument, 
+//  and returns the number of records that has the 'status' specified as the first argument.
 const get = (status, arr) => {
     return arr.filter(element => element.status === status).length;
 }; 
 
-displayContents();
+
+window.addEventListener('load', () => {
+    startLoader();
+    displayContents();
+});
