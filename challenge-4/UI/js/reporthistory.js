@@ -15,6 +15,8 @@ const reqRedflags = fetch(redflagsURL, options);
 const reqInterventions = fetch(interventionsURL, options);
 const errorDisplay = document.getElementById('outerErrorDisplayBox');
 
+startLoader();
+
 
 Promise.all([reqInterventions, reqRedflags])
 .then((responseArr) => {
@@ -22,6 +24,7 @@ Promise.all([reqInterventions, reqRedflags])
         process(response.json()); // the .json() method returns a promise
     });
 }).catch(err => {
+    stopLoader();
     errorDisplay.style.display = 'block';
     console.log(err);
     handleError(err);
@@ -31,11 +34,13 @@ let count = 0;
 let records = [];
 const process = (promisedJson) => {
     promisedJson.then((responseObj) => {
+        console.log(responseObj);
         // const records = responseObj.data;
         count += 1;
         records = records.concat(responseObj.data); // merge new array with the existing one.
 
        if(count > 1) { // i. if process() function has been called twice, since we are making two requests
+           stopLoader();
            if (records.length > 0) {
                records.sort((a, b) => a.id - b.id);
                records.forEach(record => {
@@ -217,10 +222,10 @@ const process = (promisedJson) => {
                    btnDelete.addEventListener('click', (event) => {
                     //    sessionStorage.recordId = record.id;
                        const msg = `
-                    Are you sure you want to delete this record ?
-                    <br><br>
-                    NOTE: This operation is not reversible !
-                    `;
+                        Are you sure you want to delete this record ?
+                        <br><br>
+                        NOTE: This operation is not reversible !
+                        `;
 
                        setTimeout(() => {
                            showDialogMsg(1, 'WARNING', msg, 'center');
@@ -229,8 +234,10 @@ const process = (promisedJson) => {
                        // The 'PROCEED' btn for the WARNING dialog box: 
                     //    btnConfirm[1].onclick = () => {
                         btnConfirm[1].addEventListener('click', async () => {
+                            startLoader();
                             try {
                                 const successfulDelete = await deleteRecord(record.type, record.id);
+                                stopLoader()
                                 if(successfulDelete) {
                                     dialogWindow.style.display = "none";
                                     console.log(record.id);
@@ -245,6 +252,7 @@ const process = (promisedJson) => {
                                     showDialogMsg(0, 'Error', msg, 'center');
                                 }
                             } catch(err) {
+                                stopLoader();
                                 console.log(err);
                                 handleError(err);
                             };
@@ -320,3 +328,51 @@ const deleteRecord = async (recordType, recordId) => {
         // showDialogMsg(0, 'Error', err, 'center');
     }
 };
+
+const getImgUrl = async (imgPath) => {
+    try {
+        const response = await fetch(imgPath);
+        const blob = await response.blob();
+        const objectURL = await URL.createObjectURL(blob);
+        return objectURL;
+
+    } catch (err) {
+        console.log(err);
+    };
+};
+
+
+const test = async () => {
+    try {
+        // const response = await fetch(`${imgRoot}/uploads/2_images.jpeg`);
+        // const response = await fetch(`${imgRoot}/uploads/ZfqOKfAE1j8.jpg`);
+        // const response = await fetch(`${imgRoot}/uploads/ATWG2kPqkoE.jpg`);
+        // const response = await fetch(`${imgRoot}/uploads/24_images (3).jpeg`);
+        const response = await fetch(`${imgRoot}/uploads/1543731908425.jpg`);
+        // const response = await fetch(`${imgRoot}/uploads/1543731908425.jpg`);
+        // const response = await fetch(`${imgRoot}/uploads/download (5).jpeg`);
+        const blob = await response.blob();
+        const objectURL = await URL.createObjectURL(blob);
+        console.log(objectURL);
+        console.log('here');
+        const img = document.createElement('img');
+        const div = document.getElementById('testingDiv');
+        div.style.display = 'block';
+        img.setAttribute('src', objectURL);
+        div.appendChild(img);
+        return objectURL;
+
+    } catch (err) {
+        console.log(err);
+    };
+};
+
+// run the test() function
+// test();
+// console.log(test());
+// const see = async () => {
+//     let res = await test();
+//     console.log(res);
+// }
+
+// see();

@@ -1,15 +1,31 @@
-const root = 'http://localhost:3000/api/v1';
-const imgRoot = 'http://localhost:3000';
-// const root = 'https://ireporter-db.herokuapp.com/api/v1';
-// const imgRoot = 'https://ireporter-db.herokuapp.com';
+// const root = 'http://localhost:3000/api/v1';
+// const imgRoot = 'http://localhost:3000';
 
-const dialogWindow = document.getElementById('popup-dialog-window');
-const dialogBox = document.getElementById('dialog-box');
-const closeBtn = document.getElementById('close-dialog-box');
-const dialogTitle = document.getElementById('dialog-title');
-const dialogMsg = document.getElementById('dialog-msg');
-const divConfirmation = document.getElementById('div-confirmation');
+const root = 'https://ireporter-db.herokuapp.com/api/v1';
+const imgRoot = 'https://ireporter-db.herokuapp.com';
+
+
 const btnConfirm = document.getElementsByClassName('btnConfirm');
+const closeBtn = document.getElementById('close-dialog-box');
+const dialogBox = document.getElementById('dialog-box');
+const dialogMsg = document.getElementById('dialog-msg');
+const dialogTitle = document.getElementById('dialog-title');
+const dialogWindow = document.getElementById('popup-dialog-window');
+const divConfirmation = document.getElementById('div-confirmation');
+const loader = document.getElementById('loader');
+const loaderWindow = document.getElementById('loader-window');
+
+const startLoader = () => {
+    loaderWindow.style.display = 'block';
+    loader.style.display = 'block';
+    console.log('loading ...');
+};
+
+const stopLoader = () => {
+    loaderWindow.style.display = 'none';
+    loader.style.display = 'none';
+    console.log('loading stopped.');
+};
 
 const getErrString = (value) => {
     // const errObj = JSON.parse(value);
@@ -129,13 +145,22 @@ const handleResponseError = (response) => {
 
 const handleGeolocationNetworkError = () => {
     msg = `
-        <p style='text-align: center;'>Could not show the address of this record on google map</p>
+        <p style='text-align: center;'>Failed to locate the address on google map due to network error</p>
         <ul class="dialog-box-ul">
-            Try:
-            <li>Checking the network cables, modem, and router</li>
-            <li>Reconnecting to Wi-Fi</li>
-            <li>Also ensure the address is correct</li>
-        </ul>`;
+        Try:
+        <li>Checking the network cables, modem, and router</li>
+        <li>Reconnecting to Wi-Fi</li>
+        <li>Also ensure the address is correct</li>
+        </ul>
+        <p style='text-align: center;'><strong>Then Resfresh the page</strong></p>
+        `;
+    showDialogMsg(0, 'Geolocation Error', msg);
+};
+const handleGeolocationNetworkErrorForEditPage = () => {
+    msg = `
+        <p style='text-align: center;'>Failed to locate the address on google map due to network error</p>
+        <p style='text-align: center;'>Ensure you are properly connected to the internet, <strong>then Resfresh the page</strong></p>
+        `;
     showDialogMsg(0, 'Geolocation Error', msg);
 };
 

@@ -85,7 +85,6 @@ spanRecordType.innerText = recordType.toString().toUpperCase();
             try {
                 geocoder.geocode({ 'address': address.value }, function (results, status) {
                     if (status === 'OK') {
-                        // isValidCoords = true;
                         coords.value = `${results[0].geometry.location.lat()}, ${results[0].geometry.location.lng()}`;
                         resultsMap.setCenter(results[0].geometry.location);
                         let marker = new google.maps.Marker({
@@ -95,20 +94,24 @@ spanRecordType.innerText = recordType.toString().toUpperCase();
                         infowindow.setContent(results[0].formatted_address);
                         recordAddress = results[0].formatted_address;
                         infowindow.open(map, marker);
+                        stopLoader();
                         resolve(true);
                     } else {
                         if (status === 'ERROR') {
-                            msg = `Theres was a problem with geolocation. <br>Please check your internet connection: ` + status;
+                            msg = `${status}<br>
+                            Theres was a problem with geolocation.
+                            <br>Please check your internet connection and <strong>try again</strong> `;
                             reject({ message: msg, errType: 'network error' })
                         } else {
-                            msg = 'The address you entered is unknown: ' + status;
-                            msg = `${status}: unknown address. <br> Please enter a valid address.`;
+                            // msg = 'The address you entered is unknown: ' + status;
+                            msg = `${status}<br> Unknown address. Please enter a valid address.`;
                             reject({ message: msg, errType: 'Geolocation error' })
                         }
                     }
                 });
             }
             catch(err) {
+                stopLoader();
                 handleGeolocationNetworkError();
             }
         });
@@ -132,27 +135,63 @@ spanRecordType.innerText = recordType.toString().toUpperCase();
                     recordAddress = results[0].formatted_address;
                     address.value = recordAddress;
                     infowindow.open(map, marker);
+                    stopLoader();
                 } else {
-                    handleGeolocationNetworkError();
+                    stopLoader();
+                    msg = `
+                        <p style='text-align: center;'>Failed to locate the address on google map due to network error.</p>
+                        <p style='text-align: center;'>Ensure you are properly connected to the internet, <strong>then Resfresh the page.</strong></p>
+                        <p style='text-align: center;'>If your network connection is weak, you may need to <strong>refresh</strong> the page a couple of times.</p>
+                        `;
+                    showDialogMsg(0, 'Geolocation Error', msg);
                     // alert('The address you entered is unknown: ' + status);
                 }
             });
         } catch(err){
             console.log(err);
+            stopLoader();
             handleGeolocationNetworkError();
         };
     }
 
     function getLocation() {
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
         } else {
-            alert("Geolocation is not supported by this browser.");
+            msg = "Geolocation is not supported by this browser.";
+            showDialogMsg(0, 'Geolocation Error', msg, 'center');
         }
     }
 
-    function showPosition(position) {
-        coords.value = `${position.coords.latitude}, ${position.coords.longitude}`;
+    function showError(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                stopLoader();
+                msg = "User denied the request for Geolocation.";
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+            case error.POSITION_UNAVAILABLE:
+                stopLoader();
+                msg = `Location information is unavailable. Ensure your are connected to the internet, 
+                        then <strong>try again</strong>`;
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+            case error.TIMEOUT:
+                stopLoader();
+                msg = "The request to get user location timed out.";
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+            case error.UNKNOWN_ERROR:
+                stopLoader();
+                msg = "An unknown error occurred while trying to locate the your address on google map";
+                showDialogMsg(0, 'Geolocation Error', msg, 'center');
+                break;
+        }
+    }
+
+    async function showPosition(position) {
+        coords.value = await `${position.coords.latitude}, ${position.coords.longitude}`;
+        geocodeLatLng(geocoder, map, infowindow);
     }
 
 }
@@ -166,6 +205,7 @@ const addImg = () => {
         return response.json();
     })
     .then(response => {
+        stopLoader();
         if(response.status === 200) {
             showDialogMsg(2, 'Upload Successful', response.data[0].message, 'center');
             setTimeout(() => {
@@ -176,6 +216,7 @@ const addImg = () => {
         }
     })
     .catch(err => {
+        stopLoader();
         handleError(err);
     });
 
@@ -188,6 +229,7 @@ const addVideo = () => {
         return response.json();
     })
     .then(response => {
+        stopLoader();
         if(response.status === 200) {
             showDialogMsg(2, 'Upload Successful', response.data[0].message, 'center');
             setTimeout(() => {
@@ -198,6 +240,7 @@ const addVideo = () => {
         }
     })
     .catch(err => {
+        stopLoader();
         handleError(err);
     });
 
@@ -293,14 +336,18 @@ const getRequestObj = (str) => {
         case('addImage') :
             if (images.length > 0) {
                 for (let i = 0; i < images.length; i += 1) {
-                    formdata.append('images', images[i], `${recordId}_${images[i].name}`);
+                    // formdata.append('images', images[i], `${recordId}_${images[i].name}`);
+                    // formdata.append('images', images[i], `${recordId}_${images[i]}`);
+                    formdata.append('images', images[i]);
                 }
             }
             break;
         case('addVideo') : 
             if (videos.length > 0) {
                 for (let i = 0; i < videos.length; i += 1) {
-                    formdata.append('videos', videos[i], `${recordId}_${videos[i].name}`);
+                    // formdata.append('videos', videos[i], `${recordId}_${videos[i].name}`);
+                    // formdata.append('videos', videos[i], `${recordId}_${videos[i]}`);
+                    formdata.append('videos', videos[i]);
                 }
             }
             break;
@@ -325,6 +372,7 @@ const patchComment = () => {
             return response.json();
         })
         .then(response => {
+            stopLoader();
             if (response.status === 200) {
                 msg = `<p>${response.data[0].message}</p>`;
                 showDialogMsg(2, 'Saved', msg, 'center');
@@ -338,6 +386,7 @@ const patchComment = () => {
             }
         })
         .catch(err => {
+            stopLoader();
             handleError(err);
         });
 };
@@ -349,6 +398,7 @@ const patchLocation = () => {
         return response.json();
     })
     .then(response => {
+        stopLoader();
         if (response.status === 200) {
             msg = `<p>${response.data[0].message}</p>
                     <p>Closest landmark: ${recordAddress}</p>`;
@@ -363,6 +413,7 @@ const patchLocation = () => {
         }
     })
     .catch(err => {
+        stopLoader();
         handleError(err);
     });
 };
@@ -380,21 +431,32 @@ address.addEventListener('input', () => {
 
 btnAddImages.addEventListener('click', (event) => {
     event.preventDefault();
+    startLoader();
     addImg();
 });
 
 btnAddVideos.addEventListener('click', (event) => {
     event.preventDefault();
+    startLoader();
     addVideo();
+});
+
+btnGetCurrentLocation.addEventListener('click', async (event) => {
+    event.preventDefault();
+    startLoader();
+    getLocation();
+    btnSaveLocation.disabled = false;
 });
 
 btnSaveComment.addEventListener('click', (event) => {
     event.preventDefault();
+    startLoader();
     patchComment();
 });
 
 btnSaveLocation.addEventListener('click', (event) => {
     event.preventDefault();
+    startLoader();
     let p1 = geocodeAddress(geocoder, map, infowindow);
 
     p1.then((result) => {
@@ -402,6 +464,7 @@ btnSaveLocation.addEventListener('click', (event) => {
 
         setTimeout(() => { patchLocation(); }, 1000);
     }).catch(err => {
+        stopLoader();
         showDialogMsg(0, err.errType, err.message, 'center');
     });
 });
@@ -476,6 +539,7 @@ vidFileInput.addEventListener('change', () => {
 });
 
 window.addEventListener('load', () => {
+    startLoader();
     geocodeLatLng(geocoder, map, infowindow);
 }, false);
 
