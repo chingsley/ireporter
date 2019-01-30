@@ -2,6 +2,14 @@
 // import { stringify } from 'querystring';8
 import Validator from '../validators/validator';
 // import pool from '../db/config';
+import cloudinary from 'cloudinary';
+import fs from 'fs';
+
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 const stringifyMedia = (files) => {
   const fileArr = [];
@@ -12,6 +20,32 @@ const stringifyMedia = (files) => {
   fileStr += fileArr.join(',');
   return fileStr;
 };
+
+const uploadFiles = async (files) => {
+  let uploadResponse = [];
+  try {
+    for (let i = 0; i < files.length; i += 1) {
+      const pubId = `ireporter/uploads`;
+      const imgTags = `ireporter`
+      await cloudinary.v2.uploader.upload(files[i].path, (error, result) => {
+        if (result) {
+          // uploadResponse.push(result.public_id);
+          uploadResponse.push(result.secure_url);
+          console.log('line 35', uploadResponse);
+        } else if (error) {
+          console.log(error);
+          return error;
+        }
+      });
+    }
+    return uploadResponse;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
+
 /**
  * class for inspecting user inputs
  */
@@ -26,7 +60,7 @@ class InspectRecord {
   static async newRecord(req, res, next) {
     const errObj = {};
     const { location, comment } = req.body;
-    console.log('recordsInpector.js line 29', req.body);
+    // console.log('recordsInpector.js line 29', req.body);
 
     if (!Validator.isValidCoordinates(location)) errObj['invalid coordinates'] = 'Please provide valid location coordinates. Valid coordinates must be in the format: lat, lng  [lat ranges from -90 to 90, lng ranges from -180 to 180]';
     if (!Validator.isValidComment(comment)) errObj['invalid comment'] = 'Please provide a valid comment. Comment must be a minium of 3 words';
@@ -42,6 +76,14 @@ class InspectRecord {
       }
       if (req.files.images) imageStr = stringifyMedia(req.files.images);
       if (req.files.videos) videoStr = stringifyMedia(req.files.videos);
+
+      const arrOfImgUrlFromCloud = await uploadFiles(req.files.images);
+      const arrOfVidUrlFromCloud =  await uploadFiles(req.files.videos);
+      // console.log(arrOfImgUrlFromCloud);
+      return res.json({
+        images: arrOfImgUrlFromCloud,
+        videos: arrOfVidUrlFromCloud,
+      });
     }
 
     if (Object.keys(errObj).length > 0) {

@@ -54,7 +54,7 @@ class AuthHandler {
    * @returns {function} next
    */
   static authorize(req, res, next) {
-    console.log('authHandler.js', req.body);
+    // console.log('authHandler.js', req.body);
     const token = req.header('x-auth-token');
 
     try {
