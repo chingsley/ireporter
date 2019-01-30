@@ -47,7 +47,7 @@ const upload = multer({
 });
 
 const fileUpload = upload.fields([{ name: 'images', maxCount: MAX_FILE_COUNT }, { name: 'videos', maxCount: MAX_FILE_COUNT }]);
-const fileHandler =  async (req, res, next) => {
+const fileHandler = async (req, res, next) => {
   fileUpload(req, res, (err) => {
     // console.log('recordsRouter, line 53', req.body);
     if (err instanceof multer.MulterError) {
@@ -84,8 +84,8 @@ const fileHandler =  async (req, res, next) => {
     //     //remove file from server
     //     fs.unlinkSync(path);
     //     return res.json(image);
-  // }
-  // )
+    // }
+    // )
 
     // Everything went fine.
     return next();

@@ -290,9 +290,12 @@ class RecordsController {
         });
       }
 
+      //NOTE: cloudinary generates a unique id for each file, so capturing duplicate files 
+      // in the manner done will not work. I will need to set the public_id during cloudinary
+      // upload in order to may be stand of chance of detecting duplicate files.
       let duplicateFile = null;
       mediaArr.forEach((file) => {
-        if (existingMediaArr.includes(file.path.toString().trim())) {
+        if (existingMediaArr.includes(file.toString().trim())) {
           duplicateFile = file.filename;
         }
       });
@@ -317,7 +320,7 @@ class RecordsController {
         }],
       });
     } catch (error) {
-      // console.log(error);
+      console.log(error);
       return res.status(500).json({
         status: 500,
         error: 'internal server error',
