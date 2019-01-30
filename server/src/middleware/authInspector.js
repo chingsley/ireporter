@@ -1,6 +1,7 @@
 import moment from 'moment';
 import Validator from '../validators/validator';
 import pool from '../db/config';
+import CloudinaryUploader from './cloudinary';
 
 /**
    *
@@ -15,6 +16,11 @@ class Inspect {
    * @returns {function} next
    */
   static async signup(req, res, next) {
+    const cloudinaryError = (fileType = 'file') => res.status(599).json({
+      status: 599, // 599 is 'network connection timeout'
+      error: `${fileType} upload error. Please check your internet connection and try again`,
+    });
+
     const errObj = {};
 
     const {
@@ -79,12 +85,12 @@ class Inspect {
       });
     }
     const response401 = message => res.status(401).json({ status: 401, error: message });
-    try {
-      const userExists = (await pool.query('SELECT * FROM users WHERE email=$1', [email.toString().trim()])).rowCount;
-      if (userExists) return response401(`${email.toString().trim()} has been taken. Please choose another email`);
-    } catch (error) {
-      return res.status(500).json({ error });
-    }
+    // try {
+    //   const userExists = (await pool.query('SELECT * FROM users WHERE email=$1', [email.toString().trim()])).rowCount;
+    //   if (userExists) return response401(`${email.toString().trim()} has been taken. Please choose another email`);
+    // } catch (error) {
+    //   return res.status(500).json({ error });
+    // }
     req.firstname = firstname.toString().trim();
     req.lastname = lastname.toString().trim();
     req.othernames = othernames || null;
@@ -92,11 +98,22 @@ class Inspect {
     req.phoneNumber = phoneNumber.toString().trim();
     req.email = email.toString().trim();
     req.password = password.toString().trim();
-    req.picture = req.file ? req.file.path : 'uploads/default_profile_pic.png';
     req.registered = moment(new Date());
     req.adminSecret = adminSecret ? adminSecret.toString().trim() : null;
+    // req.picture = req.file ? req.file.path : 'uploads/default_profile_pic.png';
+    if (req.file) {
+      const result = await CloudinaryUploader.uploadSingle(req.file, 'image');
+      console.log(result);
+      if (!result) return cloudinaryError();
+      req.picture = result;
+    } else {
+      req.picture = 'uploads/default_profile_pic.png';
+    }
 
-    return next();
+    return res.json({
+      picture: req.picture,
+    });
+    // return next();
   }
 
   /**

@@ -38,6 +38,32 @@ class CloudinaryUploader {
       return false;
     }
   }
+
+  /**
+   * @param {Array} file
+   * @param {String} resourceType
+   * @returns {String} image url (uploadResponse)
+   */
+  static async uploadSingle(file, resourceType) {
+    let uploadResponse = '';
+    try {
+      await cloudinary.v2.uploader.upload(file.path,
+        { resource_type: resourceType },
+        (error, result) => {
+          if (result) {
+            uploadResponse = result.secure_url;
+          }
+          if (error) {
+            // console.log(error);
+            return error;
+          }
+        });
+        return uploadResponse;
+    } catch (err) {
+      // console.log(err);
+      return false;
+    }
+  }
 }
 
 export default CloudinaryUploader;

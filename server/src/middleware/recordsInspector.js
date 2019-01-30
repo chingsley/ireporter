@@ -30,9 +30,8 @@ class InspectRecord {
    * @returns {function} next
    */
   static async newRecord(req, res, next) {
-
     // this function takes the file type (image or video) as argument, but
-    // if a value for fileType is not provided when the function is called, then 
+    // if a value for fileType is not provided when the function is called, then
     // 'file' will be used as the value of fileType
     const cloudinaryError = (fileType = 'file') => res.status(599).json({
       status: 599, // 599 is 'network connection timeout'
@@ -153,7 +152,6 @@ class InspectRecord {
    * @returns {function} next
    */
   static async addMedia(req, res, next) {
-
     const cloudinaryError = (fileType = 'file') => res.status(599).json({
       status: 599, // 599 is 'network connection timeout'
       error: `${fileType} upload error. Please check your internet connection and try again`,
@@ -182,7 +180,7 @@ class InspectRecord {
 
       if (mediaType === 'image') {
         mediaArr = await CloudinaryUploader.upload(req.files.images, 'image');
-      }else if (mediaType === 'video') {
+      } else if (mediaType === 'video') {
         mediaArr = await CloudinaryUploader.upload(req.files.videos, 'video');
       }
 
