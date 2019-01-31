@@ -1058,6 +1058,19 @@ header {
     #login-btn-submit {
         width: 40%;
         font-size: 1rem;}
+    .or-click-here {
+        color: white;
+        display: block;
+        /* border: 1px solid white; */
+        margin-top: 1rem;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+    .click-here {
+        /* color: #e8491d; */
+        color: red;
+        text-decoration: none;
+    }
 
 /****************** (END LOGIN PAGE) **********************/
 
@@ -1483,6 +1496,7 @@ select {
 }
 .report-img {
     width: 100%;
+    height: 100%;
 }
 .report-details-table {
     /* border: 1px solid silver; */
@@ -2197,6 +2211,10 @@ select {
         width: 90%;
         margin: 0 auto;
     }
+
+    .or-click-here {
+        margin-top: 1rem;
+    }
 }
 
 @media(max-width: 600px) {
@@ -2303,6 +2321,10 @@ select {
     }
     #first-link {
         margin-top: 3rem;
+    }
+
+    .or-click-here {
+        margin-top: 1rem;
     }
 
 }

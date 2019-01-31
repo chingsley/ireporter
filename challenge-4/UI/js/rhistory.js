@@ -133,7 +133,9 @@ const createReportCard = async (record) => {
     const reportImg = document.createElement('img');
     reportImg.className = "report-img";
     if (record.Images[0]) {
-        const res = await getImgUrl(`${imgRoot}/${record.Images[0]}`);
+        // const res = await getImgUrl(`${imgRoot}/${record.Images[0]}`);
+        const res = await getImgUrl(record.Images[0]);
+        console.log(record.id, ' = ', record.Images[0]);
         reportImg.setAttribute('src', res)
     } else {
         reportImg.src = await getImgUrl(getDefaultImgPath(record));
@@ -226,8 +228,10 @@ const createReportCard = async (record) => {
         const popupImg = document.getElementsByClassName('popup-img');
 
         popupText[0].textContent = record.comment;
-        popupImg[0].src = record.Images[0] ? `${imgRoot}/${record.Images[0]}` : defaultImg;
-        popupImg[1].src = record.Images[1] ? `${imgRoot}/${record.Images[1]}` : defaultImg;
+        // popupImg[0].src = record.Images[0] ? `${imgRoot}/${record.Images[0]}` : defaultImg;
+        popupImg[0].src = record.Images[0] ? record.Images[0] : defaultImg;
+        // popupImg[1].src = record.Images[1] ? `${imgRoot}/${record.Images[1]}` : defaultImg;
+        popupImg[1].src = record.Images[1] ? record.Images[1] : defaultImg;
 
         // close popup
         const popupClose = document.getElementById('popup-close');

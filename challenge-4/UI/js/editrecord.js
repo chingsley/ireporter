@@ -308,7 +308,8 @@ const displayMedia = (mediaArr, mediaType) => {
             media.classList.add('record-vid');
         }
         mediaContainer.appendChild(mediaDiv);
-        media.src = `${imgRoot}/${file}`;
+        // media.src = `${imgRoot}/${file}`;
+        media.src = file;
         mediaDiv.appendChild(media);
     });
 };

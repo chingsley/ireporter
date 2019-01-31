@@ -1,11 +1,17 @@
-// const root = 'http://localhost:3000/api/v1';
-// const imgRoot = 'http://localhost:3000';
+const root = 'http://localhost:3000/api/v1';
+const imgRoot = 'http://localhost:3000';
 
-const root = 'https://ireporter-db.herokuapp.com/api/v1';
-const imgRoot = 'https://ireporter-db.herokuapp.com';
+// const root = 'https://ireporter-db.herokuapp.com/api/v1';
+// const imgRoot = 'https://ireporter-db.herokuapp.com';
 
 
+console.log('token = ', sessionStorage.token);
+console.log('type of token', typeof sessionStorage.token);
+
+
+linkSignOut = document.querySelectorAll('.sign-out');
 const btnConfirm = document.getElementsByClassName('btnConfirm');
+const btnsReportCase = document.querySelectorAll('.report-a-case');
 const closeBtn = document.getElementById('close-dialog-box');
 const dialogBox = document.getElementById('dialog-box');
 const dialogMsg = document.getElementById('dialog-msg');
@@ -163,6 +169,49 @@ const handleGeolocationNetworkErrorForEditPage = () => {
         `;
     showDialogMsg(0, 'Geolocation Error', msg);
 };
+
+btnsReportCase.forEach(btn => {
+    btn.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        if(sessionStorage.token) {
+            location.href = 'report.html';
+        } else {
+            location.href = 'login.html';
+        }
+
+    });
+});
+
+// The 'sign-out' operation can be performed thus:
+linkSignOut.forEach(link => {
+    link.addEventListener('click', () => {
+        sessionStorage.removeItem('token');
+    });
+});
+
+{// Another way to implement the 'sign-out' operation
+    // // The 'sign-out' operation can also be performed using the a tags, selected in line 1
+    // // the a tags selected above an HTMLcollection, therefore a.forEach or a.addEventListener
+    // // would fail because an HTMLCollection is not an array. To use it as an array, you can 
+    // // use Array.from() to convert it into an array as shown below: 
+
+    // const a = document.getElementsByTagName('a');
+    // console.log(a);
+    // console.log(Array.from(a));
+    // (Array.from(a)).forEach(link => {
+    //     link.addEventListener('click', (event) => {
+    //         event.preventDefault();
+    //         console.log(typeof event.target.className);
+    //         if (event.target.className.split(' ').includes('sign-out')) {
+    //             console.log(event.target);
+    //             alert('present Sir');
+    //             sessionStorage.removeItem('token');
+    //         }
+    //     });
+    // });
+}
+
 
 
 /******** FUNCTION TO DELETE A ROW FROM A TABLE**************** */
