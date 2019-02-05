@@ -1,5 +1,8 @@
+if (!sessionStorage.token) {
+    location.href = 'login.html';
+}
+
 const token = sessionStorage.token;
-console.log(token);
 const reportSection = document.getElementById('section-reporthistory-wrapper')
 const reportHistory = document.createElement('div');
 reportHistory.className = 'flex-box-reporthistory';
@@ -47,18 +50,32 @@ const getDefaultImgPath = (record) => {
 };
 
 const showNoRecordsFound = () => {
+    let msg = '';
     const firstname = sessionStorage.firstname || '';
-    const msg = `
-                <div class="div-welcome-user"><h1>Welcome ${firstname}</h1></div>
+    const lastname = sessionStorage.lastname || '';
+    if(sessionStorage.newUser) {
+        msg = `
+                <div class="div-welcome-user"><h1>Welcome ${firstname} ${lastname}</h1></div>
                 <div class="div-no-records">
-                    <h2> No Records Found.</h2>
-                    <p> It seems you have not reported any case yet.</p>
+                    <h2> Excited to make a difference ?</h2>
+                    <p> Then report a case now. Let us know what needs to be made right.</p>
                     <p> To report a case, click on 'NEW REPORT'
-                    in the navigation bar and start making reports.</p>
+                    in the navigation bar. Let's make a change together.</p>
                 </div>
                 `;
+    } else {
+        msg = `
+                <div class="div-welcome-user"><h1>Welcome ${firstname}</h1></div>
+                <div class="div-no-records">
+                     <h2> No reports found</h2>
+                    <p> It seems you have not reported any case yet.</p>
+                    <p> To report a case, click on 'NEW REPORT'
+                    in the navigation bar. Let's make a change together</p>
+                </div>
+                `;
+    }
 
-    /************************** animation ************************ */
+    /** .......................... animation .......................*/
     // This block needs some additional css settings to work 
     // as expected. Therefore, see the '.div-welcome-user' in 
     // 'reporthistory section' of 'style.css' for the animation
@@ -74,7 +91,7 @@ const showNoRecordsFound = () => {
     setTimeout(() => {
         divNoRecords[0].style.opacity = 1;
     }, 600);
-    /****************************************************************** */
+    /**................................................................ */
     reportSection.innerHTML = msg;
 };
 
@@ -110,18 +127,6 @@ const deleteRecord = async (recordType, recordId) => {
     }
 };
 
-const getImgUrl = async (imgPath) => {
-    try {
-        const response = await fetch(imgPath);
-        const blob = await response.blob();
-        const objectURL = await URL.createObjectURL(blob);
-        return objectURL;
-
-    } catch (err) {
-        console.log(err);
-    };
-};
-
 const createReportCard = async (record) => {
     const reportCard = document.createElement('div');
     reportCard.className = 'report';
@@ -133,8 +138,8 @@ const createReportCard = async (record) => {
     const reportImg = document.createElement('img');
     reportImg.className = "report-img";
     if (record.Images[0]) {
-        // const res = await getImgUrl(`${imgRoot}/${record.Images[0]}`);
-        const res = await getImgUrl(record.Images[0]);
+        // function getImgUrl() is in script.js file;
+        const res = await getImgUrl(record.Images[0]); 
         console.log(record.id, ' = ', record.Images[0]);
         reportImg.setAttribute('src', res)
     } else {

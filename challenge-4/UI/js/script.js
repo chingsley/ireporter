@@ -21,28 +21,8 @@ const divConfirmation = document.getElementById('div-confirmation');
 const loader = document.getElementById('loader');
 const loaderWindow = document.getElementById('loader-window');
 
-const startLoader = () => {
-    loaderWindow.style.display = 'block';
-    loader.style.display = 'block';
-    console.log('loading ...');
-};
-
-const stopLoader = () => {
-    loaderWindow.style.display = 'none';
-    loader.style.display = 'none';
-    console.log('loading stopped.');
-};
-
-const getErrString = (value) => {
-    // const errObj = JSON.parse(value);
-    const errObj = value;
-    const errArr = Object.values(errObj);
-    const errStr = errArr.join('<br>=> ');
-    return `=> ${errStr}`;
-}
-
 const closeDialog = (target) => {
-   
+
     // close the dialogbox if when the user clicks
     // on the 'x' button;
     closeBtn.onclick = () => {
@@ -80,7 +60,39 @@ const closeDialog = (target) => {
     //     return true;
     // }
 
-    
+
+};
+
+const startLoader = () => {
+    loaderWindow.style.display = 'block';
+    loader.style.display = 'block';
+    console.log('loading ...');
+};
+
+const stopLoader = () => {
+    loaderWindow.style.display = 'none';
+    loader.style.display = 'none';
+    console.log('loading stopped.');
+};
+
+const getErrString = (value) => {
+    // const errObj = JSON.parse(value);
+    const errObj = value;
+    const errArr = Object.values(errObj);
+    const errStr = errArr.join('<br>=> ');
+    return `=> ${errStr}`;
+}
+
+const getImgUrl = async (imgPath) => {
+    try {
+        const response = await fetch(imgPath);
+        const blob = await response.blob();
+        const objectURL = await URL.createObjectURL(blob);
+        return objectURL;
+
+    } catch (err) {
+        console.log(err);
+    };
 };
 
 const showDialogMsg = (flag, title, msg, textAlign = 'left', target) => {
@@ -187,6 +199,15 @@ btnsReportCase.forEach(btn => {
 linkSignOut.forEach(link => {
     link.addEventListener('click', () => {
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('firstname');
+        sessionStorage.removeItem('lastname');
+        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('userEmail');
+        sessionStorage.removeItem('userPicture');
+        if(sessionStorage.newUser === true) {
+            sessionStorage.removeItem('newUser');
+        }
     });
 });
 

@@ -384,7 +384,7 @@ class RecordsController {
           error: `No ${req.recordType} matches the id of ${req.params.id}`,
         });
       }
-      if (record.created_by !== req.userId) {
+      if (record.created_by !== req.userId && req.userStatus !== 'admin') {
         return res.status(401).json({
           status: 401,
           error: 'cannot delete. A record can only be deleted by its owner',

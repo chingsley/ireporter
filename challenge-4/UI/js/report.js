@@ -1,3 +1,7 @@
+if(!sessionStorage.token) {
+    location.href = 'login.html';
+}
+
 const address = document.getElementById('address');
 const token = sessionStorage.token;
 

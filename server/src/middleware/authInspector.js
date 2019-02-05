@@ -85,12 +85,12 @@ class Inspect {
       });
     }
     const response401 = message => res.status(401).json({ status: 401, error: message });
-    // try {
-    //   const userExists = (await pool.query('SELECT * FROM users WHERE email=$1', [email.toString().trim()])).rowCount;
-    //   if (userExists) return response401(`${email.toString().trim()} has been taken. Please choose another email`);
-    // } catch (error) {
-    //   return res.status(500).json({ error });
-    // }
+    try {
+      const userExists = (await pool.query('SELECT * FROM users WHERE email=$1', [email.toString().trim()])).rowCount;
+      if (userExists) return response401(`${email.toString().trim()} has been taken. Please choose another email`);
+    } catch (error) {
+      return res.status(500).json({ error });
+    }
     req.firstname = firstname.toString().trim();
     req.lastname = lastname.toString().trim();
     req.othernames = othernames || null;
@@ -110,10 +110,10 @@ class Inspect {
       req.picture = 'uploads/default_profile_pic.png';
     }
 
-    return res.json({
-      picture: req.picture,
-    });
-    // return next();
+    // return res.json({
+    //   picture: req.picture,
+    // });
+    return next();
   }
 
   /**
