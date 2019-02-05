@@ -1,17 +1,23 @@
-// import moment from 'moment';
-// import { stringify } from 'querystring';8
 import Validator from '../validators/validator';
-// import pool from '../db/config';
+import CloudinaryUploader from './cloudinary';
+
 
 const stringifyMedia = (files) => {
-  const fileArr = [];
-  let fileStr = '';
-  files.forEach((file) => {
-    fileArr.push(file.path);
-  });
-  fileStr += fileArr.join(',');
-  return fileStr;
+  try {
+    const fileArr = [];
+    let fileStr = '';
+    files.forEach((file) => {
+      // fileArr.push(file.path);
+      fileArr.push(file);
+    });
+    fileStr += fileArr.join(',');
+    return fileStr;
+  } catch (err) {
+    return err;
+  }
 };
+
+
 /**
  * class for inspecting user inputs
  */
@@ -24,9 +30,17 @@ class InspectRecord {
    * @returns {function} next
    */
   static async newRecord(req, res, next) {
+    // this function takes the file type (image or video) as argument, but
+    // if a value for fileType is not provided when the function is called, then
+    // 'file' will be used as the value of fileType
+    const cloudinaryError = (fileType = 'file') => res.status(599).json({
+      status: 599, // 599 is 'network connection timeout'
+      error: `${fileType} upload error. Please check your internet connection and try again`,
+    });
+
+
     const errObj = {};
     const { location, comment } = req.body;
-    console.log('recordsInpector.js line 29', req.body);
 
     if (!Validator.isValidCoordinates(location)) errObj['invalid coordinates'] = 'Please provide valid location coordinates. Valid coordinates must be in the format: lat, lng  [lat ranges from -90 to 90, lng ranges from -180 to 180]';
     if (!Validator.isValidComment(comment)) errObj['invalid comment'] = 'Please provide a valid comment. Comment must be a minium of 3 words';
@@ -35,13 +49,23 @@ class InspectRecord {
     let videoStr = '';
     if (req.files) {
       if (req.fileFormatError) {
-        return res.status(400).json({
-          status: 400,
+        return res.status(415).json({
+          status: 415,
           error: `${req.fieldError}: unsupported file format (${req.unsupportedFileFormat})`,
         });
       }
-      if (req.files.images) imageStr = stringifyMedia(req.files.images);
-      if (req.files.videos) videoStr = stringifyMedia(req.files.videos);
+
+      if (req.files.images) {
+        const arrOfImgUrlFromCloud = await CloudinaryUploader.upload(req.files.images, 'image');
+        if (!arrOfImgUrlFromCloud) return cloudinaryError('image');
+        imageStr = stringifyMedia(arrOfImgUrlFromCloud);
+      }
+
+      if (req.files.videos) {
+        const arrOfVidUrlFromCloud = await CloudinaryUploader.upload(req.files.videos, 'video');
+        if (!arrOfVidUrlFromCloud) return cloudinaryError('video');
+        videoStr = stringifyMedia(arrOfVidUrlFromCloud);
+      }
     }
 
     if (Object.keys(errObj).length > 0) {
@@ -128,6 +152,11 @@ class InspectRecord {
    * @returns {function} next
    */
   static async addMedia(req, res, next) {
+    const cloudinaryError = (fileType = 'file') => res.status(599).json({
+      status: 599, // 599 is 'network connection timeout'
+      error: `${fileType} upload error. Please check your internet connection and try again`,
+    });
+
     // req.baseUrl = /api/v1/interventions
     // req.originalUrl = /api/v1/interventions/:id/images
     const n = req.originalUrl.indexOf('addImage');
@@ -148,7 +177,14 @@ class InspectRecord {
           error: `You have not provided any ${mediaType} for upload.`,
         });
       }
-      mediaArr = (mediaType === 'image') ? req.files.images : req.files.videos;
+
+      if (mediaType === 'image') {
+        mediaArr = await CloudinaryUploader.upload(req.files.images, 'image');
+      } else if (mediaType === 'video') {
+        mediaArr = await CloudinaryUploader.upload(req.files.videos, 'video');
+      }
+
+      if (!mediaArr) return cloudinaryError();
       mediaStr = stringifyMedia(mediaArr);
     }
 

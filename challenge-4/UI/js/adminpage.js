@@ -1,3 +1,6 @@
+if(!sessionStorage.token) {
+    location.href = 'login.html';
+}
 const btnCloseMap = document.getElementById('map-popup-close');
 const errorDisplayBox = document.getElementById('outerErrorDisplayBox');
 const mapPopup = document.getElementById('map-popup-window');
@@ -128,6 +131,7 @@ const popup = (record) => {
     const slicedComment = record.comment.slice(0, 10);
     a.textContent = (firstWord.length < 10) ? `${firstWord} ...` : `${slicedComment}...`;
     a.classList.add('comment-and-media-link');
+    a.id = 'comment-and-media-link';
     a.addEventListener('click', () => {
         // display the popup with record comments and images
         const popup = document.getElementById('popup');
@@ -142,8 +146,8 @@ const popup = (record) => {
         const popupImg = document.getElementsByClassName('popup-img');
 
         popupText[0].textContent = record.comment;
-        popupImg[0].src = record.Images[0] ? `${imgRoot}/${record.Images[0]}` : defaultImg;
-        popupImg[1].src = record.Images[1] ? `${imgRoot}/${record.Images[1]}` : defaultImg;
+        popupImg[0].src = record.Images[0] ? `${record.Images[0]}` : defaultImg;
+        popupImg[1].src = record.Images[1] ? `${record.Images[1]}` : defaultImg;
 
         // close popup
         const popupClose = document.getElementById('popup-close');

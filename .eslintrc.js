@@ -6,6 +6,7 @@ module.exports = {
     },
     "rules": {
         "no-unused-vars": [1, { "argsIgnorePattern": "res|next|^err" }],
+        "no-await-in-loop": 1,
         "no-param-reassign": 0,
         "consistent-return": 1,
         "valid-jsdoc": ["error", {

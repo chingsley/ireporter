@@ -35,12 +35,21 @@ btnRegister.addEventListener('click', (event) => {
             stopLoader();
             if(response.status === 201) {
                 sessionStorage.token = response.data[0].token;
-                const msg = `You have been successfully Registered !
-                            <br>
-                            You can now sign in and start reporting cases.
+                sessionStorage.firstname = response.data[0].user.firstname;
+                sessionStorage.lastname = response.data[0].user.lastname;
+                sessionStorage.username = response.data[0].user.username;
+                sessionStorage.userId = response.data[0].user.id;
+                sessionStorage.userEmail = response.data[0].user.email;
+                sessionStorage.userPicture = response.data[0].user.picture;
+                sessionStorage.newUser = true;
+                
+                const msg = `You have been successfully Registered !.
                             <br><br>
                             * Great to have you on board.`;
                 showDialogMsg(2, 'Congratulations', msg, 'center');
+                setTimeout(()=> {
+                    location.href = 'reporthistory.html';
+                }, 3000);
             } else {
                 // throw new Error(JSON.stringify(response.error));
                handleResponseError(response);

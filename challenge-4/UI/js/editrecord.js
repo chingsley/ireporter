@@ -1,3 +1,6 @@
+if(!sessionStorage.token) {
+    location.href = 'login.html';
+}
 // DECLARE VARIABLES
 const address = document.getElementById('address');
 const addressContainer = document.getElementById('rep-field-for-address');
@@ -308,7 +311,8 @@ const displayMedia = (mediaArr, mediaType) => {
             media.classList.add('record-vid');
         }
         mediaContainer.appendChild(mediaDiv);
-        media.src = `${imgRoot}/${file}`;
+        // media.src = `${imgRoot}/${file}`;
+        media.src = file;
         mediaDiv.appendChild(media);
     });
 };

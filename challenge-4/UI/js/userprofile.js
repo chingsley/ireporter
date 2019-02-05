@@ -1,13 +1,18 @@
-
+if(!sessionStorage.token) {
+    location.href = 'login.html';
+}
 const countRedflags = document.getElementById('count-redflags');
 const countIntervenions = document.getElementById('count-interventions');
 const email = document.getElementById('email');
-const userFirstname = sessionStorage.firstname;
-const userLastname = sessionStorage.lastname;
-const userUsername = sessionStorage.username;
-const userEmail = sessionStorage.userEmail;
-const userPicture = sessionStorage.userPicture;
-console.log(userPicture);
+const userFirstname = sessionStorage.firstname || '';
+const userLastname = sessionStorage.lastname || '';
+const userUsername = sessionStorage.username || '';
+const userEmail = sessionStorage.userEmail || '';
+let userPicture = sessionStorage.userPicture;
+if (!userPicture || userPicture.indexOf('cloudinary') < 0) {
+    userPicture = '../img/default_profile_pic.png';
+} 
+
 const fullname = document.getElementById('fullname');
 const img = document.createElement('img');
 const imgUsername = document.createElement('img');
@@ -62,16 +67,16 @@ const displayContents = async () => {
     stopLoader();
     const interventions = records.interventions;
     const redflags = records.redflags;
-    img.src = `${imgRoot}/${userPicture}`;
+    img.src = `${userPicture}`;
     imgContainer.appendChild(img);
-    imgUsername.src = `${imgRoot}/${userPicture}`;
+    imgUsername.src = `${userPicture}`;
     imgUsernameContainer.appendChild(imgUsername);
     fullname.textContent = `${userFirstname} ${userLastname}`;
     email.textContent = userEmail;
     if(!userUsername || userUsername === 'unspecified') {
         username.textContent = userEmail.slice(0, userEmail.indexOf('@'));
     } else {
-        username.textContent = userUsername;
+        username.textContent = userUsername ;
     }
 
     countRedflags.textContent = redflags.length;

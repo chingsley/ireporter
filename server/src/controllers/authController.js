@@ -25,6 +25,9 @@ class AuthController {
       registered,
       adminSecret,
     } = req;
+
+    // set isAdmin to true if adminSecret is equal to the value of ADMIN_SECRET in .env,
+    // otherwise, set it to false.
     const isAdmin = adminSecret === process.env.ADMIN_SECRET;
 
     try {
@@ -59,7 +62,11 @@ class AuthController {
       req.wantsToSignUp = true;
       return next();
     } catch (error) {
-      return res.status(500).json({ error });
+      // return res.status(500).json({ error });
+      return res.status(500).json({
+        status: 500,
+        error: `internal server error`
+      });
     }
   }
 

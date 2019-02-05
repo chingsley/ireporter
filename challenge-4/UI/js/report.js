@@ -1,4 +1,9 @@
+if(!sessionStorage.token) {
+    location.href = 'login.html';
+}
+
 const address = document.getElementById('address');
+const token = sessionStorage.token;
 
 let msg = 'dialog message';
 let geocoder;
@@ -144,6 +149,8 @@ let map;
 
 {// HANDLING FETCH TO POST A NEW RECORD
     const comment = document.getElementById('comment');
+    const formRadio = document.getElementsByClassName('form-radio-input');
+    console.log(formRadio);
     const images = document.getElementById('pic');
     const location = document.getElementById('coords');
     const MEDIA_MAX_COUNT = 3;
@@ -213,6 +220,14 @@ let map;
                 if (response.status === 201) {
                     sessionStorage.recordId = response.data[0].id;
                     showDialogMsg(2, 'Saved', response.data[0].message, 'center');
+                    // reportForm.type.checked = false;
+                    formRadio[0].checked = false;
+                    formRadio[1].checked = false;
+                    location.value = "";
+                    address.value = "";
+                    comment.value = "";
+                    images.value = "";
+                    videos.value = "";
                 } else {
                     handleResponseError(response);
                 }

@@ -308,6 +308,19 @@ ul {
     transition: all .5s;}
 .popup-close:hover {
     color: red;}
+.popup-close__span {
+    position: absolute;
+    top: 2.5rem;
+    right: 2.5rem;
+    font-size: 3rem;
+    color: #e8491d;
+    text-decoration: none;
+    display: inline-block !important;
+    text-align: center;
+    line-height: 1;
+    transition: all .5s;
+    cursor: pointer;
+}
 
 
 /** POPUP DIALOG BOX*/
@@ -1058,6 +1071,19 @@ header {
     #login-btn-submit {
         width: 40%;
         font-size: 1rem;}
+    .or-click-here {
+        color: white;
+        display: block;
+        /* border: 1px solid white; */
+        margin-top: 1rem;
+        text-align: center;
+        letter-spacing: 2px;
+    }
+    .click-here {
+        /* color: #e8491d; */
+        color: red;
+        text-decoration: none;
+    }
 
 /****************** (END LOGIN PAGE) **********************/
 
@@ -1483,6 +1509,7 @@ select {
 }
 .report-img {
     width: 100%;
+    height: 100%;
 }
 .report-details-table {
     /* border: 1px solid silver; */
@@ -1532,7 +1559,7 @@ select {
     box-shadow: none;
 }
 .div-no-records {
-    border: 1px solid white;
+    /* border: 1px solid white; */
     animation: moveInRight 1s ease .5s; /* this works with some additional settings in reporthistory.js */
     opacity: 0;
     padding: 1rem 0 1rem 0rem;
@@ -2197,6 +2224,10 @@ select {
         width: 90%;
         margin: 0 auto;
     }
+
+    .or-click-here {
+        margin-top: 1rem;
+    }
 }
 
 @media(max-width: 600px) {
@@ -2303,6 +2334,10 @@ select {
     }
     #first-link {
         margin-top: 3rem;
+    }
+
+    .or-click-here {
+        margin-top: 1rem;
     }
 
 }

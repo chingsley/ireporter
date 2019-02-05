@@ -4,9 +4,12 @@ import Inspector from '../middleware/recordsInspector';
 import RecordsController from '../controllers/recordsController';
 import AuthHandler from '../middleware/authHandler';
 import RecordType from '../middleware/recordType';
+// import cloudinary from 'cloudinary';
 // import { runInNewContext } from 'vm';
 
+const MAX_FILE_COUNT = 6;
 const router = new Router();
+
 
 const storage = multer.diskStorage({
   destination(req, file, callback) {
@@ -41,19 +44,15 @@ const upload = multer({
     fileSize: 1024 * 1024 * 10, // approx. 10MB
   },
   fileFilter,
-  // onError: function (err, next) {
-  //   console.log('error', err);
-  //   next(err);
-  // }
 });
 
-const fileUpload = upload.fields([{ name: 'images', maxCount: 3 }, { name: 'videos', maxCount: 3 }]);
-const fileHandler = (req, res, next) => {
+const fileUpload = upload.fields([{ name: 'images', maxCount: MAX_FILE_COUNT }, { name: 'videos', maxCount: MAX_FILE_COUNT }]);
+const fileHandler = async (req, res, next) => {
   fileUpload(req, res, (err) => {
     // console.log('recordsRouter, line 53', req.body);
     if (err instanceof multer.MulterError) {
       const errMsg = err.code === 'LIMIT_UNEXPECTED_FILE'
-        ? 'maximum file upload of 3 exceeded'
+        ? `maximum file upload of ${MAX_FILE_COUNT} exceeded`
         : `${err.message}. Limit: 10MB per file`;
       // A Multer error occurred when uploading.
       return res.status(400).json({
@@ -69,6 +68,25 @@ const fileHandler = (req, res, next) => {
         error: 'File upload error: An error occured during uploading files',
       });
     }
+
+    // const path = req.file.path;
+    // const uniqueFilename = new Date().toISOString();
+
+    // cloudinary.v2.uploader.upload(
+    //   path,
+    //   {public_id: `ireporter/uploads/${uniqueFilename}`, tags: `ireporter`},
+    //   function(err, image) {
+    //     if(err) {
+    //       console.error(err);
+    //       return res.send(err);
+    //     }
+    //     console.log('file uploaded to Cloudinary');
+    //     //remove file from server
+    //     fs.unlinkSync(path);
+    //     return res.json(image);
+    // }
+    // )
+
     // Everything went fine.
     return next();
   });

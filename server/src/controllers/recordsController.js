@@ -290,9 +290,12 @@ class RecordsController {
         });
       }
 
+      // NOTE: cloudinary generates a unique id for each file, so capturing duplicate files
+      // in the manner done will not work. I will need to set the public_id during cloudinary
+      // upload in order to may be stand of chance of detecting duplicate files.
       let duplicateFile = null;
       mediaArr.forEach((file) => {
-        if (existingMediaArr.includes(file.path.toString().trim())) {
+        if (existingMediaArr.includes(file.toString().trim())) {
           duplicateFile = file.filename;
         }
       });
@@ -381,7 +384,7 @@ class RecordsController {
           error: `No ${req.recordType} matches the id of ${req.params.id}`,
         });
       }
-      if (record.created_by !== req.userId) {
+      if (record.created_by !== req.userId && req.userStatus !== 'admin') {
         return res.status(401).json({
           status: 401,
           error: 'cannot delete. A record can only be deleted by its owner',

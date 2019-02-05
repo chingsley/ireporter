@@ -1,11 +1,17 @@
-// const root = 'http://localhost:3000/api/v1';
-// const imgRoot = 'http://localhost:3000';
+const root = 'http://localhost:3000/api/v1';
+const imgRoot = 'http://localhost:3000';
 
-const root = 'https://ireporter-db.herokuapp.com/api/v1';
-const imgRoot = 'https://ireporter-db.herokuapp.com';
+// const root = 'https://ireporter-db.herokuapp.com/api/v1';
+// const imgRoot = 'https://ireporter-db.herokuapp.com';
 
 
+console.log('token = ', sessionStorage.token);
+console.log('type of token', typeof sessionStorage.token);
+
+
+linkSignOut = document.querySelectorAll('.sign-out');
 const btnConfirm = document.getElementsByClassName('btnConfirm');
+const btnsReportCase = document.querySelectorAll('.report-a-case');
 const closeBtn = document.getElementById('close-dialog-box');
 const dialogBox = document.getElementById('dialog-box');
 const dialogMsg = document.getElementById('dialog-msg');
@@ -15,28 +21,8 @@ const divConfirmation = document.getElementById('div-confirmation');
 const loader = document.getElementById('loader');
 const loaderWindow = document.getElementById('loader-window');
 
-const startLoader = () => {
-    loaderWindow.style.display = 'block';
-    loader.style.display = 'block';
-    console.log('loading ...');
-};
-
-const stopLoader = () => {
-    loaderWindow.style.display = 'none';
-    loader.style.display = 'none';
-    console.log('loading stopped.');
-};
-
-const getErrString = (value) => {
-    // const errObj = JSON.parse(value);
-    const errObj = value;
-    const errArr = Object.values(errObj);
-    const errStr = errArr.join('<br>=> ');
-    return `=> ${errStr}`;
-}
-
 const closeDialog = (target) => {
-   
+
     // close the dialogbox if when the user clicks
     // on the 'x' button;
     closeBtn.onclick = () => {
@@ -74,7 +60,39 @@ const closeDialog = (target) => {
     //     return true;
     // }
 
-    
+
+};
+
+const startLoader = () => {
+    loaderWindow.style.display = 'block';
+    loader.style.display = 'block';
+    console.log('loading ...');
+};
+
+const stopLoader = () => {
+    loaderWindow.style.display = 'none';
+    loader.style.display = 'none';
+    console.log('loading stopped.');
+};
+
+const getErrString = (value) => {
+    // const errObj = JSON.parse(value);
+    const errObj = value;
+    const errArr = Object.values(errObj);
+    const errStr = errArr.join('<br>=> ');
+    return `=> ${errStr}`;
+}
+
+const getImgUrl = async (imgPath) => {
+    try {
+        const response = await fetch(imgPath);
+        const blob = await response.blob();
+        const objectURL = await URL.createObjectURL(blob);
+        return objectURL;
+
+    } catch (err) {
+        console.log(err);
+    };
 };
 
 const showDialogMsg = (flag, title, msg, textAlign = 'left', target) => {
@@ -163,6 +181,58 @@ const handleGeolocationNetworkErrorForEditPage = () => {
         `;
     showDialogMsg(0, 'Geolocation Error', msg);
 };
+
+btnsReportCase.forEach(btn => {
+    btn.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        if(sessionStorage.token) {
+            location.href = 'report.html';
+        } else {
+            location.href = 'login.html';
+        }
+
+    });
+});
+
+// The 'sign-out' operation can be performed thus:
+linkSignOut.forEach(link => {
+    link.addEventListener('click', () => {
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('firstname');
+        sessionStorage.removeItem('lastname');
+        sessionStorage.removeItem('username');
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('userEmail');
+        sessionStorage.removeItem('userPicture');
+        if(sessionStorage.newUser === true) {
+            sessionStorage.removeItem('newUser');
+        }
+    });
+});
+
+{// Another way to implement the 'sign-out' operation
+    // // The 'sign-out' operation can also be performed using the a tags, selected in line 1
+    // // the a tags selected above an HTMLcollection, therefore a.forEach or a.addEventListener
+    // // would fail because an HTMLCollection is not an array. To use it as an array, you can 
+    // // use Array.from() to convert it into an array as shown below: 
+
+    // const a = document.getElementsByTagName('a');
+    // console.log(a);
+    // console.log(Array.from(a));
+    // (Array.from(a)).forEach(link => {
+    //     link.addEventListener('click', (event) => {
+    //         event.preventDefault();
+    //         console.log(typeof event.target.className);
+    //         if (event.target.className.split(' ').includes('sign-out')) {
+    //             console.log(event.target);
+    //             alert('present Sir');
+    //             sessionStorage.removeItem('token');
+    //         }
+    //     });
+    // });
+}
+
 
 
 /******** FUNCTION TO DELETE A ROW FROM A TABLE**************** */

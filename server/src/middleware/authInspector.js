@@ -1,6 +1,7 @@
 import moment from 'moment';
 import Validator from '../validators/validator';
 import pool from '../db/config';
+import CloudinaryUploader from './cloudinary';
 
 /**
    *
@@ -15,6 +16,11 @@ class Inspect {
    * @returns {function} next
    */
   static async signup(req, res, next) {
+    const cloudinaryError = (fileType = 'file') => res.status(599).json({
+      status: 599, // 599 is 'network connection timeout'
+      error: `${fileType} upload error. Please check your internet connection and try again`,
+    });
+
     const errObj = {};
 
     const {
@@ -52,26 +58,26 @@ class Inspect {
       errObj.missingFields = `Values are required for the field(s): ${missingFields}`;
     }
 
-    if (!Validator.isValidName(firstname)){
+    if (!Validator.isValidName(firstname)) {
       errObj.firstname = 'First Name must be a minimum of 2 characters, (no numbers)';
-    } 
-    if (!Validator.isValidName(lastname)){
+    }
+    if (!Validator.isValidName(lastname)) {
       errObj.lastname = 'Last Name must be a minimum of 2 characters, (no numbers)';
-    } 
-    if (username && (!Validator.isValidName(username))){
+    }
+    if (username && (!Validator.isValidName(username))) {
       errObj.username = 'Must be a minimum of 2 characters, (no numbers)';
-    } 
+    }
     if (email) {
       if (Validator.customValidateEmail(email).error) {
         errObj.email = `${Validator.customValidateEmail(email).message}`;
       }
     }
-    if (!Validator.isValidPhoneNumber(phoneNumber)){
-      errObj.phoneNumber = `Phone number cannot contain alphabets, must be less than 16 digits long, cannot be preceded by '-', cannot be all 0 digits`;
-    } 
-    if (Validator.isPasswordTooShort(password)){
+    if (!Validator.isValidPhoneNumber(phoneNumber)) {
+      errObj.phoneNumber = 'Phone number cannot contain alphabets, must be less than 16 digits long, cannot be preceded by \'-\', cannot be all 0 digits';
+    }
+    if (Validator.isPasswordTooShort(password)) {
       errObj.password = 'Password should have a minimum of 6 characters';
-    } 
+    }
     if ((Object.keys(errObj)).length > 0) {
       return res.status(400).json({
         status: 400,
@@ -92,10 +98,21 @@ class Inspect {
     req.phoneNumber = phoneNumber.toString().trim();
     req.email = email.toString().trim();
     req.password = password.toString().trim();
-    req.picture = req.file ? req.file.path : 'uploads/default_profile_pic.png';
     req.registered = moment(new Date());
     req.adminSecret = adminSecret ? adminSecret.toString().trim() : null;
+    // req.picture = req.file ? req.file.path : 'uploads/default_profile_pic.png';
+    if (req.file) {
+      const result = await CloudinaryUploader.uploadSingle(req.file, 'image');
+      console.log(result);
+      if (!result) return cloudinaryError();
+      req.picture = result;
+    } else {
+      req.picture = 'uploads/default_profile_pic.png';
+    }
 
+    // return res.json({
+    //   picture: req.picture,
+    // });
     return next();
   }
 
